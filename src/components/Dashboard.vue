@@ -19,7 +19,7 @@
                             <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                             </label>
                         </td>
-                        <td @click="showFiles" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
+                        <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +42,7 @@
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
-               <h3 class="text-align-center">{{projects[0].name}} Files:</h3>
+               <h3 class="text-align-center">{{projectName}} Files:</h3>
                     <table class="mdl-data-table mdl-shadow--2dp margin-left-4 table-width">
                 <thead>
                     <tr>
@@ -52,10 +52,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  v-for="(file, index) in files">
+                    <tr  v-for="(file, yindex) in files">
                         <td class="mdl-data-table__cell--non-numeric">
-                            <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "index">
-                            <input type = "checkbox" v-model=file.selected :id = "index" class = "mdl-checkbox__input">
+                            <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "yindex">
+                            <input type = "checkbox" v-model=file.selected :id = "yindex" class = "mdl-checkbox__input">
                             </label>
                         </td>
                         <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
@@ -82,8 +82,9 @@ export default {
     data () {
         return {
             inputData: "",
-      files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
-     projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
+            projectName: "",
+            files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
+            projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
         
         }
     },
@@ -95,7 +96,8 @@ export default {
   hide () {
     this.$modal.hide('NewProjectModal');
   },
-  showFiles () {
+  showFiles: function (projectname, index) {
+      this.projectName = projectname
       this.$modal.show('ProjectFilesModal');
   },
   addProjectToTable: function () {
