@@ -3,9 +3,8 @@
     <head>
     </head>
     <body>
-      <h3 class="margin-left-3">Data Transfer</h3>
-      <div class="tableBody">
-      <table class="mdl-data-table mdl-shadow--2dp">
+      <h3 class="margin-left-3">Data Manager</h3>
+      <table class="align-center mdl-data-table mdl-shadow--2dp">
         <tr>
           <th class="mdl-data-table__cell--non-numeric">Select</th>
           <th class="mdl-data-table__cell--non-numeric dataFile">Data File</th>
@@ -15,10 +14,9 @@
           <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
         </tr>
       </table>
-      <div class="button">
+      <section class="text-align-center">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Transfer</button>
-        </div>
-      </div>
+      </section>
     </body>
   </html>
 </template>
@@ -39,41 +37,7 @@ export default {
 </script>
 
 <style scoped>
-body {
-  min-width: 750px;
-}
-
-.margin-left-3 {
-    margin-left: 3em;
-}
-
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-table {
-  margin: auto;
-  margin-bottom: 50px;
-}
-
-th {
-  background-color: #D3D3D3;
-  padding: 20px;
-}
-
-.tableBody {
-  margin: auto;
-  width: 80%;
-  border: 3px solid gray;
-  padding: 40px;
-}
-
 .dataFile {
   width: 80%;
-}
-
-.button {
-  text-align: center;
 }
 </style>

@@ -17,7 +17,7 @@
                         <td class="mdl-data-table__cell--non-numeric">
                             <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "index">
                             <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
-                            </label> 
+                            </label>
                         </td>
                         <td class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
                     </tr>
@@ -30,19 +30,19 @@
                <h3 class="text-align-center">Create New Project</h3>
               <form action="#">
                 <div class="text-align-center">
-                    <label for="sample1">Project Name:</label>      
+                    <label for="sample1">Project Name:</label>
                     <input class="input" type="text" id="sample1" placeholder="Project Name">
                 </div>
                </form>
                <br>
-               <div class="text-align-center margin-botton-2">
+               <div class="text-align-center margin-bottom-2">
                    <button @click="hide" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
                 </div>
            </modal>
            <a href="/#/fileupload">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add New File</button>
             </a>
-            
+
         </div>
     </body>
 
@@ -59,7 +59,7 @@ export default {
     },
 
 
-  
+
   methods: {
   show () {
     this.$modal.show('NewProjectModal');
@@ -77,19 +77,4 @@ export default {
   margin-left: 3em;
 }
 
-.text-align-center {
-    text-align: center;
-}
-
-.margin-botton-2 {
-    margin-bottom: 2em;
-}
-
-.margin-right-2 {
-    margin-right: 2em;
-}
-
-.margin-left-3 {
-    margin-left: 3em;
-}
 </style>
