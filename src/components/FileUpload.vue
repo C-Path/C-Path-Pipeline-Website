@@ -3,33 +3,31 @@
     <head>
     </head>
     <body>
-      <h3 class="margin-left-3">Data Transfer</h3>
-      <div id='fileUpload'>
-        <form class="formBody">
-          <section class="fileSubmission">
-            <label>Files to Submit</label>
-            <input class="mdl-button mdl-button--raised" type="file" @change="fileChange">
-          </section>
-          <section class="pipelineSelection">
-            <input type="radio" value="WGS" v-model="type"> Whole Genome Sequence Pipeline
-            <input type="radio" value="TSP" v-model="type"> Targeted Sequence Pipeline
-          </section>
-          <div class="queueInfo">
-            <label>Current WGS Queue Size: </label>
-            <input v-model="wsgQueue" disabled>
-            <label>Current TGS Queue Size: </label>
-            <input v-model="tgsQueue" disabled>
-          </div>
-          <div class="button">
+      <h3 class="margin-left-3">File Upload</h3>
+      <form class="align-center text-align-center">
+        <section>
+          <label class="margin-right-2">Files to Submit</label>
+          <input type="file" @change="fileChange">
+        </section>
+        <section>
+          <input type="radio" value="WGS" v-model="type"> Whole Genome Sequence Pipeline
+          <input type="radio" value="TSP" v-model="type"> Targeted Sequence Pipeline
+        </section>
+        <section>
+          <label>Current WGS Queue Size: </label>
+          <input class="width-2" v-model="wsgQueue" disabled>
+          <label>Current TGS Queue Size: </label>
+          <input class="width-2" v-model="tgsQueue" disabled>
+        </section>
+        <section class="text-align-center">
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="submit">Upload</button>
-        </div>
-        </form>
-        <div class="button">
-          <a href="/#/dashboard">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
-          </a>
-      </div>
-      </div>
+        </section>
+      </form>
+      <section class="text-align-center">
+        <a href="/#/dashboard">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
+        </a>
+      </section>
     </body>
   </html>
 </template>
@@ -60,40 +58,5 @@ export default {
 </script>
 
 <style scoped>
-body {
-  min-width: 750px;
-}
 
-.margin-left-3 {
-    margin-left: 3em;
-}
-
-.formBody {
-  margin: auto;
-  width: 80%;
-  border: 3px solid gray;
-  padding: 40px;
-}
-
-.fileSubmission button {
-  margin: 20px;
-}
-
-.fileSubmission input {
-  margin: 20px;
-}
-
-.pipelineSelection input {
-  margin: 20px;
-}
-
-.queueInfo input {
-  width: 50px;
-  text-align: center;
-}
-
-.button {
-  margin-top: 25px;
-  text-align: center;
-}
 </style>

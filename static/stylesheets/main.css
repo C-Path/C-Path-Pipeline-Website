@@ -1,0 +1,35 @@
+body {
+  min-width: 750px;
+}
+
+section {
+  margin-top: 2em;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.align-center {
+  margin: 0 auto;
+}
+
+.margin-bottom-2 {
+    margin-bottom: 2em;
+}
+
+.margin-right-2 {
+    margin-right: 2em;
+}
+
+.margin-top-2 {
+  margin-top: 2em;
+}
+
+.margin-left-3 {
+    margin-left: 3em;
+}
+
+.width-2 {
+  width: 2em;
+}
