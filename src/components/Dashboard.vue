@@ -5,7 +5,7 @@
     <body class="margin-left-3">
         <h3>User Projects</h3>
         <div class="margin-botton-2">
-            <table class="mdl-data-table mdl-js-data-table">
+            <table class="mdl-data-table mdl-shadow--2dp">
                 <thead>
                     <tr>
                     <th class="mdl-data-table__cell--non-numeric">Active</th>
@@ -17,7 +17,7 @@
                         <td class="mdl-data-table__cell--non-numeric">
                             <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "index">
                             <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
-                            </label>	 
+                            </label> 
                         </td>
                         <td class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
                     </tr>
