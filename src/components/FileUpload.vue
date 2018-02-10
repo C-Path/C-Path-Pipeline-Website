@@ -24,6 +24,7 @@
         </div>
         </form>
       </div>
+      <a href="/#/dashboard"> < Back</a>
     </body>
 
     </html>
