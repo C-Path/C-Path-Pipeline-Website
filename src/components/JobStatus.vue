@@ -3,21 +3,22 @@
     <head>
     </head>
     <body>
+      <h3 class="margin-left-3">Pipeline Job Status</h3>
       <div class="tableBody">
-      <table>
+      <table class="mdl-data-table mdl-shadow--2dp">
         <tr>
-          <th>Job ID</th>
-          <th>Status</th>
-          <th>Position</th>
+          <th class="mdl-data-table__cell--non-numeric">Job ID</th>
+          <th class="mdl-data-table__cell--non-numeric">Status</th>
+          <th class="mdl-data-table__cell--non-numeric">Position</th>
           <th>Delete</th>
           <th>Contribute</th>
         </tr>
         <tr v-for="job in jobs">
-          <td>{{job.id}}</td>
-          <td>{{job.status}}</td>
-          <td>{{job.position}}</td>
-          <td><input type="checkbox"></td>
-          <td><input type="checkbox"></td>
+          <td class="mdl-data-table__cell--non-numeric">{{job.id}}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{job.status}}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{job.position}}</td>
+          <td><input class="mdl-checkbox" type="checkbox"></td>
+          <td><input class="mdl-checkbox" type="checkbox"></td>
         </tr>
       </table>
       <div class="queueInfo">
@@ -28,7 +29,7 @@
         <input v-model="tgsQueue" disabled>
       </div>
       <div class="uploadBtn">
-        <a href="/#/dashboard"><button>Home</button></a>
+        <a href="/#/dashboard"><button class="mdl-button mdl-button--raised">Home</button></a>
     </div>
     </form>
   </div>
@@ -55,6 +56,10 @@ export default {
 <style scoped>
 body {
   min-width: 750px;
+}
+
+.margin-left-3 {
+    margin-left: 3em;
 }
 
 table, th, td {
