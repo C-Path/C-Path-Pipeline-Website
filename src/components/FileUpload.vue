@@ -8,12 +8,12 @@
         <form class="formBody">
           <section class="fileSubmission">
             <label>Files to Submit</label>
-            <input class="mdel-button mdl-button--raised" type="file" @change="fileChange">
+            <input class="mdl-button mdl-button--raised" type="file" @change="fileChange">
           </section>
           <section class="pipelineSelection">
             <input type="radio" value="WGS" v-model="type"> Whole Genome Sequence Pipeline
             <input type="radio" value="TSP" v-model="type"> Targeted Sequence Pipeline
-          </section>
+          </section>FF
           <div class="queueInfo">
             <label>Current WGS Queue Size: </label>
             <input v-model="wsgQueue" disabled>
@@ -21,12 +21,12 @@
             <input v-model="tgsQueue" disabled>
           </div>
           <div class="button">
-          <button class="mdel-button mdl-button--raised" @click="submit">Upload</button>
+          <button class="mdl-button mdl-button--raised" @click="submit">Upload</button>
         </div>
         </form>
         <div class="button">
           <a href="/#/dashboard">
-          <button class="mdel-button mdl-button--raised">Home</button>
+          <button class="mdl-button mdl-button--raised">Home</button>
         </a>
       </div>
       </div>
