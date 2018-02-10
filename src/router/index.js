@@ -6,6 +6,6 @@ import Dashboard from '@/components/Dashboard';
 Vue.use(Router);
 export default new Router({
   routes: [
-    { path: '/dashboard', component: Dashboard },
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   ],
 });
