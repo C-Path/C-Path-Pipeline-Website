@@ -1,8 +1,9 @@
 <template lang="html">
-    <html>
+  <html>
     <head>
     </head>
     <body>
+      <h3 class="margin-left-3">Data Transfer</h3>
       <div id='fileUpload'>
         <form class="formBody">
           <section class="fileSubmission">
@@ -19,15 +20,18 @@
             <label>Current TGS Queue Size: </label>
             <input v-model="tgsQueue" disabled>
           </div>
-          <div class="uploadBtn">
-          <button @click="submit">Upload</button>
+          <div class="button">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="submit">Upload</button>
         </div>
         </form>
+        <div class="button">
+          <a href="/#/dashboard">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
+          </a>
+        </div>
       </div>
-      <a href="/#/dashboard"> < Back</a>
     </body>
-
-    </html>
+  </html>
 </template>
 
 <script>
@@ -59,12 +63,16 @@ export default {
 body {
   min-width: 750px;
 }
+
+.margin-left-3 {
+    margin-left: 3em;
+}
+
 .formBody {
   margin: auto;
   width: 80%;
   border: 3px solid gray;
   padding: 40px;
-  text-align: center;
 }
 
 .fileSubmission button {
@@ -81,9 +89,10 @@ body {
 
 .queueInfo input {
   width: 50px;
+  text-align: center;
 }
 
-.uploadBtn {
+.button {
   margin-top: 25px;
   text-align: center;
 }

@@ -1,5 +1,5 @@
 <template lang="html">
-    <html>
+  <html>
     <head>
     </head>
     <body>
@@ -16,13 +16,11 @@
         </tr>
       </table>
       <div class="button">
-        <button class="mdl-button mdl-button--raised">Transfer</button>
-    </div>
-    </form>
-  </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Transfer</button>
+        </div>
+      </div>
     </body>
-
-    </html>
+  </html>
 </template>
 
 <script>
@@ -62,10 +60,6 @@ table {
 th {
   background-color: #D3D3D3;
   padding: 20px;
-}
-
-button {
-  padding: 1em;
 }
 
 .tableBody {
