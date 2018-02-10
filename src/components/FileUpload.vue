@@ -7,14 +7,12 @@
         <form class="formBody">
           <section class="fileSubmission">
             <label>Files to Submit</label>
-            <input>
-            <button>Browse</button>
+            <input type="file" @change="fileChange">
           </section>
           <section class="pipelineSelection">
             <input type="radio" value="WGS" v-model="type"> Whole Genome Sequence Pipeline
             <input type="radio" value="TSP" v-model="type"> Targeted Sequence Pipeline
           </section>
-          <h3>Selected: {{ type }}</h3>
           <div class="queueInfo">
             <label>Current WGS Queue Size: </label>
             <input v-model="wsgQueue" disabled>
@@ -22,7 +20,7 @@
             <input v-model="tgsQueue" disabled>
           </div>
           <div class="uploadBtn">
-          <button type="submit">Upload</button>
+          <button @click="submit">Upload</button>
         </div>
         </form>
       </div>
@@ -33,9 +31,22 @@
 
 <script>
 export default {
+  methods: {
+    fileChange(e) {
+      var files = e.target.files || e.dataTransfer.files
+      if (!files.length) return;
+      this.files = files;
+    },
+    submit() {
+      console.log('submitted')
+      console.log('type: ', this.type)
+      console.log('files: ', this.files)
+    },
+  },
   data() {
     return {
       type: 'WGS',
+      files: '',
       wsgQueue: '84',
       tgsQueue: '35',
     };
