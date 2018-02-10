@@ -1,41 +1,39 @@
 <template lang="html">
-    <html>
+  <html>
     <head>
     </head>
     <body>
       <h3 class="margin-left-3">Pipeline Job Status</h3>
       <div class="tableBody">
-      <table class="mdl-data-table mdl-shadow--2dp">
-        <tr>
-          <th class="mdl-data-table__cell--non-numeric">Job ID</th>
-          <th class="mdl-data-table__cell--non-numeric">Status</th>
-          <th class="mdl-data-table__cell--non-numeric">Position</th>
-          <th>Delete</th>
-          <th>Contribute</th>
-        </tr>
-        <tr v-for="job in jobs">
-          <td class="mdl-data-table__cell--non-numeric">{{job.id}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{job.status}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{job.position}}</td>
-          <td><input class="mdl-checkbox" type="checkbox"></td>
-          <td><input class="mdl-checkbox" type="checkbox"></td>
-        </tr>
-      </table>
-      <div class="queueInfo">
-        <label>Current WGS Queue Size: </label>
-        <input v-model="wsgQueue" disabled>
-        <br>
-        <label>Current TGS Queue Size: </label>
-        <input v-model="tgsQueue" disabled>
+        <table class="mdl-data-table mdl-shadow--2dp">
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Job ID</th>
+            <th class="mdl-data-table__cell--non-numeric">Status</th>
+            <th class="mdl-data-table__cell--non-numeric">Position</th>
+            <th>Delete</th>
+            <th>Contribute</th>
+          </tr>
+          <tr v-for="job in jobs">
+            <td class="mdl-data-table__cell--non-numeric">{{job.id}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{job.status}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{job.position}}</td>
+            <td><input class="mdl-checkbox" type="checkbox"></td>
+            <td><input class="mdl-checkbox" type="checkbox"></td>
+          </tr>
+        </table>
+        <div class="queueInfo">
+          <label>Current WGS Queue Size: </label>
+          <input v-model="wsgQueue" disabled>
+          <br>
+          <label>Current TGS Queue Size: </label>
+          <input v-model="tgsQueue" disabled>
+        </div>
+        <div class="uploadBtn">
+          <a href="/#/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button></a>
+        </div>
       </div>
-      <div class="uploadBtn">
-        <a href="/#/dashboard"><button class="mdl-button mdl-button--raised">Home</button></a>
-    </div>
-    </form>
-  </div>
     </body>
-
-    </html>
+  </html>
 </template>
 
 <script>

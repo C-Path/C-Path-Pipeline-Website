@@ -1,5 +1,5 @@
 <template lang="html">
-    <html>
+  <html>
     <head>
     </head>
     <body>
@@ -21,18 +21,21 @@
             <input v-model="tgsQueue" disabled>
           </div>
           <div class="button">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="submit">Upload</button>
           <button class="mdl-button mdl-button--raised" @click="submit">Upload</button>
         </div>
         </form>
         <div class="button">
           <a href="/#/dashboard">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
+          </a>
+        </div>
           <button class="mdl-button mdl-button--raised">Home</button>
         </a>
       </div>
       </div>
     </body>
-
-    </html>
+  </html>
 </template>
 
 <script>
