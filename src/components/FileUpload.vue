@@ -13,7 +13,7 @@
           <section class="pipelineSelection">
             <input type="radio" value="WGS" v-model="type"> Whole Genome Sequence Pipeline
             <input type="radio" value="TSP" v-model="type"> Targeted Sequence Pipeline
-          </section>FF
+          </section>
           <div class="queueInfo">
             <label>Current WGS Queue Size: </label>
             <input v-model="wsgQueue" disabled>
