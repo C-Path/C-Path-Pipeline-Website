@@ -2,30 +2,31 @@
     <html>
     <head>
     </head>
-    <body class="margin-left-3">
-        <h3>User Projects</h3>
-        <div class="margin-bottom-2">
-            <table class="mdl-data-table mdl-shadow--2dp">
+    <body>
+        <h3 class="margin-left-1">User Projects</h3>
+        <div class="margin-bottom-2 margin-left-3">
+            <table class="mdl-data-table mdl-shadow--2dp table-width">
                 <thead>
                     <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Active</th>
+                    <th class="mdl-data-table__cell--non-numeric table-width-10">Active</th>
                     <th class="mdl-data-table__cell--non-numeric">Project Name</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(project, index) in projects">
-                        <td class="mdl-data-table__cell--non-numeric">
+                    <tr  v-for="(project, index) in projects">
+                        <td class="mdl-data-table__cell--non-numeric table-width-10">
                             <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "index">
                             <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                             </label>
                         </td>
-                        <td class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
+                        <td @click="showFiles" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div>
+        <div class="margin-left-3">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2" @click="show">Create New Project</button>
+            <!-- New Project Modal -->
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
               <form action="#">
@@ -38,6 +39,32 @@
                <div class="text-align-center margin-bottom-2">
                    <button v-on:click="addProjectToTable()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
                 </div>
+           </modal>
+           <!-- Project Files Modal -->
+           <modal name="ProjectFilesModal" height="auto" :scrollable="true">
+               <h3 class="text-align-center">{{projects[0].name}} Files:</h3>
+                    <table class="mdl-data-table mdl-shadow--2dp margin-left-4 table-width">
+                <thead>
+                    <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Select</th>
+                    <th class="mdl-data-table__cell--non-numeric">File Name</th>
+                    <th class="mdl-data-table__cell--non-numeric">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  v-for="(file, index) in files">
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "index">
+                            <input type = "checkbox" v-model=file.selected :id = "index" class = "mdl-checkbox__input">
+                            </label>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{file.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+               <br>
+               
            </modal>
            <a href="/#/fileupload">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add New File</button>
@@ -55,6 +82,7 @@ export default {
     data () {
         return {
             inputData: "",
+      files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
      projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
         
         }
@@ -66,6 +94,9 @@ export default {
   },
   hide () {
     this.$modal.hide('NewProjectModal');
+  },
+  showFiles () {
+      this.$modal.show('ProjectFilesModal');
   },
   addProjectToTable: function () {
       this.projects.push({selected: false, name: this.inputData})
@@ -79,6 +110,14 @@ export default {
 <style scoped>
 .projectsTable {
   margin-left: 3em;
+}
+
+.table-width {
+    width: 83%;
+}
+
+.table-width-10 {
+    width: 10%;
 }
 
 </style>

@@ -26,8 +26,16 @@ section {
   margin-top: 2em;
 }
 
+.margin-left-1 {
+  margin-left: 1em;
+}
+
 .margin-left-3 {
     margin-left: 3em;
+}
+
+.margin-left-4 {
+  margin-left: 4em;
 }
 
 .width-2 {
