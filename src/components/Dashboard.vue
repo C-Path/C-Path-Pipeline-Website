@@ -30,13 +30,13 @@
                <h3 class="text-align-center">Create New Project</h3>
               <form action="#">
                 <div class="text-align-center">
-                    <label for="sample1">Project Name:</label>      
-                    <input class="input" type="text" id="sample1" placeholder="Project Name">
+                    <label for="projectName">Project Name:</label>      
+                    <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="inputData" required>
                 </div>
                </form>
                <br>
                <div class="text-align-center margin-botton-2">
-                   <button @click="hide" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
+                   <button v-on:click="addProjectToTable()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
                 </div>
            </modal>
            <a href="/#/fileupload">
@@ -54,18 +54,23 @@ export default {
 
     data () {
         return {
+            inputData: "",
      projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
+        
         }
     },
-
-
   
   methods: {
   show () {
+      this.inputData = "";
     this.$modal.show('NewProjectModal');
   },
   hide () {
     this.$modal.hide('NewProjectModal');
+  },
+  addProjectToTable: function () {
+      this.projects.push({selected: false, name: this.inputData})
+      this.hide()
   }
 }
 }
