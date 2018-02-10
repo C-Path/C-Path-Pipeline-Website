@@ -8,19 +8,23 @@
             <!-- table -->
         </div>
         <div>
-            <button @click="show">Create New Project</button>
-           <modal name="NewProjectModal" height="auto" :scrollable="true">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="show">Create New Project</button>
+            <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
-               <div class="text-align-center">
-                   <label for="project-name">Project name:</label>
-                   <input id="project-name" name="projectName" placeholder="Project name" required>
-               </div>
+              <form action="#">
+                <div class="text-align-center">
+                    <label for="sample1">Project Name:</label>      
+                    <input class="input" type="text" id="sample1" placeholder="Project Name">
+                </div>
+               </form>
                <br>
-               <div class="text-align-center">
-               <button  @click="hide">Create</button>
-
+               <div class="text-align-center margin-botton-2">
+                   <button @click="hide" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
                 </div>
            </modal>
+           <form action="/#/fileupload">
+            <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" value="Add New File" />
+            </form>
         </div>
     </body>
 
@@ -49,5 +53,9 @@ export default {
 
 .text-align-center {
     text-align: center;
+}
+
+.margin-botton-2 {
+    margin-bottom: 2em;
 }
 </style>
