@@ -3,19 +3,20 @@
     <head>
     </head>
     <body>
+      <h3 class="margin-left-3">Data Transfer</h3>
       <div class="tableBody">
-      <table>
+      <table class="mdl-data-table mdl-shadow--2dp">
         <tr>
-          <th>Select</th>
-          <th class="dataFile">Data File</th>
+          <th class="mdl-data-table__cell--non-numeric">Select</th>
+          <th class="mdl-data-table__cell--non-numeric dataFile">Data File</th>
         </tr>
         <tr v-for="file in files">
-          <td><input type="checkbox" v-model=file.selected></td>
-          <td>{{file.name}}</td>
+          <td><input class="mdl-checkbox" type="checkbox" v-model=file.selected></td>
+          <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
         </tr>
       </table>
       <div class="button">
-        <button>Transfer</button>
+        <button class="mdl-button mdl-button--raised">Transfer</button>
     </div>
     </form>
   </div>
@@ -44,6 +45,10 @@ body {
   min-width: 750px;
 }
 
+.margin-left-3 {
+    margin-left: 3em;
+}
+
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -57,6 +62,10 @@ table {
 th {
   background-color: #D3D3D3;
   padding: 20px;
+}
+
+button {
+  padding: 1em;
 }
 
 .tableBody {
