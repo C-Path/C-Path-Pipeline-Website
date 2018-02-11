@@ -1,7 +1,5 @@
 # C-Path Pipeline Website
 
-> TODO: Project description
-
 ## Build Setup
 
 ``` bash
@@ -27,4 +25,13 @@ npm run e2e
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+##  Access-Control-Allow-Origin ERROR:
+
+```
+Failed to load http://localhost:3000/projects: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access.
+```
+
+Then you need to allow `Access-Control-Allow-Origin` for your browser. This is an easy fix, download this chrome extension:
+https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en. It will allow you to enable the CORS for your browser. 
+
+Now try POSTing to the server again and it should no longer complain about CORS.
