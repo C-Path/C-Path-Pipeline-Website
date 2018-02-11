@@ -1,7 +1,5 @@
 # C-Path Pipeline Website
 
-> TODO: Project description
-
 ## Build Setup
 
 ``` bash
