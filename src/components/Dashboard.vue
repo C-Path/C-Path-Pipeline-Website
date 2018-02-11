@@ -31,7 +31,7 @@
                <h3 class="text-align-center">Create New Project</h3>
               <form action="#">
                 <div class="text-align-center">
-                    <label for="projectName">Project Name:</label>      
+                    <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
                 </div>
                </form>
@@ -64,9 +64,9 @@
                 </tbody>
             </table>
                <br>
-               
+
            </modal>
-           <a href="/#/fileupload">
+           <a href="/fileupload">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add New File</button>
             </a>
 
@@ -88,7 +88,7 @@ export default {
             NewProject: {name: "", active: false},
             files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
             projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
-        
+
         }
     },
   methods: {
