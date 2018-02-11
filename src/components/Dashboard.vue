@@ -32,12 +32,12 @@
               <form action="#">
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>      
-                    <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="inputData" required>
+                    <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
                 </div>
                </form>
                <br>
                <div class="text-align-center margin-bottom-2">
-                   <button v-on:click="addProjectToTable()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
+                   <button v-on:click="addProjectNameToAPI()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
                 </div>
            </modal>
            <!-- Project Files Modal -->
@@ -77,12 +77,15 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
 
     data () {
         return {
             inputData: "",
             projectName: "",
+            NewProject: {name: "", active: false},
             files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
             projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
         
@@ -102,6 +105,19 @@ export default {
   },
   addProjectToTable: function () {
       this.projects.push({selected: false, name: this.inputData})
+      this.hide()
+  },
+  addProjectNameToAPI() {
+      let newProject = {name: this.NewProject.name, active: false}
+      console.log(this.NewProject)
+      /* TODO: place the url for POST in .envrc */
+      axios.post('http://localhost:3000/projects', newProject)
+      .then(function(response) {
+          console.log(response)
+      })
+      .catch(function(error) {
+          console.log(error);
+      });
       this.hide()
   }
 }
