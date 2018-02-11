@@ -10,6 +10,7 @@
 <script>
 import auth from './auth'
 export default {
+  name: 'app',
   data () {
     return {
       loggedIn: auth.loggedIn()
