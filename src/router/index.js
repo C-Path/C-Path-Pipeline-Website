@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import auth from '@/auth'
 import Dashboard from '@/components/Dashboard';
 import FileUpload from '@/components/FileUpload';
 import JobStatus from '@/components/JobStatus';
@@ -9,11 +10,30 @@ import Login from '@/components/Login'
 
 Vue.use(Router);
 export default new Router({
+  mode: 'history',
+  base: __dirname,
   routes: [
-    { path: '/', name: 'Login', component: Login },
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-    { path: '/fileupload', name: 'FileUpload', component: FileUpload },
-    { path: '/jobstatus', name: 'JobStatus', component: JobStatus },
-    { path: '/datamanager', name: 'DataManager', component: DataManager },
-  ],
+    {path: '/', name: 'Login', component: Login},
+    {path: '/login', name: 'Login', component: Login},
+    {path: '/dashboard', name: 'Dashboard', component: Dashboard, beforeEnter: requireAuth},
+    {path: '/fileupload', name: 'FileUpload', component: FileUpload, beforeEnter: requireAuth},
+    {path: '/jobstatus', name: 'JobStatus', component: JobStatus, beforeEnter: requireAuth},
+    {path: '/datamanager', name: 'DataManager', component: DataManager, beforeEnter: requireAuth},
+    {path: '/logout',
+      beforeEnter (to, from, next) {
+        auth.logout()
+        next('/')
+      }
+  }],
 });
+
+function requireAuth (to, from, next) {
+  if (!auth.loggedIn()) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
