@@ -77,52 +77,62 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-
-    data () {
-        return {
-            inputData: "",
-            projectName: "",
-            NewProject: {name: "", active: false},
-            files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
-            projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
-        
-        }
-    },
-  methods: {
-  show () {
-      this.inputData = "";
-    this.$modal.show('NewProjectModal');
+  data() {
+    return {
+      inputData: "",
+      projectName: "",
+      NewProject: { name: "", active: false },
+      files: [
+        { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
+        {selected: false,name: "SRR_3324_1.fastq.fastq",status: "Submitted"},
+        { selected: false, name: "SRR_3475_1.fastq", status: "Completed" },
+        { selected: false, name: "SRR_3475_2.fastq", status: "Rejected" }
+      ],
+      projects: [{"name": "hello"}],
+    };
   },
-  hide () {
-    this.$modal.hide('NewProjectModal');
-  },
-  showFiles: function (projectname, index) {
-      this.projectName = projectname
-      this.$modal.show('ProjectFilesModal');
-  },
-  addProjectToTable: function () {
-      this.projects.push({selected: false, name: this.inputData})
-      this.hide()
-  },
-  addProjectNameToAPI() {
-      let newProject = {name: this.NewProject.name, active: false}
-      console.log(this.NewProject)
-      /* TODO: place the url for POST in .envrc */
-      axios.post('http://localhost:3000/projects', newProject)
+  mounted() {
+    axios.get("http://localhost:3000/projects")
       .then(function(response) {
-          console.log(response)
+        console.log(response.data);
+        let myProject = response.data
+        console.log("My Project: ", this.projects)
+        this.projects[0].name = "HElo"
+        // projects = response.data;
       })
       .catch(function(error) {
-          console.log(error);
+        console.log(error);
       });
-      this.hide()
+  },
+  methods: {
+    show() {
+      this.inputData = "";
+      this.$modal.show("NewProjectModal");
+    },
+    hide() {
+      this.$modal.hide("NewProjectModal");
+    },
+    showFiles: function(projectname, index) {
+      this.projectName = projectname;
+      this.$modal.show("ProjectFilesModal");
+    },
+    
+    addProjectNameToAPI() {
+      let newProject = { name: this.NewProject.name, active: false };
+      /* TODO: place the url for POST in .envrc */
+      axios.post("http://localhost:3000/projects", newProject)
+        .then(function(response) {
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.hide();
+    }
   }
-}
-}
-
+};
 </script>
 
 <style scoped>
@@ -131,11 +141,10 @@ export default {
 }
 
 .table-width {
-    width: 83%;
+  width: 83%;
 }
 
 .table-width-10 {
-    width: 10%;
+  width: 10%;
 }
-
 </style>
