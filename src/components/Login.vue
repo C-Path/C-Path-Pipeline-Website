@@ -3,7 +3,6 @@
     <head>
     </head>
     <body>
-        <h3 class="margin-left-3">C-Path Website Demo</h3>
         <p v-if="$route.query.redirect">
           You need to login first.
         </p>
