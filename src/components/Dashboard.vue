@@ -42,7 +42,7 @@
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
-               <h3 class="text-align-center">{{projectName}} Files:</h3>
+               <h3 class="text-align-center">{{projectNameTitle}} Files:</h3>
                     <table class="mdl-data-table mdl-shadow--2dp margin-left-4 table-width">
                 <thead>
                     <tr>
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       inputData: "",
-      projectName: "",
+      projectNameTitle: "",
       NewProject: { name: "", active: false },
       files: [
         { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
@@ -113,8 +113,8 @@ export default {
     hide() {
       this.$modal.hide("NewProjectModal");
     },
-    showFiles: function(projectname, index) {
-      this.projectName = projectname;
+    showFiles: function(nameOfProject, index) {
+      this.projectNameTitle = nameOfProject;
       this.$modal.show("ProjectFilesModal");
     },
     addProjectToTable: function() {
@@ -122,10 +122,10 @@ export default {
       this.hide();
     },
     addProjectNameToAPI() {
-      let newProject = { name: this.NewProject.name, active: false };
+      let projectData = { name: this.NewProject.name, active: false };
       /* TODO: place the url for POST in .envrc */
       axios
-        .post("http://localhost:3000/projects", newProject)
+        .post("http://localhost:3000/projects", projectData)
         .then(function(response) {})
         .catch(function(error) {
           console.log(error);
