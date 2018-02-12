@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+      <img src="../static/images/pr-c-path-logo.png" alt="c-path logo">
         <router-link v-if="loggedIn" to="/logout">Log out</router-link>
     <template v-if="$route.matched.length">
       <router-view></router-view>
