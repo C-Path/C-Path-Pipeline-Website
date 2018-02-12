@@ -20,12 +20,14 @@
           <input class="width-2" v-model="tgsQueue" disabled>
         </section>
         <section class="text-align-center">
-          <a href="/dashboard">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
-          </a>
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="submit">Upload</button>
         </section>
       </form>
+      <section class="text-align-center">
+        <a href="/dashboard">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
+        </a>
+      </section>
     </body>
   </html>
 </template>
@@ -56,7 +58,5 @@ export default {
 </script>
 
 <style scoped>
-button {
-  margin: 2em;
-}
+
 </style>
