@@ -87,21 +87,19 @@ export default {
       NewProject: { name: "", active: false },
       files: [
         { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
-        {selected: false,name: "SRR_3324_1.fastq.fastq",status: "Submitted"},
+        { selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},
         { selected: false, name: "SRR_3475_1.fastq", status: "Completed" },
         { selected: false, name: "SRR_3475_2.fastq", status: "Rejected" }
       ],
-      projects: [{"name": "hello"}],
+      projects: [{ name: "" }]
     };
   },
   mounted() {
-    axios.get("http://localhost:3000/projects")
+    var $vm = this;
+    axios
+      .get("http://localhost:3000/projects")
       .then(function(response) {
-        console.log(response.data);
-        let myProject = response.data
-        console.log("My Project: ", this.projects)
-        this.projects[0].name = "HElo"
-        // projects = response.data;
+        $vm.projects = response.data;
       })
       .catch(function(error) {
         console.log(error);
@@ -119,16 +117,20 @@ export default {
       this.projectName = projectname;
       this.$modal.show("ProjectFilesModal");
     },
-    
+    addProjectToTable: function() {
+      this.projects.push({ active: false, name: this.NewProject.name });
+      this.hide();
+    },
     addProjectNameToAPI() {
       let newProject = { name: this.NewProject.name, active: false };
       /* TODO: place the url for POST in .envrc */
-      axios.post("http://localhost:3000/projects", newProject)
-        .then(function(response) {
-        })
+      axios
+        .post("http://localhost:3000/projects", newProject)
+        .then(function(response) {})
         .catch(function(error) {
           console.log(error);
         });
+      this.addProjectToTable()
       this.hide();
     }
   }
