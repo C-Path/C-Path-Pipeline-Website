@@ -31,7 +31,7 @@
                <h3 class="text-align-center">Create New Project</h3>
               <form action="#">
                 <div class="text-align-center">
-                    <label for="projectName">Project Name:</label>      
+                    <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
                 </div>
                </form>
@@ -64,9 +64,9 @@
                 </tbody>
             </table>
                <br>
-               
+
            </modal>
-           <a href="/#/fileupload">
+           <a href="/fileupload">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add New File</button>
             </a>
 

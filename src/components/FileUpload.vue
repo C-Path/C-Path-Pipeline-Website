@@ -24,7 +24,7 @@
         </section>
       </form>
       <section class="text-align-center">
-        <a href="/#/dashboard">
+        <a href="/dashboard">
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button>
         </a>
       </section>
