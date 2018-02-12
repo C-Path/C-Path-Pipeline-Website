@@ -93,7 +93,7 @@ export default {
     },
   methods: {
   show () {
-      this.inputData = "";
+      this.NewProject.name = "";
     this.$modal.show('NewProjectModal');
   },
   hide () {
@@ -104,10 +104,13 @@ export default {
       this.$modal.show('ProjectFilesModal');
   },
   addProjectToTable: function () {
-      this.projects.push({selected: false, name: this.inputData})
+      this.projects.push({selected: false, name: this.NewProject.name})
       this.hide()
   },
   addProjectNameToAPI() {
+      /* For DEMO purposes: */
+      this.addProjectToTable()
+
       let newProject = {name: this.NewProject.name, active: false}
       console.log(this.NewProject)
       /* TODO: place the url for POST in .envrc */
