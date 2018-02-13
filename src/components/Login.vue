@@ -3,9 +3,11 @@
     <head>
     </head>
     <body>
-        <p v-if="$route.query.redirect">
-          You need to login first.
-        </p>
+      <section class="text-align-center error">
+          <h4 v-if="$route.query.redirect">
+            Please log in to access this website.
+          </h4>
+      </section>
         <section class="login">
           <div class="align-center text-align-center">
           	<main class="mdl-layout__content mdl-shadow--6dp">
