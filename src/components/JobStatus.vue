@@ -28,7 +28,7 @@
         <input class="width-2" v-model="tgsQueue" disabled>
       </section>
       <section class="text-align-center">
-        <a href="/#/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button></a>
+        <a href="/dashboard"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Home</button></a>
       </section>
     </body>
   </html>
