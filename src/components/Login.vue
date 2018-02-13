@@ -29,6 +29,12 @@
           	</main>
           </div>
         </section>
+        <section class="text-align-center account-services">
+          <p>If you would like an account, or if you forgot your credentials,<br> please click the link below to send us an email</p>
+          <a href="mailto:isaac.c.lessard@gmail.com?subject=ReSeqTB Account Services">
+            <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
+          </a>
+        </section>
     </body>
 
     </html>
@@ -61,5 +67,9 @@
 <style>
   .error {
     color: red;
+  }
+
+  .account-services {
+    padding: 4em;
   }
 </style>
