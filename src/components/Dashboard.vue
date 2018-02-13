@@ -42,7 +42,7 @@
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
-               <h3 class="text-align-center">{{projectName}} Files:</h3>
+               <h3 class="text-align-center">{{projectNameTitle}} Files:</h3>
                     <table class="mdl-data-table mdl-shadow--2dp margin-left-4 table-width">
                 <thead>
                     <tr>
@@ -77,55 +77,64 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-
-    data () {
-        return {
-            inputData: "",
-            projectName: "",
-            NewProject: {name: "", active: false},
-            files: [{selected: false, name: "SRR_102237_1.fastq", status: "In Progress"},{selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},{selected: false, name: "SRR_3475_1.fastq", status: "Completed"},{selected: false, name: "SRR_3475_2.fastq", status: "Rejected"}],
-            projects: [{selected: false, name: "Research Project 2"},{selected: false, name: "Surveillance Project 1"},{selected: false, name: "EU Study"}],
-
-        }
-    },
-  methods: {
-  show () {
-      this.NewProject.name = "";
-    this.$modal.show('NewProjectModal');
+  data() {
+    return {
+      inputData: "",
+      projectNameTitle: "",
+      NewProject: { name: "", active: false },
+      files: [
+        { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
+        { selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},
+        { selected: false, name: "SRR_3475_1.fastq", status: "Completed" },
+        { selected: false, name: "SRR_3475_2.fastq", status: "Rejected" }
+      ],
+      projects: [{ name: "" }]
+    };
   },
-  hide () {
-    this.$modal.hide('NewProjectModal');
-  },
-  showFiles: function (projectname, index) {
-      this.projectName = projectname
-      this.$modal.show('ProjectFilesModal');
-  },
-  addProjectToTable: function () {
-      this.projects.push({selected: false, name: this.NewProject.name})
-      this.hide()
-  },
-  addProjectNameToAPI() {
-      /* For DEMO purposes: */
-      this.addProjectToTable()
-
-      let newProject = {name: this.NewProject.name, active: false}
-      console.log(this.NewProject)
-      /* TODO: place the url for POST in .envrc */
-      axios.post('http://localhost:3000/projects', newProject)
+  mounted() {
+    var $vm = this;
+    axios
+      .get("http://localhost:3000/projects")
       .then(function(response) {
-          console.log(response)
+        $vm.projects = response.data;
       })
       .catch(function(error) {
-          console.log(error);
+        console.log(error);
       });
-      this.hide()
+  },
+  methods: {
+    show() {
+      this.inputData = "";
+      this.$modal.show("NewProjectModal");
+    },
+    hide() {
+      this.$modal.hide("NewProjectModal");
+    },
+    showFiles: function(nameOfProject, index) {
+      this.projectNameTitle = nameOfProject;
+      this.$modal.show("ProjectFilesModal");
+    },
+    addProjectToTable: function() {
+      this.projects.push({ active: false, name: this.NewProject.name });
+      this.hide();
+    },
+    addProjectNameToAPI() {
+      let projectData = { name: this.NewProject.name, active: false };
+      /* TODO: place the url for POST in .envrc */
+      axios
+        .post("http://localhost:3000/projects", projectData)
+        .then(function(response) {})
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.addProjectToTable()
+      this.hide();
+    }
   }
-}
-}
-
+};
 </script>
 
 <style scoped>
@@ -134,15 +143,14 @@ export default {
 }
 
 .table-width {
-    width: 83%;
+  width: 83%;
 }
 
 .table-width-10 {
-    width: 10%;
+  width: 10%;
 }
 
 .new-project-btn {
   margin: 0 3em 3em 3em;
 }
-
 </style>
