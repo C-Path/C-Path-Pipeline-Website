@@ -16,12 +16,10 @@
           	  	<div class="mdl-card__supporting-text">
           				<form @submit.prevent="login">
           					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="text" id="username" v-model="username"/>
-          						<label class="mdl-textfield__label" for="username">Username</label>
+          						<input class="mdl-textfield__input" type="text" id="username" v-model="username" placeholder="username"/>
           					</div>
           					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="password" id="pass" v-model="pass"/>
-          						<label class="mdl-textfield__label" for="pass">Password</label>
+          						<input class="mdl-textfield__input" type="password" id="pass" v-model="pass" placeholder="password"/>
           					</div>
                     <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Log in</button>
           				</form>
