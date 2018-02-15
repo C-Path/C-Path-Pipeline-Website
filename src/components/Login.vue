@@ -3,9 +3,11 @@
     <head>
     </head>
     <body>
-        <p v-if="$route.query.redirect">
-          You need to login first.
-        </p>
+      <section class="text-align-center error">
+          <h4 v-if="$route.query.redirect">
+            Please log in to access this website.
+          </h4>
+      </section>
         <section class="login">
           <div class="align-center text-align-center">
           	<main class="mdl-layout__content mdl-shadow--6dp">
@@ -16,12 +18,10 @@
           	  	<div class="mdl-card__supporting-text">
           				<form @submit.prevent="login">
           					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="text" id="username" v-model="username"/>
-          						<label class="mdl-textfield__label" for="username">Username</label>
+          						<input class="mdl-textfield__input" type="text" id="username" v-model="username" placeholder="username"/>
           					</div>
           					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="password" id="pass" v-model="pass"/>
-          						<label class="mdl-textfield__label" for="pass">Password</label>
+          						<input class="mdl-textfield__input" type="password" id="pass" v-model="pass" placeholder="password"/>
           					</div>
                     <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Log in</button>
           				</form>
@@ -30,6 +30,12 @@
           		</div>
           	</main>
           </div>
+        </section>
+        <section class="text-align-center account-services">
+          <p>If you would like an account, or if you forgot your credentials,<br> please click the link below to send us an email</p>
+          <a href="mailto:isaac.c.lessard@gmail.com?subject=ReSeqTB Account Services">
+            <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
+          </a>
         </section>
     </body>
 
@@ -63,5 +69,9 @@
 <style>
   .error {
     color: red;
+  }
+
+  .account-services {
+    padding: 4em;
   }
 </style>

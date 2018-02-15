@@ -4,6 +4,7 @@
     </head>
     <body>
         <h3 class="margin-left-1">User Projects</h3>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect new-project-btn" @click="show">Create New Project</button>
         <div class="margin-bottom-2 margin-left-3">
             <table class="mdl-data-table mdl-shadow--2dp table-width">
                 <thead>
@@ -25,7 +26,6 @@
             </table>
         </div>
         <div class="margin-left-3">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2" @click="show">Create New Project</button>
             <!-- New Project Modal -->
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
@@ -148,5 +148,9 @@ export default {
 
 .table-width-10 {
   width: 10%;
+}
+
+.new-project-btn {
+  margin: 0 3em 3em 3em;
 }
 </style>
