@@ -9,7 +9,7 @@ import Login from '@/components/Login'
 
 
 Vue.use(Router);
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: __dirname,
   routes: [
@@ -18,7 +18,7 @@ export default new Router({
     {path: '/dashboard', name: 'Dashboard', component: Dashboard, beforeEnter: requireAuth},
     {path: '/fileupload', name: 'FileUpload', component: FileUpload, beforeEnter: requireAuth},
     {path: '/jobstatus', name: 'JobStatus', component: JobStatus, beforeEnter: requireAuth},
-    {path: '/datamanager', name: 'DataManager', component: DataManager, beforeEnter: requireAuth},
+    {path: '/datamanager', name: 'DataManager', component: DataManager, beforeEnter: requireAdmin},
     {path: '/logout',
       beforeEnter (to, from, next) {
         auth.logout()
@@ -26,6 +26,8 @@ export default new Router({
       }
   }],
 });
+
+export default router
 
 function requireAuth (to, from, next) {
   if (!auth.loggedIn()) {
@@ -35,5 +37,23 @@ function requireAuth (to, from, next) {
     })
   } else {
     next()
+  }
+}
+
+function requireAdmin (to, from, next) {
+  if (!auth.loggedIn()) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    if (!auth.isManager()) {
+      next({
+        path: '/dashboard',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
   }
 }
