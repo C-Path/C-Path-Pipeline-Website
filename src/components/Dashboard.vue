@@ -87,7 +87,11 @@ export default {
       NewProject: { name: "", active: false },
       files: [
         { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
-        { selected: false, name: "SRR_3324_1.fastq.fastq", status: "Submitted"},
+        {
+          selected: false,
+          name: "SRR_3324_1.fastq.fastq",
+          status: "Submitted"
+        },
         { selected: false, name: "SRR_3475_1.fastq", status: "Completed" },
         { selected: false, name: "SRR_3475_2.fastq", status: "Rejected" }
       ],
@@ -96,8 +100,12 @@ export default {
   },
   mounted() {
     var $vm = this;
+    /* For testing purposes, later this will include the person actually signed in: */
+    document.cookie = "username=isaac@cpath.org;"
     axios
-      .get("http://localhost:3000/projects")
+      .get("http://localhost:3000/projects", {
+        params: { username: document.cookie.match(new RegExp("username" + '=([^;]+)'))[1] }
+      })
       .then(function(response) {
         $vm.projects = response.data;
       })
@@ -122,7 +130,11 @@ export default {
       this.hide();
     },
     addProjectNameToAPI() {
-      let projectData = { name: this.NewProject.name, active: false };
+      let projectData = {
+        username: this.getCookieValue("username"),
+        name: this.NewProject.name,
+        active: false
+      };
       /* TODO: place the url for POST in .envrc */
       axios
         .post("http://localhost:3000/projects", projectData)
@@ -130,8 +142,12 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-      this.addProjectToTable()
+      this.addProjectToTable();
       this.hide();
+    },
+    getCookieValue(a) {
+      var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
+      return b ? b.pop() : "";
     }
   }
 };
