@@ -11,6 +11,7 @@ export default {
     pretendRequest(email, pass, (res) => {
       if (res.authenticated) {
         localStorage.token = res.token
+        localStorage.setItem('user', JSON.stringify(res))
         if (cb) cb(true)
         this.onChange(true)
       } else {
@@ -34,6 +35,11 @@ export default {
     return !!localStorage.token
   },
 
+  isManager () {
+    var user = JSON.parse(localStorage.getItem('user'))
+    return user.role == "DATA_MANAGER"
+  },
+
   onChange () {}
 }
 
@@ -42,7 +48,14 @@ function pretendRequest (email, pass, cb) {
     if (email === 'isaac@cpath.org' && pass === 'password1') {
       cb({
         authenticated: true,
-        token: Math.random().toString(36).substring(7)
+        token: Math.random().toString(36).substring(7),
+        role: 'USER'
+      })
+    } else if (email === 'merrill@cpath.org' && pass === 'password1') {
+      cb({
+        authenticated: true,
+        token: Math.random().toString(36).substring(7),
+        role: 'DATA_MANAGER'
       })
     } else {
       cb({ authenticated: false })

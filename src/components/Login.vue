@@ -58,7 +58,12 @@
           if (!loggedIn) {
             this.error = true
           } else {
-            this.$router.replace(this.$route.query.redirect || '/dashboard')
+            var user = JSON.parse(localStorage.getItem('user'))
+            if (user.role == "DATA_MANAGER") {
+              this.$router.replace(this.$route.query.redirect || '/datamanager')
+            } else {
+              this.$router.replace(this.$route.query.redirect || '/dashboard')
+            }
           }
         })
       }
