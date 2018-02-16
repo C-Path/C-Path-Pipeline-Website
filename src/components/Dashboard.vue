@@ -6,6 +6,7 @@
         <h3 class="margin-left-1">User Projects</h3>
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect new-project-btn" @click="show">Create New Project</button>
         <div class="margin-bottom-2 margin-left-3">
+          <h5>Click on a Project to Add or View Files</h5>
             <table class="mdl-data-table mdl-shadow--2dp table-width">
                 <thead>
                     <tr>
@@ -42,33 +43,17 @@
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
-               <h3 class="text-align-center">{{projectNameTitle}} Files:</h3>
-                    <table class="mdl-data-table mdl-shadow--2dp margin-left-4 table-width">
-                <thead>
-                    <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Select</th>
-                    <th class="mdl-data-table__cell--non-numeric">File Name</th>
-                    <th class="mdl-data-table__cell--non-numeric">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr  v-for="(file, yindex) in files">
-                        <td class="mdl-data-table__cell--non-numeric">
-                            <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for = "yindex">
-                            <input type = "checkbox" v-model=file.selected :id = "yindex" class = "mdl-checkbox__input">
-                            </label>
-                        </td>
-                        <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
-                        <td class="mdl-data-table__cell--non-numeric">{{file.status}}</td>
-                    </tr>
-                </tbody>
-            </table>
+             <div class="text-align-center">
+               <h3 >{{projectNameTitle}} Files:</h3>
+
+               <a href="https://pipeline.reseqtb.org/#/tnorth/asap/0.5.0/upload">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add / View File</button>
+             </a>
+             </div>
                <br>
 
            </modal>
-           <a href="/fileupload">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add New File</button>
-            </a>
+           
 
         </div>
     </body>
@@ -84,7 +69,7 @@ export default {
     return {
       inputData: "",
       projectNameTitle: "",
-      NewProject: { name: "", active: false },
+      NewProject: { },
       files: [
         { selected: false, name: "SRR_102237_1.fastq", status: "In Progress" },
         {
@@ -95,7 +80,7 @@ export default {
         { selected: false, name: "SRR_3475_1.fastq", status: "Completed" },
         { selected: false, name: "SRR_3475_2.fastq", status: "Rejected" }
       ],
-      projects: [{ name: "" }]
+      projects: []
     };
   },
   mounted() {
