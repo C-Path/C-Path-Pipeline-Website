@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import auth from '@/auth'
 import Dashboard from '@/components/Dashboard';
-import FileUpload from '@/components/FileUpload';
 import JobStatus from '@/components/JobStatus';
 import DataManager from '@/components/DataManager';
 import Login from '@/components/Login'
@@ -16,7 +15,6 @@ const router = new Router({
     {path: '/', redirect: '/login'},
     {path: '/login', name: 'Login', component: Login},
     {path: '/dashboard', name: 'Dashboard', component: Dashboard, beforeEnter: requireAuth},
-    {path: '/fileupload', name: 'FileUpload', component: FileUpload, beforeEnter: requireAuth},
     {path: '/jobstatus', name: 'JobStatus', component: JobStatus, beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: DataManager, beforeEnter: requireAdmin},
     {path: '/logout',
