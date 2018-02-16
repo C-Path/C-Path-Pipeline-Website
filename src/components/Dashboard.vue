@@ -86,7 +86,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      inputData: "",
       projectNameTitle: "",
       NewProject: {},
       projects: []
@@ -109,10 +108,13 @@ export default {
   },
   methods: {
     show() {
-      this.inputData = "";
+      
+      
       this.$modal.show("NewProjectModal");
     },
     hide() {
+      this.NewProject.name = "";
+      this.NewProject.description = "";
       this.$modal.hide("NewProjectModal");
     },
     showFiles: function(nameOfProject, index) {
