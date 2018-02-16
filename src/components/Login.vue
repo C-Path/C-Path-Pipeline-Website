@@ -37,8 +37,7 @@
             <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
           </a>
         </section>
-    </body>
-
+      </body>
     </html>
 </template>
 
@@ -54,12 +53,12 @@
     },
     methods: {
       login () {
-        auth.login(this.username, this.pass, loggedIn => {
+        auth.login(this.username, this.pass, (loggedIn) => {
           if (!loggedIn) {
             this.error = true
           } else {
             var user = JSON.parse(localStorage.getItem('user'))
-            if (user.role == "DATA_MANAGER") {
+            if (auth.isManager()) {
               this.$router.replace(this.$route.query.redirect || '/datamanager')
             } else {
               this.$router.replace(this.$route.query.redirect || '/dashboard')
