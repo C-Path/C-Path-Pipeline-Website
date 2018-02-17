@@ -54,7 +54,7 @@
              <div class="text-align-center">
                <h3 class="text-underline">{{projectNameTitle}}</h3>
 
-               <a href="https://pipeline.reseqtb.org/#/tnorth/asap/0.5.0/upload">
+               <a href="/upload">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add / View File</button>
              </a>
                 <button @click="showDescription()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Edit Description</button>
@@ -108,8 +108,6 @@ export default {
   },
   methods: {
     show() {
-      
-      
       this.$modal.show("NewProjectModal");
     },
     hide() {
