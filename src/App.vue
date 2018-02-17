@@ -24,11 +24,6 @@ export default {
       loggedIn: auth.loggedIn()
     }
   },
-  created () {
-    auth.onChange = loggedIn => {
-      this.loggedIn = loggedIn
-    }
-  }
 }
 </script>
 
