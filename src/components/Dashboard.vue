@@ -64,7 +64,7 @@
                  <h5 class="text-align-center">Enter a Description:</h5>
               <div class="text-align-center">
                 <div class="mdl-textfield mdl-js-textfield">
-                  <textarea class="mdl-textfield__input border-light" type="text" rows= "7" id="sample5" v-model="NewProject.description"></textarea>
+                  <textarea class="mdl-textfield__input border-light" type="text" rows= "7" id="sample5" v-model="description"></textarea>
                   <label class="mdl-textfield__label" for="sample5">Description</label>
                 </div>
                 </br>
@@ -86,8 +86,14 @@ import axios from "axios";
 export default {
   data() {
     return {
+      NewProject: {
+        name: '',
+        description: '',
+        username: this.getCookieValue("username"),
+        active: false,
+      },
       projectNameTitle: "",
-      NewProject: {},
+      description:'',
       projects: []
     };
   },
@@ -100,7 +106,6 @@ export default {
         params: { username: document.cookie.match(new RegExp("username" + '=([^;]+)'))[1] }
       })
       .then(function(response) {
-        console.log("Mount: ", response)
         $vm.projects = response.data;
       })
       .catch(function(error) {
@@ -108,64 +113,48 @@ export default {
       });
   },
   methods: {
+<<<<<<< HEAD
     show() {
+=======
+    show () {
+>>>>>>> :wrench: cleaned file and finished implementaiton
       this.$modal.show("NewProjectModal");
     },
-    hide() {
-      this.NewProject.name = "";
-      this.NewProject.description = "";
+    hide () {
       this.$modal.hide("NewProjectModal");
     },
-    showFiles: function(nameOfProject, index) {
+    showFiles (nameOfProject, index) {
       this.projectNameTitle = nameOfProject;
       this.$modal.show("ProjectFilesModal");
     },
-    showDescription() {
+    showDescription () {
       this.$modal.show("ProjectDescription");
     },
-    hideDescription() {
+    hideDescription () {
       this.$modal.hide("ProjectDescription");
     },
-    addProjectToTable: function(responseProject) {
-      this.projects.push({ active: false, name: responseProject.name, description: responseProject.description });
+    addProjectToTable (responseProject) {
+      this.projects.push(responseProject);
       this.hide();
     },
-    addDescriptionToTable: function() {
-      this.projects.push({ active: false, name: this.NewProject.name, description: this.NewProject.description });
-      this.hideDescription();
+    resetNewProject () {
+      this.NewProject = {
+        name: '',
+        description: '',
+        username: this.getCookieValue("username"),
+        active: false,
+      }
     },
     createNewProject () {
-      let projectData = {
-        username: this.getCookieValue("username"),
-        project: this.NewProject,
-        active: false
-      };
-
       /* TODO: place the url for POST in .envrc */
-      axios.post("http://localhost:3000/projects", projectData).then((res) => {
-        console.log(res)
+      axios.post("http://localhost:3000/projects", this.NewProject).then((res) => {
           this.addProjectToTable(res.data)
+          this.resetNewProject()
       }).catch(function(err) {
         console.log(err)
       })
     },
-    addProjectNameToAPI() {
-      let projectData = {
-        username: this.getCookieValue("username"),
-        project: this.NewProject,
-        active: false
-      };
-
-      axios
-        .post("http://localhost:3000/projects", projectData)
-        .then(function(response) {})
-        .catch(function(error) {
-          console.log(error);
-        });
-      this.addProjectToTable();
-      this.hide();
-    },
-    getCookieValue(a) {
+    getCookieValue (a) {
       var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
       return b ? b.pop() : "";
     }
