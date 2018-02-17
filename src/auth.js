@@ -18,8 +18,10 @@ export default {
         localStorage.token = res.token
         localStorage.setItem('user', JSON.stringify(res.data))
         if (cb) cb(true)
+        this.onChange(true)
       } else {
         if (cb) cb(false)
+        this.onChange(false)
       }
     }).catch(function(err) {
       console.log(err)
@@ -33,6 +35,7 @@ export default {
   logout (cb) {
     delete localStorage.token
     if (cb) cb()
+    this.onChange(false)
   },
 
   loggedIn () {
@@ -42,5 +45,7 @@ export default {
   isManager () {
     var user = JSON.parse(localStorage.getItem('user'))
     return user.role === "DATA_MANAGER"
-  }
+  },
+  
+  onChange () {}
 }
