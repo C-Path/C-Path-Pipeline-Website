@@ -32,7 +32,7 @@
             <!-- New Project Modal -->
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
-              <form action="#">
+              <form @submit.prevent="createNewProject">
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
@@ -43,11 +43,11 @@
                   <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model="NewProject.description"></textarea>
                   </div>
                  </div>
-               </form>
-               <br>
-               <div class="text-align-center margin-bottom-2">
-                   <button v-on:click="addProjectNameToAPI()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
-                </div>
+                 <br>
+                 <div class="text-align-center margin-bottom-2">
+                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Add Project</button>
+                   </div>
+                </form>
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
@@ -100,6 +100,7 @@ export default {
         params: { username: document.cookie.match(new RegExp("username" + '=([^;]+)'))[1] }
       })
       .then(function(response) {
+        console.log("Mount: ", response)
         $vm.projects = response.data;
       })
       .catch(function(error) {
@@ -127,13 +128,28 @@ export default {
     hideDescription() {
       this.$modal.hide("ProjectDescription");
     },
-    addProjectToTable: function() {
-      this.projects.push({ active: false, name: this.NewProject.name, description: this.NewProject.description });
+    addProjectToTable: function(responseProject) {
+      this.projects.push({ active: false, name: responseProject.name, description: responseProject.description });
       this.hide();
     },
     addDescriptionToTable: function() {
       this.projects.push({ active: false, name: this.NewProject.name, description: this.NewProject.description });
       this.hideDescription();
+    },
+    createNewProject () {
+      let projectData = {
+        username: this.getCookieValue("username"),
+        project: this.NewProject,
+        active: false
+      };
+
+      /* TODO: place the url for POST in .envrc */
+      axios.post("http://localhost:3000/projects", projectData).then((res) => {
+        console.log(res)
+          this.addProjectToTable(res.data)
+      }).catch(function(err) {
+        console.log(err)
+      })
     },
     addProjectNameToAPI() {
       let projectData = {
@@ -141,7 +157,7 @@ export default {
         project: this.NewProject,
         active: false
       };
-      /* TODO: place the url for POST in .envrc */
+
       axios
         .post("http://localhost:3000/projects", projectData)
         .then(function(response) {})
