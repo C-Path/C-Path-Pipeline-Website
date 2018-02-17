@@ -45,5 +45,7 @@ export default {
   isManager () {
     var user = JSON.parse(localStorage.getItem('user'))
     return user.role === "DATA_MANAGER"
-  }
+  },
+  
+  onChange () {}
 }
