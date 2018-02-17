@@ -6,6 +6,10 @@ import JobStatus from '@/components/JobStatus';
 import DataManager from '@/components/DataManager';
 import Login from '@/components/Login'
 
+import SequenceFileUpload from '@/pages/tnorth/asap/fileupload/SequenceFileUpload';
+import FileIndex from '@/pages/tnorth/asap/FileIndex';
+import NotFound from '@/pages/NotFound';
+
 
 Vue.use(Router);
 const router = new Router({
@@ -22,7 +26,16 @@ const router = new Router({
         auth.logout()
         next('/')
       }
-  }],
+    },
+    {path: '/upload', component: SequenceFileUpload},
+    {path: '/projects/default', component: FileIndex},
+    {path: '/projects/default/reports/tb', component: () => import('@/pages/tnorth/asap/tb/Summary.vue')},
+    {path: '/projects/default/reports/tb/samples/:id', component: () => import('@/pages/tnorth/asap/tb/Sample.vue'), props: true},
+    {path: 'projects/default/reports/tb/detail', component: () => import('@/pages/tnorth/asap/tb/SummaryDetail.vue')},
+    {path: '/projects/default/reports/tb/samples/:id/detail', component: () => import('@/pages/tnorth/asap/tb/SampleDetail.vue'), props: true},
+    {path: '/404', component: NotFound },
+    {path: '*', redirect: '/404' },
+  ],
 });
 
 export default router
