@@ -28,8 +28,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="margin-left-3">
-            <!-- New Project Modal -->
+        <!-- <div class="margin-left-3">
+
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
               <form @submit.prevent="createNewProject">
@@ -49,7 +49,7 @@
                    </div>
                 </form>
            </modal>
-           <!-- Project Files Modal -->
+
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
              <div class="text-align-center">
                <h3 class="text-underline">{{projectNameTitle}}</h3>
@@ -74,7 +74,7 @@
            </modal>
 
 
-        </div>
+        </div> -->
     </body>
 
     </html>
@@ -118,8 +118,10 @@ export default {
       this.$modal.hide("NewProjectModal");
     },
     showFiles (nameOfProject, index) {
-      this.projectNameTitle = nameOfProject;
-      this.$modal.show("ProjectFilesModal");
+      localStorage.setItem('currentProject', nameOfProject)
+      console.log(nameOfProject)
+      this.$router.replace(this.$route.query.redirect || '/upload')
+      // this.$modal.show("ProjectFilesModal");
     },
     showDescription () {
       this.$modal.show("ProjectDescription");

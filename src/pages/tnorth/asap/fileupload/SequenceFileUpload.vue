@@ -70,7 +70,7 @@ section
   //- The fileupload-buttonbar contains buttons to add/delete files
       and start/cancel the upload
   section.container
-
+    h1 {{currentProject}}
     div.btn-group(role="group" aria-label="File Upload Controls")
       //- The fileinput-button span is used to style the file input field as button
       button.btn.btn-outline-primary.fileinput-button(type="button")
@@ -140,7 +140,7 @@ section
               span.col-auto.text-nowrap 10:00:59
               div.col
                 div.progress
-                  div.progress-bar(role="progressbar" v-bind:style="{width: sample.progress+ '%'}" v-bind:aria-valuenow="sample.progress + '%'" aria-valuemin="0" aria-valuemax="100") ({{sample.size}} bytes) {{sample.progress}}% 
+                  div.progress-bar(role="progressbar" v-bind:style="{width: sample.progress+ '%'}" v-bind:aria-valuenow="sample.progress + '%'" aria-valuemin="0" aria-valuemax="100") ({{sample.size}} bytes) {{sample.progress}}%
         div.card-footer.text-muted
           a(href="https://samtools.github.io/hts-specs/SAMv1.pdf") Sequence Alignment/Map Format Specification
 
@@ -183,6 +183,7 @@ export default {
       pairedEndReads: [],
       singleEndReads: [],
       unmatchedReads: [],
+      currentProject: localStorage.getItem('currentProject')
     };
   },
   beforeDestroy() {

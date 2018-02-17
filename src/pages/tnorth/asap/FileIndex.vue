@@ -11,7 +11,7 @@ table.table
       th Completed At
   tbody
     tr(v-for="(run, index) in files" @click="$router.push(`/tnorth/asap/0.5.0/projects/default/reports/tb/samples/${run.Xml}`)")
-      td {{ run.Fastq.ProjectName }}
+      td {{ currentProject }}
       td {{ run.Fastq.SampleName }}
       td {{ run.Fastq.R1.LastModified | formatDate }}
       //- td {{ run.Fastq.R1.CreatedAt | formatDate }}
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       files: [],
+      currentProject: localStorage.getItem('currentProject')
     };
   },
   mounted() {
@@ -55,18 +56,20 @@ export default {
   },
   methods: {
     loadData() {
-      console.log('loadData', this.endpoint, this.interval);
-      axios
-        .get(this.endpoint)
-        .then(response => {
-          // TODO: document the expected response.
-          // eslint-disable-next-line no-param-reassign
-          this.files = response.data;
-        })
-        .catch(err => {
-          console.log(err);
-          throw err;
-        });
+      /* TODO: hit the database and pull in file names to display*/
+      console.log('Loaded with: ', localStorage.getItem('currentProject'))
+    //   console.log('loadData', this.endpoint, this.interval);
+    //   axios
+    //     .get(this.endpoint)
+    //     .then(response => {
+    //       // TODO: document the expected response.
+    //       // eslint-disable-next-line no-param-reassign
+    //       this.files = response.data;
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //       throw err;
+    //     });
     },
   },
 };
