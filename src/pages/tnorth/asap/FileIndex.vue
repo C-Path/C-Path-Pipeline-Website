@@ -11,7 +11,7 @@ table.table
       th Completed At
   tbody
     tr(v-for="(run, index) in files" @click="$router.push(`/tnorth/asap/0.5.0/projects/default/reports/tb/samples/${run.Xml}`)")
-      td {{ run.Fastq.ProjectName }}
+      td {{ currentProject }}
       td {{ run.Fastq.SampleName }}
       td {{ run.Fastq.R1.LastModified | formatDate }}
       //- td {{ run.Fastq.R1.CreatedAt | formatDate }}
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       files: [],
-      currentProject: 'ERROR'
+      currentProject: localStorage.getItem('currentProject')
     };
   },
   mounted() {
