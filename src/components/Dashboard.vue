@@ -99,11 +99,10 @@ export default {
   },
   mounted() {
     var $vm = this;
-    /* For testing purposes, later this will include the person actually signed in: */
-    document.cookie = "username=isaac@cpath.org;"
+
     axios
       .get("http://localhost:3000/projects", {
-        params: { username: document.cookie.match(new RegExp("username" + '=([^;]+)'))[1] }
+        params: { username: this.getCookieValue("username")}
       })
       .then(function(response) {
         $vm.projects = response.data;
