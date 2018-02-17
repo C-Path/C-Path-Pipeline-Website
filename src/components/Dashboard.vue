@@ -99,10 +99,9 @@ export default {
   },
   mounted() {
     var $vm = this;
-
     axios
       .get("http://localhost:3000/projects", {
-        params: { username: this.getCookieValue("username")}
+        params: { username: this.getCookieValue("username") }
       })
       .then(function(response) {
         $vm.projects = response.data;
@@ -112,11 +111,7 @@ export default {
       });
   },
   methods: {
-<<<<<<< HEAD
     show() {
-=======
-    show () {
->>>>>>> :wrench: cleaned file and finished implementaiton
       this.$modal.show("NewProjectModal");
     },
     hide () {
