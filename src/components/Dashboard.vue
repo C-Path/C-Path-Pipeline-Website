@@ -37,7 +37,7 @@
                     <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
                     </br>
-                    
+
                     <div class="mdl-textfield mdl-js-textfield">
                       <p>Description:</p>
                   <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model="NewProject.description"></textarea>
@@ -72,7 +72,7 @@
               </div>
               </modal>
            </modal>
-           
+
 
         </div>
     </body>
@@ -136,7 +136,7 @@ export default {
     addProjectNameToAPI() {
       let projectData = {
         username: this.getCookieValue("username"),
-        name: this.NewProject.name,
+        project: this.NewProject,
         active: false
       };
       /* TODO: place the url for POST in .envrc */
