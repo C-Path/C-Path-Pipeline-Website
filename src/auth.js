@@ -46,6 +46,11 @@ export default {
     var user = JSON.parse(localStorage.getItem('user'))
     return user.role === "DATA_MANAGER"
   },
+<<<<<<< HEAD
   
   onChange () {}
+=======
+
+  onChange() {}
+>>>>>>> saving comments and file name working
 }
