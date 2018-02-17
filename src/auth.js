@@ -17,6 +17,8 @@ export default {
       if (res.data.authenticated) {
         localStorage.token = res.token
         localStorage.setItem('user', JSON.stringify(res.data))
+
+        document.cookie = "username=" + JSON.parse(localStorage.getItem('user')).username
         if (cb) cb(true)
         this.onChange(true)
       } else {
@@ -46,6 +48,6 @@ export default {
     var user = JSON.parse(localStorage.getItem('user'))
     return user.role === "DATA_MANAGER"
   },
-  
+
   onChange () {}
 }

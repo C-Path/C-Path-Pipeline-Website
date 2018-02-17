@@ -32,22 +32,22 @@
             <!-- New Project Modal -->
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
-              <form action="#">
+              <form @submit.prevent="createNewProject">
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
                     </br>
-                    
+
                     <div class="mdl-textfield mdl-js-textfield">
                       <p>Description:</p>
                   <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model="NewProject.description"></textarea>
                   </div>
                  </div>
-               </form>
-               <br>
-               <div class="text-align-center margin-bottom-2">
-                   <button v-on:click="addProjectNameToAPI()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Add Project</button>
-                </div>
+                 <br>
+                 <div class="text-align-center margin-bottom-2">
+                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Add Project</button>
+                   </div>
+                </form>
            </modal>
            <!-- Project Files Modal -->
            <modal name="ProjectFilesModal" height="auto" :scrollable="true">
@@ -64,7 +64,7 @@
                  <h5 class="text-align-center">Enter a Description:</h5>
               <div class="text-align-center">
                 <div class="mdl-textfield mdl-js-textfield">
-                  <textarea class="mdl-textfield__input border-light" type="text" rows= "7" id="sample5" v-model="NewProject.description"></textarea>
+                  <textarea class="mdl-textfield__input border-light" type="text" rows= "7" id="sample5" v-model="description"></textarea>
                   <label class="mdl-textfield__label" for="sample5">Description</label>
                 </div>
                 </br>
@@ -72,7 +72,7 @@
               </div>
               </modal>
            </modal>
-           
+
 
         </div>
     </body>
@@ -86,18 +86,22 @@ import axios from "axios";
 export default {
   data() {
     return {
+      NewProject: {
+        name: '',
+        description: '',
+        username: this.getCookieValue("username"),
+        active: false,
+      },
       projectNameTitle: "",
-      NewProject: {},
+      description:'',
       projects: []
     };
   },
   mounted() {
     var $vm = this;
-    /* For testing purposes, later this will include the person actually signed in: */
-    document.cookie = "username=isaac@cpath.org;"
     axios
       .get("http://localhost:3000/projects", {
-        params: { username: document.cookie.match(new RegExp("username" + '=([^;]+)'))[1] }
+        params: { username: this.getCookieValue("username") }
       })
       .then(function(response) {
         $vm.projects = response.data;
@@ -110,46 +114,41 @@ export default {
     show() {
       this.$modal.show("NewProjectModal");
     },
-    hide() {
-      this.NewProject.name = "";
-      this.NewProject.description = "";
+    hide () {
       this.$modal.hide("NewProjectModal");
     },
-    showFiles: function(nameOfProject, index) {
+    showFiles (nameOfProject, index) {
       this.projectNameTitle = nameOfProject;
       this.$modal.show("ProjectFilesModal");
     },
-    showDescription() {
+    showDescription () {
       this.$modal.show("ProjectDescription");
     },
-    hideDescription() {
+    hideDescription () {
       this.$modal.hide("ProjectDescription");
     },
-    addProjectToTable: function() {
-      this.projects.push({ active: false, name: this.NewProject.name, description: this.NewProject.description });
+    addProjectToTable (responseProject) {
+      this.projects.push(responseProject);
       this.hide();
     },
-    addDescriptionToTable: function() {
-      this.projects.push({ active: false, name: this.NewProject.name, description: this.NewProject.description });
-      this.hideDescription();
-    },
-    addProjectNameToAPI() {
-      let projectData = {
+    resetNewProject () {
+      this.NewProject = {
+        name: '',
+        description: '',
         username: this.getCookieValue("username"),
-        name: this.NewProject.name,
-        active: false
-      };
-      /* TODO: place the url for POST in .envrc */
-      axios
-        .post("http://localhost:3000/projects", projectData)
-        .then(function(response) {})
-        .catch(function(error) {
-          console.log(error);
-        });
-      this.addProjectToTable();
-      this.hide();
+        active: false,
+      }
     },
-    getCookieValue(a) {
+    createNewProject () {
+      /* TODO: place the url for POST in .envrc */
+      axios.post("http://localhost:3000/projects", this.NewProject).then((res) => {
+          this.addProjectToTable(res.data)
+          this.resetNewProject()
+      }).catch(function(err) {
+        console.log(err)
+      })
+    },
+    getCookieValue (a) {
       var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
       return b ? b.pop() : "";
     }
