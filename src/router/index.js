@@ -21,20 +21,20 @@ const router = new Router({
     {path: '/dashboard', name: 'Dashboard', component: Dashboard, beforeEnter: requireAuth},
     {path: '/jobstatus', name: 'JobStatus', component: JobStatus, beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: DataManager, beforeEnter: requireAdmin},
+    {path: '/upload', component: SequenceFileUpload, beforeEnter: requireAuth},
+    {path: '/projects/default', component: FileIndex, beforeEnter: requireAuth},
+    {path: '/projects/default/reports/tb', component: () => import('@/pages/tnorth/asap/tb/Summary.vue'), beforeEnter: requireAuth},
+    {path: '/projects/default/reports/tb/samples/:id', component: () => import('@/pages/tnorth/asap/tb/Sample.vue'), props: true, beforeEnter: requireAuth},
+    {path: 'projects/default/reports/tb/detail', component: () => import('@/pages/tnorth/asap/tb/SummaryDetail.vue'), beforeEnter: requireAuth},
+    {path: '/projects/default/reports/tb/samples/:id/detail', component: () => import('@/pages/tnorth/asap/tb/SampleDetail.vue'), props: true, beforeEnter: requireAuth},
+    {path: '/404', component: NotFound },
+    {path: '*', redirect: '/404' },
     {path: '/logout',
       beforeEnter (to, from, next) {
         auth.logout()
         next('/')
       }
     },
-    {path: '/upload', component: SequenceFileUpload},
-    {path: '/projects/default', component: FileIndex},
-    {path: '/projects/default/reports/tb', component: () => import('@/pages/tnorth/asap/tb/Summary.vue')},
-    {path: '/projects/default/reports/tb/samples/:id', component: () => import('@/pages/tnorth/asap/tb/Sample.vue'), props: true},
-    {path: 'projects/default/reports/tb/detail', component: () => import('@/pages/tnorth/asap/tb/SummaryDetail.vue')},
-    {path: '/projects/default/reports/tb/samples/:id/detail', component: () => import('@/pages/tnorth/asap/tb/SampleDetail.vue'), props: true},
-    {path: '/404', component: NotFound },
-    {path: '*', redirect: '/404' },
   ],
 });
 
