@@ -28,7 +28,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- <div class="margin-left-3">
+        <div class="margin-left-3">
 
             <modal name="NewProjectModal" height="auto" :scrollable="true">
                <h3 class="text-align-center">Create New Project</h3>
@@ -50,7 +50,7 @@
                 </form>
            </modal>
 
-           <modal name="ProjectFilesModal" height="auto" :scrollable="true">
+          <!--  <modal name="ProjectFilesModal" height="auto" :scrollable="true">
              <div class="text-align-center">
                <h3 class="text-underline">{{projectNameTitle}}</h3>
 
@@ -71,10 +71,10 @@
                 <button @click="hideDescription()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-bottom-2">Submit</button>
               </div>
               </modal>
-           </modal>
+           </modal> -->
 
 
-        </div> -->
+        </div>
     </body>
 
     </html>
