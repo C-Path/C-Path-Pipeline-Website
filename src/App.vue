@@ -16,20 +16,34 @@
 </template>
 
 <script>
-import auth from './auth'
+import auth from "./auth";
+import axios from "axios";
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
       loggedIn: auth.loggedIn()
-    }
+    };
   },
-  created () {
+  created() {
     auth.onChange = loggedIn => {
-      this.loggedIn = loggedIn
-    }
+      this.loggedIn = loggedIn;
+    };
+    var minutes = 60,
+      the_interval = minutes * 60 * 1000;
+    setInterval(function() {
+      console.log("I am doing my 60 minute check");
+      axios
+        .delete("http://localhost:3000/files")
+        .then(function(response) {
+          console.log("deleted files successfully: ", response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }, the_interval);
   }
-}
+};
 </script>
 
 <style>
