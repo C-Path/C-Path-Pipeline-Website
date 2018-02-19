@@ -35,12 +35,12 @@
               <form @submit.prevent="createNewProject">
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>
-                    <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model="NewProject.name" required>
+                    <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model.trim="NewProject.name" required>
                     </br>
 
                     <div class="mdl-textfield mdl-js-textfield">
                       <p>Description:</p>
-                  <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model="NewProject.description"></textarea>
+                  <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model.trim="NewProject.description"></textarea>
                   </div>
                  </div>
                  <br>
