@@ -29,10 +29,12 @@
             </table>
         </div>
         <div class="margin-left-3">
-
             <modal name="NewProjectModal" height="auto" :scrollable="true">
+          <v-dialog/>
+              
                <h3 class="text-align-center">Create New Project</h3>
               <form @submit.prevent="createNewProject">
+                
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model.trim="NewProject.name" required>
@@ -87,13 +89,13 @@ export default {
   data() {
     return {
       NewProject: {
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         username: this.getCookieValue("username"),
-        active: false,
+        active: false
       },
       projectNameTitle: "",
-      description:'',
+      description: "",
       projects: []
     };
   },
@@ -114,43 +116,69 @@ export default {
     show() {
       this.$modal.show("NewProjectModal");
     },
-    hide () {
-      this.$modal.hide("NewProjectModal");
+    showAlert() {
+      this.$modal.show("dialog", {
+        title: '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
+        text: '<p style="text-align:center;">Please enter a different project name.</p>',
+        buttons: [
+          {
+            title: "Close", // Button title
+            default: true, // Will be triggered by default if 'Enter' pressed.
+           
+          },
+        ]
+      });
     },
-    showFiles (nameOfProject, index) {
-      localStorage.setItem('currentProject', nameOfProject)
-      console.log(nameOfProject)
-      this.$router.replace(this.$route.query.redirect || '/upload')
+    showFiles(nameOfProject, index) {
+      localStorage.setItem("currentProject", nameOfProject);
+      console.log(nameOfProject);
+      this.$router.replace(this.$route.query.redirect || "/upload");
       // this.$modal.show("ProjectFilesModal");
     },
-    showDescription () {
+    showDescription() {
       this.$modal.show("ProjectDescription");
     },
-    hideDescription () {
+    hideDescription() {
       this.$modal.hide("ProjectDescription");
     },
-    addProjectToTable (responseProject) {
+    addProjectToTable(responseProject) {
       this.projects.push(responseProject);
       this.hide();
     },
-    resetNewProject () {
+    resetNewProject() {
       this.NewProject = {
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         username: this.getCookieValue("username"),
-        active: false,
+        active: false
+      };
+    },
+    createNewProject() {
+      if (this.isExistingProject()) {
+        this.showAlert();
+      } else {
+        /* TODO: place the url for POST in .envrc */
+        console.log(this.projects);
+        axios
+          .post("http://localhost:3000/projects", this.NewProject)
+          .then(res => {
+            this.addProjectToTable(res.data);
+            this.resetNewProject();
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       }
     },
-    createNewProject () {
-      /* TODO: place the url for POST in .envrc */
-      axios.post("http://localhost:3000/projects", this.NewProject).then((res) => {
-          this.addProjectToTable(res.data)
-          this.resetNewProject()
-      }).catch(function(err) {
-        console.log(err)
-      })
+    isExistingProject() {
+      for (var i = 0; i < this.NewProject.length; i++) {
+        if (this.projects[i].name !== this.NewProject.name) {
+          return false;
+        }
+      }
+      return true;
     },
-    getCookieValue (a) {
+    getCookieValue(a) {
       var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
       return b ? b.pop() : "";
     }
