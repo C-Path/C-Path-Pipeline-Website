@@ -54,31 +54,6 @@
                    </div>
                 </form>
            </modal>
-
-          <!--  <modal name="ProjectFilesModal" height="auto" :scrollable="true">
-             <div class="text-align-center">
-               <h3 class="text-underline">{{projectNameTitle}}</h3>
-
-               <a href="/upload">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Add / View File</button>
-             </a>
-                <button @click="showDescription()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-right-2">Edit Description</button>
-             </div>
-               <br>
-               <modal name="ProjectDescription" height="auto" :scrollable="true">
-                 <h5 class="text-align-center">Enter a Description:</h5>
-              <div class="text-align-center">
-                <div class="mdl-textfield mdl-js-textfield">
-                  <textarea class="mdl-textfield__input border-light" type="text" rows= "7" id="sample5" v-model="description"></textarea>
-                  <label class="mdl-textfield__label" for="sample5">Description</label>
-                </div>
-                </br>
-                <button @click="hideDescription()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-bottom-2">Submit</button>
-              </div>
-              </modal>
-           </modal> -->
-
-
         </div>
     </body>
 
@@ -95,7 +70,7 @@ export default {
       NewProject: {
         name: '',
         description: '',
-        username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
         active: false,
       },
       projectNameTitle: "",
@@ -110,7 +85,7 @@ export default {
       .get("http://localhost:3000/projects", {
         params: {
           token:  localStorage.getItem('token'),
-          username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username
+          username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username
         }
       })
       .then(function(res) {
@@ -135,7 +110,6 @@ export default {
           {
             title: "Close", // Button title
             default: true, // Will be triggered by default if 'Enter' pressed.
-
           },
         ]
       });
@@ -143,7 +117,6 @@ export default {
     showFiles (nameOfProject, index) {
       localStorage.setItem('currentProject', nameOfProject)
       this.$router.replace(this.$route.query.redirect || '/upload')
-      // this.$modal.show("ProjectFilesModal");
     },
     showDescription() {
       this.$modal.show("ProjectDescription");
@@ -159,7 +132,7 @@ export default {
       this.NewProject = {
         name: '',
         description: '',
-        username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
         active: false,
       }
     },
@@ -173,11 +146,6 @@ export default {
         console.log(err)
       })
     },
-    parseJwt (token) {
-      var base64Url = token.split('.')[1];
-      var base64 = base64Url.replace('-', '+').replace('_', '/');
-      return JSON.parse(window.atob(base64));
-    }
   }
 };
 </script>
