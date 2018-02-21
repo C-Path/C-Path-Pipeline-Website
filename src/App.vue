@@ -8,8 +8,8 @@
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
       </a>
       <a href="/dashboard" v-if="loggedIn">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button> 
-        </a>                   
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
+        </a>
     </div>
     <template v-if="$route.matched.length">
       <router-view></router-view>
@@ -47,22 +47,26 @@ export default {
   },
   methods: {
     showAlert() {
-      this.$modal.show("dialog", {
-        title: '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
-        text: '<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>',
-        buttons: [
-          {
-            title: "Log Out",
-            handler: () => {window.location = "/logout"; }
-          
-          },
-          {
-            title: "Cancel", // Button title
-            default: true, // Will be triggered by default if 'Enter' pressed.
-           
-          },
-        ]
-      });
+      if (auth.parseJwt(JSON.parse(localStorage.getItem('token'))).role != "DATA_MANAGER") {
+        this.$modal.show("dialog", {
+          title: '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
+          text: '<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>',
+          buttons: [
+            {
+              title: "Log Out",
+              handler: () => {window.location = "/logout"; }
+
+            },
+            {
+              title: "Cancel", // Button title
+              default: true, // Will be triggered by default if 'Enter' pressed.
+
+            },
+          ]
+        });
+      } else {
+        window.location = "/logout";
+      }
     },
   }
 };
