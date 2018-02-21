@@ -8,7 +8,7 @@ const router = new Router({
   base: __dirname,
   routes: [
     {path: '/', redirect: '/login'},
-    {path: '/login', name: 'Login', component: () => import('@/components/Login')},
+    {path: '/login', name: 'Login', component: () => import('@/components/Login'), beforeEnter: checkToken},
     {path: '/dashboard', name: 'Dashboard', component: () => import('@/components/Dashboard'), beforeEnter: requireAuth},
     {path: '/jobstatus', name: 'JobStatus', component: () => import('@/components/JobStatus'), beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: () => import('@/components/DataManager'), beforeEnter: requireAdmin},
@@ -28,6 +28,24 @@ const router = new Router({
     },
   ],
 });
+
+function checkToken (to, from, next) {
+  if (auth.loggedIn()) {
+    if (auth.isManager()) {
+      next({
+        path: '/datamanager',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next({
+        path: '/dashboard',
+        query: { redirect: to.fullPath }
+      })
+    }
+  } else {
+    next()
+  }
+}
 
 function requireAuth (to, from, next) {
   if (!auth.loggedIn()) {
