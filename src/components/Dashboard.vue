@@ -31,10 +31,10 @@
         <div class="margin-left-3">
             <modal name="NewProjectModal" height="auto" :scrollable="true">
           <v-dialog/>
-              
+
                <h3 class="text-align-center">Create New Project</h3>
               <form @submit.prevent="createNewProject">
-                
+
                 <div class="text-align-center">
                     <label for="projectName">Project Name:</label>
                     <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model.trim="NewProject.name" required>
@@ -84,15 +84,16 @@
 
 <script>
 import axios from "axios";
+import auth from "../auth.js"
 
 export default {
   data() {
     return {
       NewProject: {
-        name: "",
-        description: "",
-        username: this.getCookieValue("username"),
-        active: false
+        name: '',
+        description: '',
+        username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        active: false,
       },
       projectNameTitle: "",
       description: "",
@@ -101,12 +102,16 @@ export default {
   },
   mounted() {
     var $vm = this;
+
     axios
       .get("http://localhost:3000/projects", {
-        params: { username: this.getCookieValue("username") }
+        params: {
+          token:  localStorage.getItem('token'),
+          username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username
+        }
       })
-      .then(function(response) {
-        $vm.projects = response.data;
+      .then(function(res) {
+        $vm.projects = res.data;
       })
       .catch(function(error) {
         console.log(error);
@@ -116,6 +121,9 @@ export default {
     show() {
       this.$modal.show("NewProjectModal");
     },
+    hide () {
+      this.$modal.hide('NewProjectModal');
+    },
     showAlert() {
       this.$modal.show("dialog", {
         title: '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
@@ -124,15 +132,14 @@ export default {
           {
             title: "Close", // Button title
             default: true, // Will be triggered by default if 'Enter' pressed.
-           
+
           },
         ]
       });
     },
-    showFiles(nameOfProject, index) {
-      localStorage.setItem("currentProject", nameOfProject);
-      console.log(nameOfProject);
-      this.$router.replace(this.$route.query.redirect || "/upload");
+    showFiles (nameOfProject, index) {
+      localStorage.setItem('currentProject', nameOfProject)
+      this.$router.replace(this.$route.query.redirect || '/upload')
       // this.$modal.show("ProjectFilesModal");
     },
     showDescription() {
@@ -147,40 +154,26 @@ export default {
     },
     resetNewProject() {
       this.NewProject = {
-        name: "",
-        description: "",
-        username: this.getCookieValue("username"),
-        active: false
-      };
-    },
-    createNewProject() {
-      if (this.isExistingProject()) {
-        this.showAlert();
-      } else {
-        /* TODO: place the url for POST in .envrc */
-        console.log(this.projects);
-        axios
-          .post("http://localhost:3000/projects", this.NewProject)
-          .then(res => {
-            this.addProjectToTable(res.data);
-            this.resetNewProject();
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
+        name: '',
+        description: '',
+        username: this.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        active: false,
       }
     },
-    isExistingProject() {
-      for (var i = 0; i < this.NewProject.length; i++) {
-        if (this.projects[i].name !== this.NewProject.name) {
-          return false;
-        }
-      }
-      return true;
+    createNewProject () {
+      /* TODO: place the url for POST in .envrc */
+      var tokenParam = "?token=" + localStorage.getItem('token')
+      axios.post("http://localhost:3000/projects" + tokenParam, this.NewProject).then((res) => {
+          this.addProjectToTable(res.data)
+          this.resetNewProject()
+      }).catch(function(err) {
+        console.log(err)
+      })
     },
-    getCookieValue(a) {
-      var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
-      return b ? b.pop() : "";
+    parseJwt (token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace('-', '+').replace('_', '/');
+      return JSON.parse(window.atob(base64));
     }
   }
 };

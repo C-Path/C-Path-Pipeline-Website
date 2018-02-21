@@ -57,7 +57,6 @@
           if (!loggedIn) {
             this.error = true
           } else {
-            var user = JSON.parse(localStorage.getItem('user'))
             if (auth.isManager()) {
               this.$router.replace(this.$route.query.redirect || '/datamanager')
             } else {
