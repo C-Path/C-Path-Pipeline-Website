@@ -3,6 +3,9 @@
     <head>
     </head>
     <body>
+      <h4 class="margin-left-1 error" v-if="$route.query.redirect">
+        404: Url not found, redirected to /datamanager
+      </h4>
       <h3 class="margin-left-3">Data Manager</h3>
       <table class="align-center mdl-data-table mdl-shadow--2dp">
         <tr>
