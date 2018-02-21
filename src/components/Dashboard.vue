@@ -3,7 +3,7 @@
     <head>
     </head>
     <body>
-      <h4 class="margin-left-1 error" v-if="$route.query.redirect">
+      <h4 class="margin-left-1 error" v-if="$route.query.redirect && $route.query.redirect != '/login'"">
         404: Url not found, redirected to /dashboard
       </h4>
         <h3 class="margin-left-1">User Projects</h3>
