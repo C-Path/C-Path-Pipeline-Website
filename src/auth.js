@@ -15,10 +15,8 @@ export default {
     }
     axios.post("http://localhost:3000/authenticate", userData).then((res) => {
       if (res.data.authenticated) {
-        localStorage.token = res.token
-        localStorage.setItem('user', JSON.stringify(res.data))
+        localStorage.setItem('token', JSON.stringify(res.data.token))
 
-        document.cookie = "username=" + JSON.parse(localStorage.getItem('user')).username
         if (cb) cb(true)
         this.onChange(true)
       } else {
@@ -45,8 +43,13 @@ export default {
   },
 
   isManager () {
-    var user = JSON.parse(localStorage.getItem('user'))
+    var user = this.parseJwt(JSON.parse(localStorage.getItem('token')))
     return user.role === "DATA_MANAGER"
+  },
+  parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   },
 
   onChange () {}

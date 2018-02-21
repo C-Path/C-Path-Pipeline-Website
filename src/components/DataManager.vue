@@ -38,8 +38,9 @@ export default {
   },
 mounted() {
   var $vm = this;
+  var tokenParam = "?token=" + localStorage.getItem('token')
     axios
-      .get("http://localhost:3000/files")
+      .get("http://localhost:3000/files" + tokenParam)
       .then(function(response) {
         $vm.files = response.data;
       })
