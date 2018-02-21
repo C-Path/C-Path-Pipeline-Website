@@ -2,9 +2,11 @@
   <div id="app">
     <div class="header">
       <img src="../static/images/ReSeqTB.png" alt="c-path logo">
-      <router-link v-if="loggedIn" to="/logout">
+      <!-- <router-link v-if="loggedIn" to="/logout"> -->
+      <v-dialog/>
+      <a @click="showAlert" v-if="loggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
-      </router-link>
+      </a>
       <a href="/dashboard" v-if="loggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button> 
         </a>                   
@@ -42,6 +44,26 @@ export default {
           console.log(error);
         });
     }, the_interval);
+  },
+  methods: {
+    showAlert() {
+      this.$modal.show("dialog", {
+        title: '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
+        text: '<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>',
+        buttons: [
+          {
+            title: "Log Out",
+            handler: () => {window.location = "/logout"; }
+          
+          },
+          {
+            title: "Cancel", // Button title
+            default: true, // Will be triggered by default if 'Enter' pressed.
+           
+          },
+        ]
+      });
+    },
   }
 };
 </script>
@@ -56,5 +78,9 @@ export default {
 .header {
   padding: 2em;
   background-color: grey;
+}
+
+.vue-dialog-button:hover {
+  background-color: #eee;
 }
 </style>
