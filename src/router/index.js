@@ -19,7 +19,7 @@ const router = new Router({
     {path: 'projects/default/reports/tb/detail', component: () => import('@/pages/tnorth/asap/tb/SummaryDetail.vue'), beforeEnter: requireAuth},
     {path: '/projects/default/reports/tb/samples/:id/detail', component: () => import('@/pages/tnorth/asap/tb/SampleDetail.vue'), props: true, beforeEnter: requireAuth},
     {path: '/404', component: () => import('@/pages/NotFound')},
-    {path: '*', redirect: '/404' },
+    {path: '*', beforeEnter: redirectUser },
     {path: '/logout',
       beforeEnter (to, from, next) {
         auth.logout()
@@ -55,6 +55,21 @@ function requireAdmin (to, from, next) {
     } else {
       next()
     }
+  }
+}
+
+function redirectUser (to, from, next) {
+    var user = auth.parseJwt(JSON.parse(localStorage.getItem('token')))
+  if (auth.isManager()) {
+    next({
+      path: '/datamanager',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next({
+      path: '/dashboard',
+      query: { redirect: to.fullPath }
+    })
   }
 }
 

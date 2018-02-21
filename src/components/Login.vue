@@ -70,10 +70,6 @@
 </script>
 
 <style>
-  .error {
-    color: red;
-  }
-
   .account-services {
     padding: 4em;
   }
