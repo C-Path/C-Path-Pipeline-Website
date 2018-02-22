@@ -7,7 +7,7 @@
       <a @click="showAlert" v-if="loggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
       </a>
-      <a href="/dashboard" v-if="loggedIn">
+      <a href="/dashboard" v-if="isUserLoggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
         </a>
     </div>
@@ -24,12 +24,14 @@ export default {
   name: "app",
   data() {
     return {
-      loggedIn: auth.loggedIn()
+      loggedIn: auth.loggedIn(),
+      isUserLoggedIn: this.isUser()
     };
   },
   created() {
-    auth.onChange = loggedIn => {
+    auth.onChange = (loggedIn, isUserLoggedIn) => {
       this.loggedIn = loggedIn;
+      this.isUserLoggedIn = this.isUser()
     };
     var minutes = 60,
       the_interval = minutes * 60 * 1000;
@@ -68,6 +70,14 @@ export default {
         window.location = "/logout";
       }
     },
+    isUser() {
+      if (localStorage.getItem('token') != null) {
+        var userRole = auth.parseJwt(JSON.parse(localStorage.getItem('token'))).role
+        return (userRole != "DATA_MANAGER")
+      } else {
+        return false
+      }
+    }
   }
 };
 </script>
