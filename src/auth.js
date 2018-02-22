@@ -29,7 +29,11 @@ export default {
   },
 
   getToken () {
-    return localStorage.token
+    return JSON.parse(localStorage.getItem('token'))
+  },
+
+  getUsername () {
+    return this.parseJwt(JSON.parse(localStorage.getItem('token'))).username
   },
 
   logout (cb) {
