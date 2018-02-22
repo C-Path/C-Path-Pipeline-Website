@@ -70,7 +70,7 @@ export default {
       NewProject: {
         name: '',
         description: '',
-        username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        username: auth.getUsername(),
         active: false,
       },
       projectNameTitle: "",
@@ -80,12 +80,11 @@ export default {
   },
   mounted() {
     var $vm = this;
-
     axios
       .get("http://localhost:3000/projects", {
         params: {
-          token:  localStorage.getItem('token'),
-          username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username
+          token: auth.getToken(),
+          username: auth.getUsername()
         }
       })
       .then(function(res) {
@@ -132,13 +131,13 @@ export default {
       this.NewProject = {
         name: '',
         description: '',
-        username: auth.parseJwt(JSON.parse(localStorage.getItem('token'))).username,
+        username: auth.getUsername(),
         active: false,
       }
     },
     createNewProject () {
       /* TODO: place the url for POST in .envrc */
-      var tokenParam = "?token=" + localStorage.getItem('token')
+      var tokenParam = "?token=" + auth.getToken()
       axios.post("http://localhost:3000/projects" + tokenParam, this.NewProject).then((res) => {
           this.addProjectToTable(res.data)
           this.resetNewProject()
