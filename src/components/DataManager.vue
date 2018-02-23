@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios';
+import auth from '../auth.js'
 export default {
   methods: {
 
@@ -41,12 +42,14 @@ export default {
   },
 mounted() {
   var $vm = this;
-  var tokenParam = "?token=" + localStorage.getItem('token')
-    axios
-      .get("http://localhost:3000/files" + tokenParam)
-      .then(function(response) {
+  var tokenParam = "?token=" + auth.getToken()
+  
+    axios.get("http://localhost:3000/files" + tokenParam).then(function(response) {
+      if (response.data.message === undefined) {
         $vm.files = response.data;
-      })
+      } else {
+        console.log(response.data.message)
+      }})
       .catch(function(error) {
         console.log(error);
       });
