@@ -12,7 +12,7 @@ div.progress-bar-container(v-bind:class="{'text-danger': !!errorMessage}")
     div.col(v-text="upload.file.name")
     div.col
       button.btn(type="button" v-on:click="upload.start()" v-bind:class="{'btn-outline-primary': !isSuccess, 'btn-success': isSuccess}")
-        span {{progressPercent}} ({{bytesUploaded}} / {{bytesTotal}})
+        span.font-size-1-5 {{progressPercent}} ({{bytesUploaded}} / {{bytesTotal}})
     //-
       div.col(v-if="checksum")
         //- TODO: display the checksum if available
@@ -149,6 +149,10 @@ the following position combination:
   left: 0;
   height: 100%;
   background-color: lightblue;
+}
+
+.font-size-1-5 {
+  font-size: 1.5rem;
 }
 
 .progress-bar-content {

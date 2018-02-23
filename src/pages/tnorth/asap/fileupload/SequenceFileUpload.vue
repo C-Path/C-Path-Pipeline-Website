@@ -70,8 +70,8 @@ section
   //- The fileupload-buttonbar contains buttons to add/delete files
       and start/cancel the upload
   section.container
-    h1.project-name.font-weight-300 {{currentProject}}
-    h4.font-weight-300 Select the pipeline you would like to upload files to:
+    h1.project-name.font-weight-200.font-size-5 {{currentProject}}
+    h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
     div.font-size-1-5.font-weight-300
       label.margin-1.margin-right-2.font-weight-300
         input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
@@ -82,12 +82,12 @@ section
 
     div.btn-group(role="group" aria-label="File Upload Controls")
       //- The fileinput-button span is used to style the file input field as button
-      button.btn.btn-outline-primary.fileinput-button(type="button")
+      button.btn.btn-outline-primary.fileinput-button.font-weight-250(type="button")
         i.fa.fa-plus(aria-hidden="true")
         span Add files...
         //- input(type="file" name="files[]" accept=".fastq.gz" multiple v-on:change="addFiles")
         input(type="file" name="files[]" multiple v-on:change="addFiles")
-      button.btn.btn-outline-success.fileinput-button(type="button" v-on:click="startUpload")
+      button.btn.btn-outline-success.fileinput-button.font-weight-250(type="button" v-on:click="startUpload")
         //- i.fa.fa-cloud-upload(aria-hidden="true")
         i.fa.fa-play(aria-hidden="true") &nbsp;
         span Start upload
@@ -104,11 +104,11 @@ section
           i.fa.fa-stop(aria-hidden="true") &nbsp;
           span Cancel upload
 
-    div.card
+    div.card.font-size-2.font-weight-300
       div.card-header.d-flex.justify-content-between
         span Single-end Reads
-        button.btn.btn-default.rounded-circle(type="button")
-          i.fa.fa-refresh(aria-hidden="true")
+        //- button.btn.btn-default.rounded-circle(type="button")
+        //-   i.fa.fa-refresh(aria-hidden="true")
       ul.list-group.list-group-flush
         li.list-group-item.no-padding(v-for="sample in singleEndReads" v-bind:key="sample.name")
           upload-progress-bar.monospace(
@@ -118,11 +118,11 @@ section
             @onSuccess="startNext(singleEndReads)"
             @onError="startNext(singleEndReads)")
 
-    div.card
+    div.card.font-size-2.font-weight-300
       div.card-header.d-flex.justify-content-between
         span.tooltip--right(data-tooltip="Illumina Naming convention: .*_S\\d+_L\\d{3}_R[1,2]_001.fastq.gz") Paired-end Reads
-        button.btn.btn-default.rounded-circle(type="button")
-          i.fa.fa-refresh(aria-hidden="true")
+        //- button.btn.btn-default.rounded-circle(type="button")
+        //-   i.fa.fa-refresh(aria-hidden="true")
       ul.list-group.list-group-flush
         li.list-group-item.no-padding(v-for="sample in pairedEndReads" v-bind:key="sample.name")
           upload-progress-bar.monospace(
@@ -158,20 +158,20 @@ section
       p.lead
         | The table below lists samples you uploaded.
       p.lead
-        a.btn.btn-primary.btn-lg(href="https://pathogen.tgen.org/ASAP/TB_Example_Set.html" role="button")
+        a.btn.btn-primary.btn-lg.font-size-2.font-weight-200(href="https://pathogen.tgen.org/ASAP/TB_Example_Set.html" role="button")
           | Example ASAP Report
           i.fas.fa-external-link-alt
 
-  section.container
+  section.container.font-size-1-5
     file-index(:endpoint="endpoint" :interval="30000")
 
 </template>
 
 <script>
-import FileIndex from '@/pages/tnorth/asap/FileIndex';
-import UploadProgressBar from './UploadProgressBar';
-import Sha256Worker from './sha256.worker';
-import resolveMetadata from './resolveMetadata';
+import FileIndex from "@/pages/tnorth/asap/FileIndex";
+import UploadProgressBar from "./UploadProgressBar";
+import Sha256Worker from "./sha256.worker";
+import resolveMetadata from "./resolveMetadata";
 
 // https://eslint.org/docs/rules/no-underscore-dangle#allowafterthis
 /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
@@ -182,17 +182,17 @@ import resolveMetadata from './resolveMetadata';
 export default {
   components: {
     UploadProgressBar,
-    FileIndex,
+    FileIndex
   },
   data() {
     return {
-      endpoint: '/api/files',
-      error: 'TODO: remove test error',
-      project: 'default',
+      endpoint: "/api/files",
+      error: "TODO: remove test error",
+      project: "default",
       pairedEndReads: [],
       singleEndReads: [],
       unmatchedReads: [],
-      currentProject: localStorage.getItem('currentProject')
+      currentProject: localStorage.getItem("currentProject")
     };
   },
   beforeDestroy() {
@@ -211,13 +211,13 @@ export default {
         if (!(file instanceof File)) {
           // eslint-disable-next-line max-len
           throw new TypeError(
-            'expected parameter to be an object where the ' +
-              'values are instances of File',
+            "expected parameter to be an object where the " +
+              "values are instances of File"
           );
         }
       });
 
-      const fastqExtension = '.fastq.gz';
+      const fastqExtension = ".fastq.gz";
       const fastqByReadNumber = Object.values(filesByName)
         .filter(file => file.name.endsWith(fastqExtension))
         .reduce((obj, file) => {
@@ -226,7 +226,7 @@ export default {
           const match = illuminaRegex.exec(file.name);
 
           let sampleName = file.name.slice(0, -fastqExtension.length);
-          let readNumber = 'R1';
+          let readNumber = "R1";
 
           if (match) {
             [sampleName, readNumber] = [match[1], match[2]];
@@ -237,7 +237,7 @@ export default {
           obj[sampleName] = obj[sampleName] || {};
 
           if (obj[sampleName][readNumber]) {
-            throw new Error('TODO: throw overwriting readNumber error');
+            throw new Error("TODO: throw overwriting readNumber error");
           }
 
           // eslint-disable-next-line no-param-reassign
@@ -264,7 +264,7 @@ export default {
             this.project,
             sample.name,
             sample.R1,
-            sample.R2,
+            sample.R2
           );
 
           if (sample.R1 && sample.R2) {
@@ -281,7 +281,7 @@ export default {
       return {
         pairedEndReads,
         singleEndReads,
-        unmatchedReads,
+        unmatchedReads
       };
     },
 
@@ -320,7 +320,7 @@ export default {
       ({
         singleEndReads: this.singleEndReads,
         pairedEndReads: this.pairedEndReads,
-        unmatchedReads: this.unmatchedReads,
+        unmatchedReads: this.unmatchedReads
       } = this.partitionFilesByName(filesByName));
 
       // TODO: avoid rehashing files that have already been hashed.
@@ -343,8 +343,8 @@ export default {
     startUpload() {
       this.startNext(this.singleEndReads);
       this.startNext(this.pairedEndReads);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -370,19 +370,39 @@ export default {
   right: 0;
   margin: 0;
   opacity: 0;
-  -ms-filter: 'alpha(opacity=0)';
+  -ms-filter: "alpha(opacity=0)";
   font-size: 200px !important;
   direction: ltr;
   cursor: pointer;
 }
 
 .project-name {
-    border-bottom: 3px solid black;
-    width: 11%;
+  border-bottom: 3px solid black;
+  width: 21%;
+}
+
+.font-size-2 {
+  font-size: 2rem;
+}
+
+.font-size-2-5 {
+  font-size: 2.5rem;
+}
+
+.font-size-5 {
+  font-size: 5rem;
+}
+
+.font-weight-200 {
+  font-weight: 200;
 }
 
 .font-weight-300 {
   font-weight: 300;
+}
+
+.font-weight-250 {
+  font-weight: 250;
 }
 
 .margin-right-2 {
@@ -411,7 +431,7 @@ The progress-bar should fill the entire element.
 <style lang="scss">
 $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
 
-[class^='tooltip'] {
+[class^="tooltip"] {
   position: relative;
   &:after {
     opacity: 0;
@@ -453,14 +473,14 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
 }
 
 .font-size-1-5 {
-    font-size: 1.5rem;
-  }
-  .margin-1 {
-    margin: 1rem;
-  }
-  .margin-right-0-5 {
-    margin-right: 0.5rem !important;
-  }
+  font-size: 1.5rem;
+}
+.margin-1 {
+  margin: 1rem;
+}
+.margin-right-0-5 {
+  margin-right: 0.5rem !important;
+}
 
 .tooltip--right {
   &:after {
@@ -477,7 +497,7 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
 
 .tooltip--triangle {
   &:before {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     border-left: solid 5px transparent;
@@ -500,6 +520,5 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
       transform: translateX(-50%) translateY(0);
     }
   }
-  
 }
 </style>
