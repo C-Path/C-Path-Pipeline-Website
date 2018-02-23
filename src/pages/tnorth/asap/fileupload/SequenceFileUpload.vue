@@ -70,12 +70,15 @@ section
   //- The fileupload-buttonbar contains buttons to add/delete files
       and start/cancel the upload
   section.container
-    h1 {{currentProject}}
-    div
-      input(type='radio', name='pipeline-name', value=1, checked='')
-      | UVP
-      input(type='radio', name='pipeline-name', value=0, checked='')
-      | ASAP
+    h1.project-name.font-weight-300 {{currentProject}}
+    h4.font-weight-300 Select the pipeline you would like to upload files to:
+    div.font-size-1-5.font-weight-300
+      label.margin-1.margin-right-2.font-weight-300
+        input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
+        | ASAP
+      label.font-weight-300
+        input.margin-right-0-5(type='radio', name='pipeline-name', value=0, checked='')
+        | UVP
 
     div.btn-group(role="group" aria-label="File Upload Controls")
       //- The fileinput-button span is used to style the file input field as button
@@ -84,7 +87,7 @@ section
         span Add files...
         //- input(type="file" name="files[]" accept=".fastq.gz" multiple v-on:change="addFiles")
         input(type="file" name="files[]" multiple v-on:change="addFiles")
-      button.btn.btn-outline-success(type="button" v-on:click="startUpload")
+      button.btn.btn-outline-success.fileinput-button(type="button" v-on:click="startUpload")
         //- i.fa.fa-cloud-upload(aria-hidden="true")
         i.fa.fa-play(aria-hidden="true") &nbsp;
         span Start upload
@@ -358,6 +361,7 @@ export default {
   position: relative;
   overflow: hidden;
   display: inline-block;
+  font-size: 2rem;
 }
 
 .fileinput-button input {
@@ -370,6 +374,19 @@ export default {
   font-size: 200px !important;
   direction: ltr;
   cursor: pointer;
+}
+
+.project-name {
+    border-bottom: 3px solid black;
+    width: 11%;
+}
+
+.font-weight-300 {
+  font-weight: 300;
+}
+
+.margin-right-2 {
+  margin-right: 2rem;
 }
 
 .card {
@@ -435,6 +452,16 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
   }
 }
 
+.font-size-1-5 {
+    font-size: 1.5rem;
+  }
+  .margin-1 {
+    margin: 1rem;
+  }
+  .margin-right-0-5 {
+    margin-right: 0.5rem !important;
+  }
+
 .tooltip--right {
   &:after {
     top: -4px;
@@ -473,5 +500,6 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1);
       transform: translateX(-50%) translateY(0);
     }
   }
+  
 }
 </style>
