@@ -71,6 +71,12 @@ section
       and start/cancel the upload
   section.container
     h1 {{currentProject}}
+    div
+      input(type='radio', name='pipeline-name', value=1, checked='')
+      | UVP
+      input(type='radio', name='pipeline-name', value=0, checked='')
+      | ASAP
+
     div.btn-group(role="group" aria-label="File Upload Controls")
       //- The fileinput-button span is used to style the file input field as button
       button.btn.btn-outline-primary.fileinput-button(type="button")
