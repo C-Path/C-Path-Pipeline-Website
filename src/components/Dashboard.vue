@@ -135,12 +135,12 @@ export default {
       }
     },
     isExistingProject() {
-      for (var i = 0; i < this.NewProject.length; i++) {
-        if (this.projects[i].name !== this.NewProject.name) {
-          return false;
+      for (var i = 0; i < this.projects.length; i++) {
+        if (this.projects[i].name.toLowerCase() === this.NewProject.name.toLowerCase()) {
+          return true;
         }
       }
-      return true;
+      return false;
      },
     createNewProject () {
       if (this.isExistingProject()) {
