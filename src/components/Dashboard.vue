@@ -33,8 +33,7 @@
         </div>
         <div class="margin-left-3">
             <modal name="NewProjectModal" height="auto" :scrollable="true">
-          <v-dialog/>
-
+              <v-dialog/>
                <h3 class="text-align-center">Create New Project</h3>
               <form @submit.prevent="createNewProject">
 
@@ -135,7 +134,18 @@ export default {
         active: false,
       }
     },
+    isExistingProject() {
+      for (var i = 0; i < this.NewProject.length; i++) {
+        if (this.projects[i].name !== this.NewProject.name) {
+          return false;
+        }
+      }
+      return true;
+     },
     createNewProject () {
+      if (this.isExistingProject()) {
+        this.showAlert();
+      } else {
       /* TODO: place the url for POST in .envrc */
       var tokenParam = "?token=" + auth.getToken()
       axios.post("http://localhost:3000/projects" + tokenParam, this.NewProject).then((res) => {
@@ -144,6 +154,7 @@ export default {
       }).catch(function(err) {
         console.log(err)
       })
+      }
     },
   }
 };
