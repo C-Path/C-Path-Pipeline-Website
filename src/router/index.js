@@ -18,7 +18,6 @@ const router = new Router({
     {path: '/projects/default/reports/tb/samples/:id', component: () => import('@/pages/tnorth/asap/tb/Sample.vue'), props: true, beforeEnter: requireAuth},
     {path: 'projects/default/reports/tb/detail', component: () => import('@/pages/tnorth/asap/tb/SummaryDetail.vue'), beforeEnter: requireAuth},
     {path: '/projects/default/reports/tb/samples/:id/detail', component: () => import('@/pages/tnorth/asap/tb/SampleDetail.vue'), props: true, beforeEnter: requireAuth},
-    {path: '/404', component: () => import('@/pages/NotFound')},
     {path: '*', beforeEnter: redirectUser },
     {path: '/logout',
       beforeEnter (to, from, next) {
