@@ -114,7 +114,8 @@ export default {
     },
     showFiles (nameOfProject, index) {
       localStorage.setItem('currentProject', nameOfProject)
-      this.$router.replace(this.$route.query.redirect || '/upload')
+      this.$router.push('/upload')
+      // this.$router.replace(this.$route.query.redirect || '/upload')
     },
     showDescription() {
       this.$modal.show("ProjectDescription");
