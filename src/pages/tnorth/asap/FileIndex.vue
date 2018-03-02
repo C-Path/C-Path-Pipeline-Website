@@ -57,7 +57,6 @@ export default {
   methods: {
     loadData() {
       /* TODO: hit the database and pull in file names to display*/
-      console.log('Loaded with: ', localStorage.getItem('currentProject'))
     //   console.log('loadData', this.endpoint, this.interval);
     //   axios
     //     .get(this.endpoint)

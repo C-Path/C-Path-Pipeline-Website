@@ -2,7 +2,8 @@
 progress-bar.monospace(
   :name="file.name"
   :current="bytesUploaded"
-  :total="file.size")
+  :total="file.size"
+  :pipeline="pipeline")
 </template>
 
 <script>
@@ -31,6 +32,7 @@ export default {
     upload(newValue) {
       switch(newValue) {
         case true:
+          this.pipeline = "pipeline"
           this.tus.options.onProgress = (bytesUploaded) => {
             this.bytesUploaded = bytesUploaded;
           };

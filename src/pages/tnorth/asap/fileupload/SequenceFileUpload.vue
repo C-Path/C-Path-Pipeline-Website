@@ -76,19 +76,19 @@ section
       label.margin-1.margin-right-2.font-weight-300
         input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
         | ASAP
+        #pipelineAsap
       label.font-weight-300
         input.margin-right-0-5(type='radio', name='pipeline-name', value=0, checked='')
         | UVP
+        #pipelineUvp
 
     div.btn-group(role="group" aria-label="File Upload Controls")
       //- The fileinput-button span is used to style the file input field as button
       button.btn.btn-outline-primary.fileinput-button.font-weight-250(type="button")
         i.fa.fa-plus(aria-hidden="true")
         span Add files...
-        //- input(type="file" name="files[]" accept=".fastq.gz" multiple v-on:change="addFiles")
         input(type="file" name="files[]" multiple v-on:change="addFiles")
       button.btn.btn-outline-success.fileinput-button.font-weight-250(type="button" v-on:click="startUpload")
-        //- i.fa.fa-cloud-upload(aria-hidden="true")
         i.fa.fa-play(aria-hidden="true") &nbsp;
         span Start upload
       //-
@@ -188,7 +188,8 @@ export default {
     return {
       endpoint: "/api/files",
       error: "TODO: remove test error",
-      project: "default",
+      project: localStorage.getItem("currentProject"),
+      pipeline: this.pipeline,
       pairedEndReads: [],
       singleEndReads: [],
       unmatchedReads: [],
@@ -262,6 +263,7 @@ export default {
           sample.metadata = resolveMetadata(
             this.endpoint,
             this.project,
+            this.pipeline,
             sample.name,
             sample.R1,
             sample.R2
