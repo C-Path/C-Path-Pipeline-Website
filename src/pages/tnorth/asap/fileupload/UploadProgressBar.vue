@@ -33,7 +33,7 @@ div.progress-bar-container(v-bind:class="{'text-danger': !!errorMessage}")
 </template>
 
 <script>
-import 'bootstrap/scss/bootstrap.scss';
+// import 'bootstrap/scss/bootstrap.scss';
 import { Upload } from 'tus-js-client';
 
 export default {
