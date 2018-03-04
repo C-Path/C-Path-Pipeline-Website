@@ -39,7 +39,7 @@ export default {
     setInterval(function() {
       console.log("I am doing my 60 minute check");
       axios
-        .delete(config.heroku.url + "/files")
+        .delete(process.env.SERVER_URL + "/files")
         .then(function(response) {
           console.log("deleted files successfully: ", response);
         })

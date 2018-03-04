@@ -14,7 +14,7 @@ export default {
       username: username,
       password: pass
     }
-    axios.post(config.heroku.url + "/authenticate", userData).then((res) => {
+    axios.post(process.env.SERVER_URL + "/authenticate", userData).then((res) => {
       if (res.data.authenticated) {
         localStorage.setItem('token', JSON.stringify(res.data.token))
 

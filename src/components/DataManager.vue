@@ -46,7 +46,7 @@ mounted() {
   var $vm = this;
   var tokenParam = "?token=" + auth.getToken()
 
-    axios.get(config.heroku.url + "/files" + tokenParam).then(function(response) {
+    axios.get(process.env.SERVER_URL + "/files" + tokenParam).then(function(response) {
       if (response.data.message === undefined) {
         $vm.files = response.data;
       } else {
