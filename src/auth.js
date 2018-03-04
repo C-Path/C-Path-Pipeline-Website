@@ -1,6 +1,5 @@
 /* globals localStorage */
 import axios from "axios";
-import config from "../emailConfig.js"
 
 export default {
   login (username, pass, cb) {
