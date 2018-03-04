@@ -1,5 +1,6 @@
 /* globals localStorage */
 import axios from "axios";
+import config from "../emailConfig.js"
 
 export default {
   login (username, pass, cb) {
@@ -13,7 +14,7 @@ export default {
       username: username,
       password: pass
     }
-    axios.post("http://localhost:3000/authenticate", userData).then((res) => {
+    axios.post(process.env.SERVER_URL + "/authenticate", userData).then((res) => {
       if (res.data.authenticated) {
         localStorage.setItem('token', JSON.stringify(res.data.token))
 

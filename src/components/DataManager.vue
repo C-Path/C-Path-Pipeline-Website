@@ -29,6 +29,8 @@
 <script>
 import axios from 'axios';
 import auth from '../auth.js'
+import config from "../../emailConfig.js"
+
 export default {
   methods: {
 
@@ -43,8 +45,8 @@ export default {
 mounted() {
   var $vm = this;
   var tokenParam = "?token=" + auth.getToken()
-  
-    axios.get("http://localhost:3000/files" + tokenParam).then(function(response) {
+
+    axios.get(process.env.SERVER_URL + "/files" + tokenParam).then(function(response) {
       if (response.data.message === undefined) {
         $vm.files = response.data;
       } else {
