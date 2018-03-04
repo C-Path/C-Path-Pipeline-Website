@@ -20,7 +20,7 @@
 <script>
 import auth from "./auth";
 import axios from "axios";
-import config from "../emailConfig.js"
+
 export default {
   name: "app",
   data() {

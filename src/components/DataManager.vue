@@ -29,7 +29,6 @@
 <script>
 import axios from 'axios';
 import auth from '../auth.js'
-import config from "../../emailConfig.js"
 
 export default {
   methods: {
