@@ -58,7 +58,7 @@ function requestUploadUrl(endpoint, file, metadata) {
   });
 }
 
-export default function resolveMetadata(endpoint, project, sampleName, r1, r2) {
+export default function resolveMetadata(endpoint, projectName, sampleName, r1, r2) {
   // TODO: validate input types
   // project and sampleName should be String
   // r1 and r2 should be File
@@ -79,8 +79,8 @@ export default function resolveMetadata(endpoint, project, sampleName, r1, r2) {
     size: r1.size,
     lastModified: r1.lastModified,
     type: r1.type,
-    project,
     sampleName,
+    projectName,
     r2ID: -1,
   };
 
@@ -90,8 +90,8 @@ export default function resolveMetadata(endpoint, project, sampleName, r1, r2) {
       size: r2.size,
       lastModified: r2.lastModified,
       type: r2.type,
-      project,
       sampleName,
+      projectName,
       r2ID: 0,
     };
 

@@ -100,7 +100,7 @@ export default {
     return {
       endpoint: "/api/files",
       error: "TODO: remove test error",
-      project: "default",
+      projectName: localStorage.getItem("currentProject"),
       pairedEndReads: [],
       singleEndReads: [],
       unmatchedReads: [],
@@ -150,9 +150,7 @@ export default {
       const pairedEndReads = [];
       const singleEndReads = [];
       const unmatchedReads = [];
-      // eslint-disable-next-line no-restricted-syntax
       for (const sampleName in fastqByReadNumber) {
-        // eslint-disable-next-line no-prototype-builtins
         if (fastqByReadNumber.hasOwnProperty(sampleName)) {
           const sample = fastqByReadNumber[sampleName];
 
@@ -160,10 +158,10 @@ export default {
           sample.start = false;
           sample.metadata = resolveMetadata(
             this.endpoint,
-            this.project,
+            this.projectName,
             sample.name,
             sample.R1,
-            sample.R2
+            sample.R2,
           );
 
           if (sample.R1 && sample.R2) {
