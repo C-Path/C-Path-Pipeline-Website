@@ -64,8 +64,6 @@ import axios from "axios";
 import auth from "../auth.js"
 import config from "../../emailConfig.js"
 
-console.log("LOADED: ENV: ", process.env.SERVER_URL)
-
 export default {
   data() {
     return {
