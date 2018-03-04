@@ -168,7 +168,6 @@ export default {
             sample.toBeDeleted,
             this.pipelineName,
             this.pipelineVersion
-            
           );
 
           if (sample.R1 && sample.R2) {

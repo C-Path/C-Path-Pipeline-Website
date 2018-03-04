@@ -47,18 +47,17 @@ function requestUploadUrl(endpoint, file, metadata) {
     xhr.setRequestHeader(
       'Upload-Metadata',
       Object.entries(metadata)
-        .map(kv => {
-          const [key, value] = kv;
-          return `${key} ${btoa(unescape(encodeURIComponent(value)))}`;
-        })
-        .join(','),
+      .map(kv => {
+        const [key, value] = kv;
+        return `${key} ${btoa(unescape(encodeURIComponent(value)))}`;
+      })
+      .join(','),
     );
 
     xhr.send(null);
   });
 }
-
-export default function resolveMetadata(endpoint, projectName, sampleName, r1, r2) {
+export default function resolveMetadata(endpoint, projectName, sampleName, r1, r2, contributed, toBeDeleted, pipelineName, pipelineVersion) {
   // TODO: validate input types
   // project and sampleName should be String
   // r1 and r2 should be File
@@ -82,6 +81,10 @@ export default function resolveMetadata(endpoint, projectName, sampleName, r1, r
     sampleName,
     projectName,
     r2ID: -1,
+    contributed,
+    toBeDeleted,
+    pipelineName,
+    pipelineVersion,
   };
 
   if (r1 && r2) {
@@ -93,6 +96,10 @@ export default function resolveMetadata(endpoint, projectName, sampleName, r1, r
       sampleName,
       projectName,
       r2ID: 0,
+      contributed,
+      toBeDeleted,
+      pipelineName,
+      pipelineVersion,
     };
 
     return requestUploadUrl(endpoint, r2, metadata.R2).then(location => {
