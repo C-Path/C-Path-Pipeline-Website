@@ -20,6 +20,7 @@
 <script>
 import auth from "./auth";
 import axios from "axios";
+import config from "../emailConfig.js"
 export default {
   name: "app",
   data() {
@@ -38,7 +39,7 @@ export default {
     setInterval(function() {
       console.log("I am doing my 60 minute check");
       axios
-        .delete("http://localhost:3000/files")
+        .delete(config.heroku.url + "/files")
         .then(function(response) {
           console.log("deleted files successfully: ", response);
         })

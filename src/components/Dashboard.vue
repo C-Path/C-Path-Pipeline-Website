@@ -62,6 +62,7 @@
 <script>
 import axios from "axios";
 import auth from "../auth.js"
+import config from "../../emailConfig.js"
 
 export default {
   data() {
@@ -80,7 +81,7 @@ export default {
   mounted() {
     var $vm = this;
     axios
-      .get("http://localhost:3000/projects", {
+      .get(config.heroku.url + "/projects", {
         params: {
           token: auth.getToken(),
           username: auth.getUsername()
@@ -149,7 +150,7 @@ export default {
       } else {
       /* TODO: place the url for POST in .envrc */
       var tokenParam = "?token=" + auth.getToken()
-      axios.post("http://localhost:3000/projects" + tokenParam, this.NewProject).then((res) => {
+      axios.post(config.heroku.url + "/projects" + tokenParam, this.NewProject).then((res) => {
           this.addProjectToTable(res.data)
           this.resetNewProject()
       }).catch(function(err) {
