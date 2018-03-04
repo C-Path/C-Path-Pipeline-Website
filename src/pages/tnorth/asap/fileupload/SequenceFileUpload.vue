@@ -1,40 +1,5 @@
 <template lang="pug">
 section
-
-  //- https://codepen.io/surjithctly/pen/pLDwe
-    transition(name="bounce")
-      section.alert.alert-danger(role="alert" v-if="error")
-        button.close(type="button" @click="error = ''") ×
-        strong Whoops!
-        |
-        | {{ error }}
-
-  //- https://router.vuejs.org/en/advanced/transitions.html
-    section.book-header(role="navigation")
-      a.btn.pull-left.js-toolbar-action(aria-label="" href="#")
-        i.fa.fa-align-justify
-      a.btn.pull-left.js-toolbar-action(aria-label="" href="#")
-        i.fa.fa-edit
-        | Edit This Page
-      a.btn.pull-right.js-toolbar-action(aria-label="GitHub" href="#")
-        i.fa.fa-github
-      div.dropdown.pull-right.js-toolbar-action
-        a.btn.toggle-dropdown(aria-label="Share" href="#")
-          i.fa.fa-share-alt
-        div.dropdown-menu.dropdown-left
-          div.dropdown-caret
-            span.caret-outer
-            span.caret-inner
-          div.buttons
-            button.button.size-5 Facebook
-            button.button.size-5 Google+
-            button.button.size-5 Twitter
-            button.button.size-5 Weibo
-            button.button.size-5 Instapaper
-      h1
-        i.fa.fa-circle-o-notch.fa-spin
-        a(href="..") Transitions
-
   section.jumbotron
     div.container
       h1.display-4 Amplicon Sequencing Analysis Pipeline
@@ -58,17 +23,6 @@ section
         a(href="https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/NamingConvention_FASTQ-files-swBS.htm")
           | Illumina Naming Convention
           i.fas.fa-external-link-alt
-
-      //- p.lead foo bar baz
-
-  //-
-    nav.navbar.navbar-light.bg-light
-      a.navbar-brand Amplicon Sequencing Analysis Pipeline
-      input(v-model="project" placeholder="Project Name")
-      router-link.btn.btn-primary.btn-lg(:to="resultsPath" role="button") Results
-
-  //- The fileupload-buttonbar contains buttons to add/delete files
-      and start/cancel the upload
   section.container
     h1.project-name.font-weight-200.font-size-5 {{currentProject}}
     h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
@@ -81,29 +35,13 @@ section
         | UVP
 
     div.btn-group(role="group" aria-label="File Upload Controls")
-      //- The fileinput-button span is used to style the file input field as button
       button.btn.btn-outline-primary.fileinput-button.font-weight-250(type="button")
         i.fa.fa-plus(aria-hidden="true")
         span Add files...
-        //- input(type="file" name="files[]" accept=".fastq.gz" multiple v-on:change="addFiles")
         input(type="file" name="files[]" multiple v-on:change="addFiles")
       button.btn.btn-outline-success.fileinput-button.font-weight-250(type="button" v-on:click="startUpload")
-        //- i.fa.fa-cloud-upload(aria-hidden="true")
         i.fa.fa-play(aria-hidden="true") &nbsp;
         span Start upload
-      //-
-        button.btn.btn-outline-secondary(type="button" disabled="true")
-          //- i.fa.fa-cloud-upload(aria-hidden="true")
-          i.fa.fa-shield(aria-hidden="true") &nbsp;
-          span Checksum
-      //-
-        button.btn.btn-warning(type="button") &nbsp;
-          i.fa.fa-pause(aria-hidden="true")
-          span Pause upload
-        button.btn.btn-danger(type="button")
-          i.fa.fa-stop(aria-hidden="true") &nbsp;
-          span Cancel upload
-
     div.card.font-size-2.font-weight-300
       div.card-header.d-flex.justify-content-between
         span Single-end Reads
@@ -135,24 +73,6 @@ section
             :file="sample.R2"
             :metadata="sample.metadata.then(m => m.R2)"
             :start="sample.start")
-
-
-    //-
-      div.card
-        div.card-header.d-flex.justify-content-between Bams
-          button.btn.btn-default.rounded-circle(type="button")
-            i.fa.fa-refresh(aria-hidden="true")
-        ul.list-group.list-group-flush
-          li.list-group-item(v-for="sample in bams" v-bind:key="sample.name")
-            div.row
-              span.col(v-text="sample.name")
-              span.col-auto.text-nowrap 10:00:59
-              div.col
-                div.progress
-                  div.progress-bar(role="progressbar" v-bind:style="{width: sample.progress+ '%'}" v-bind:aria-valuenow="sample.progress + '%'" aria-valuemin="0" aria-valuemax="100") ({{sample.size}} bytes) {{sample.progress}}%
-        div.card-footer.text-muted
-          a(href="https://samtools.github.io/hts-specs/SAMv1.pdf") Sequence Alignment/Map Format Specification
-
   section.jumbotron
     div.container
       p.lead
@@ -161,10 +81,8 @@ section
         a.btn.btn-primary.btn-lg.font-size-2.font-weight-200(href="https://pathogen.tgen.org/ASAP/TB_Example_Set.html" role="button")
           | Example ASAP Report
           i.fas.fa-external-link-alt
-
   section.container.font-size-1-5
     file-index(:endpoint="endpoint" :interval="30000")
-
 </template>
 
 <script>
@@ -172,12 +90,6 @@ import FileIndex from "@/pages/tnorth/asap/FileIndex";
 import UploadProgressBar from "./UploadProgressBar";
 import Sha256Worker from "./sha256.worker";
 import resolveMetadata from "./resolveMetadata";
-
-// https://eslint.org/docs/rules/no-underscore-dangle#allowafterthis
-/* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
-
-// TODO: reenable no-console before production release
-/* eslint-disable no-console */
 
 export default {
   components: {
@@ -195,21 +107,10 @@ export default {
       currentProject: localStorage.getItem("currentProject")
     };
   },
-  beforeDestroy() {
-    this.sha256Worker.terminate();
-  },
-  created() {
-    this.sha256Worker = new Sha256Worker();
-    this.sha256Worker.onmessage = e => {
-      // eslint-disable-next-line no-console
-      console.log(e.data);
-    };
-  },
   methods: {
     partitionFilesByName(filesByName) {
       Object.values(filesByName).forEach(file => {
         if (!(file instanceof File)) {
-          // eslint-disable-next-line max-len
           throw new TypeError(
             "expected parameter to be an object where the " +
               "values are instances of File"
@@ -233,14 +134,12 @@ export default {
           }
 
           // Ensure the property is initialized
-          // eslint-disable-next-line no-param-reassign
           obj[sampleName] = obj[sampleName] || {};
 
           if (obj[sampleName][readNumber]) {
             throw new Error("TODO: throw overwriting readNumber error");
           }
 
-          // eslint-disable-next-line no-param-reassign
           obj[sampleName][readNumber] = file;
 
           return obj;
@@ -322,14 +221,6 @@ export default {
         pairedEndReads: this.pairedEndReads,
         unmatchedReads: this.unmatchedReads
       } = this.partitionFilesByName(filesByName));
-
-      // TODO: avoid rehashing files that have already been hashed.
-      // Uncaught DOMException: Failed to execute 'postMessage' on 'Worker':
-      //   function fingerprint(file) {
-      //     return ["tus", file.name, file.type, file.size, file.lastModified].join("-");
-      //   }
-      // could not be cloned.
-      // this.sha256Worker.postMessage(this._filesHashedByName);
     },
     startNext(array) {
       for (let i = 0; i < array.length; i += 1) {
@@ -348,13 +239,7 @@ export default {
 };
 </script>
 
-
-<!-- <style src='bootstrap/scss/bootstrap.scss'> -->
-<style src="bootstrap/dist/css/bootstrap.min.css">
-
-</style>
-
-</style>
+<style src="bootstrap/dist/css/bootstrap.min.css"></style>
 
 <style scoped>
 .fileinput-button {
