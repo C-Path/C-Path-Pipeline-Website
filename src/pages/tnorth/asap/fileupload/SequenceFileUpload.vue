@@ -104,7 +104,9 @@ export default {
       pairedEndReads: [],
       singleEndReads: [],
       unmatchedReads: [],
-      currentProject: localStorage.getItem("currentProject")
+      currentProject: localStorage.getItem("currentProject"),
+      pipelineName: localStorage.getItem("currentPipeline"),
+      pipelineVersion: localStorage.getItem("pipelineVersion")
     };
   },
   methods: {
@@ -162,6 +164,11 @@ export default {
             sample.name,
             sample.R1,
             sample.R2,
+            sample.contributed,
+            sample.toBeDeleted,
+            this.pipelineName,
+            this.pipelineVersion
+            
           );
 
           if (sample.R1 && sample.R2) {
