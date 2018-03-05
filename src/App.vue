@@ -2,7 +2,6 @@
   <div id="app">
     <div class="header">
       <img src="../static/images/ReSeqTB.png" alt="c-path logo">
-      <!-- <router-link v-if="loggedIn" to="/logout"> -->
       <v-dialog/>
       <a @click="showAlert" v-if="loggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
@@ -32,7 +31,7 @@ export default {
   created() {
     auth.onChange = (loggedIn, isUserLoggedIn) => {
       this.loggedIn = loggedIn;
-      this.isUserLoggedIn = this.isUser()
+      this.isUserLoggedIn = this.isUser();
     };
     var minutes = 60,
       the_interval = minutes * 60 * 1000;
@@ -50,21 +49,26 @@ export default {
   },
   methods: {
     showAlert() {
-      if (auth.parseJwt(JSON.parse(localStorage.getItem('token'))).role != "DATA_MANAGER") {
+      if (
+        auth.parseJwt(JSON.parse(localStorage.getItem("token"))).role !=
+        "DATA_MANAGER"
+      ) {
         this.$modal.show("dialog", {
-          title: '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
-          text: '<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>',
+          title:
+            '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
+          text:
+            "<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>",
           buttons: [
             {
               title: "Log Out",
-              handler: () => {window.location = "/logout"; }
-
+              handler: () => {
+                window.location = "/logout";
+              }
             },
             {
               title: "Cancel", // Button title
-              default: true, // Will be triggered by default if 'Enter' pressed.
-
-            },
+              default: true // Will be triggered by default if 'Enter' pressed.
+            }
           ]
         });
       } else {
@@ -72,11 +76,12 @@ export default {
       }
     },
     isUser() {
-      if (localStorage.getItem('token') != null) {
-        var userRole = auth.parseJwt(JSON.parse(localStorage.getItem('token'))).role
-        return (userRole != "DATA_MANAGER")
+      if (localStorage.getItem("token") != null) {
+        var userRole = auth.parseJwt(JSON.parse(localStorage.getItem("token")))
+          .role;
+        return userRole != "DATA_MANAGER";
       } else {
-        return false
+        return false;
       }
     }
   }
