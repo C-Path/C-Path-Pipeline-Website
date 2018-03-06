@@ -16,6 +16,7 @@
                     <th class="mdl-data-table__cell--non-numeric table-width-10">Active</th>
                     <th class="mdl-data-table__cell--non-numeric">Project Name</th>
                     <th class="mdl-data-table__cell--non-numeric">Description</th>
+                    <th class="">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,10 +28,12 @@
                         </td>
                         <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
                         <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
+                        <td @click="showDeleteModal(project)" class="delete__cell"><img src="../../static/images/ic_delete_black_24dp_1x.png" alt="Delete"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
         <div class="margin-left-3">
             <modal name="NewProjectModal" height="auto" :scrollable="true">
               <v-dialog/>
@@ -54,6 +57,18 @@
                 </form>
            </modal>
         </div>
+
+        <modal class="delete-modal" name="DeleteModal" height="auto" :scrollable="true">
+             <div class="text-align-center">
+               <h3 class="text-underline">Confirm Deletion for: {{deletionProject.name}}</h3>
+               <p>All data/files associated with this project will also be deleted, unless it has been marked for contribution. Are you sure you want to delete?</p>
+             </div>
+              <div class="text-align-center">
+                <button @click="deleteProject()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-bottom-2 delete-option">Delete</button>
+                <button @click="hideDeleteModal()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-bottom-2 delete-option">Cancel</button>
+              </div>
+              </modal>
+           </modal>
     </body>
 
     </html>
@@ -74,7 +89,8 @@ export default {
       },
       projectNameTitle: "",
       description: "",
-      projects: []
+      projects: [],
+      deletionProject: ""
     };
   },
   mounted() {
@@ -147,15 +163,50 @@ export default {
       if (this.isExistingProject()) {
         this.showAlert();
       } else {
-      /* TODO: place the url for POST in .envrc */
+        /* TODO: place the url for POST in .envrc */
+        var tokenParam = "?token=" + auth.getToken()
+        axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
+            this.addProjectToTable(res.data)
+            this.resetNewProject()
+        }).catch(function(err) {
+          console.log(err)
+        })
+      }
+    },
+    showDeleteModal (project) {
+      this.$modal.show("DeleteModal");
+      this.deletionProject = project;
+    },
+    hideDeleteModal () {
+      this.$modal.hide("DeleteModal");
+      this.deletionProject = "";
+    },
+    refreshData () {
+      var $vm = this
+      axios
+        .get(process.env.SERVER_URL + "/projects", {
+          params: {
+            token: auth.getToken(),
+            username: auth.getUsername()
+          }
+        })
+        .then(function(res) {
+          $vm.projects = res.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    deleteProject () {
       var tokenParam = "?token=" + auth.getToken()
-      axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
-          this.addProjectToTable(res.data)
-          this.resetNewProject()
+      axios.delete(process.env.SERVER_URL + "/projects/" + this.deletionProject._id + tokenParam).then((res) => {
+          if (res.data.Deleted) {
+            this.refreshData()
+          }
       }).catch(function(err) {
         console.log(err)
       })
-      }
+      this.hideDeleteModal()
     },
   }
 };
@@ -184,5 +235,13 @@ export default {
 
 .border-light {
   border: 1px solid gainsboro;
+}
+
+.delete-option {
+  margin: 0em 2em;
+}
+
+.delete-modal * {
+  padding: 0em 2em 2em 2em;
 }
 </style>
