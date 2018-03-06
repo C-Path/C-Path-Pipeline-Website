@@ -21,7 +21,7 @@ section
         |
         span(style="font-family: monospace") fastq.gz
         |
-        | files to run through the ASAP pipeline on our
+        | files to run through the {{selectedPipelineTitle}} on our
         |
         a(href="https://aws.amazon.com/")
           | AWS
