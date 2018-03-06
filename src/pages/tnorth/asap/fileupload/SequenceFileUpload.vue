@@ -2,7 +2,18 @@
 section
   section.jumbotron
     div.container
-      h1.display-4 Amplicon Sequencing Analysis Pipeline
+      h1.project-name.font-weight-200.font-size-5 {{currentProject}}
+      h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
+      div.font-size-1-5.font-weight-300
+        label.margin-1.margin-right-2.font-weight-300
+          input.margin-right-0-5(type='radio', name='pipeline-name', value=0, checked='checked')
+          | UVP
+        label.font-weight-300
+          input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
+          | ASAP
+  section.jumbotron
+    div.container
+      h1.display-4 {{selectedPipelineTitle}}
       p.lead
           hr.my-4
       p.lead
@@ -23,16 +34,7 @@ section
         a(href="https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/NamingConvention_FASTQ-files-swBS.htm")
           | Illumina Naming Convention
           i.fas.fa-external-link-alt
-  section.container
-    h1.project-name.font-weight-200.font-size-5 {{currentProject}}
-    h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
-    div.font-size-1-5.font-weight-300
-      label.margin-1.margin-right-2.font-weight-300
-        input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
-        | ASAP
-      label.font-weight-300
-        input.margin-right-0-5(type='radio', name='pipeline-name', value=0, checked='')
-        | UVP
+  
 
     div.btn-group(role="group" aria-label="File Upload Controls")
       button.btn.btn-outline-primary.fileinput-button.font-weight-250(type="button")
@@ -106,7 +108,8 @@ export default {
       unmatchedReads: [],
       currentProject: localStorage.getItem("currentProject"),
       pipelineName: localStorage.getItem("currentPipeline"),
-      pipelineVersion: localStorage.getItem("pipelineVersion")
+      pipelineVersion: localStorage.getItem("pipelineVersion"),
+      selectedPipelineTitle: "Amplicon Sequencing Analysis Pipeline"
     };
   },
   methods: {
