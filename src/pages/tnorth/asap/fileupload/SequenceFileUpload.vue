@@ -6,10 +6,10 @@ section
       h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
       div.font-size-1-5.font-weight-300
         label.margin-1.margin-right-2.font-weight-300
-          input.margin-right-0-5(type='radio', name='pipeline-name', value="Amplicon Sequencing Analysis Pipeline", v-model="selectedPipelineTitle", checked)
+          input.margin-right-0-5(type='radio', name='pipeline-name', value="Amplicon Sequencing Analysis Pipeline", v-model="selectedPipelineTitle", v-on:click="pipelineAcronym = 'ASAP'", checked)
           | ASAP
         label.font-weight-300
-          input.margin-right-0-5(type='radio', name='pipeline-name', value="Unified Variant Pipeline",v-model="selectedPipelineTitle")
+          input.margin-right-0-5(type='radio', name='pipeline-name', value="Unified Variant Pipeline", v-model="selectedPipelineTitle", v-on:click="pipelineAcronym = 'UVP'")
           | UVP
   section.jumbotron
     div.container
@@ -21,7 +21,7 @@ section
         |
         span(style="font-family: monospace") fastq.gz
         |
-        | files to run through the {{selectedPipelineTitle}} on our
+        | files to run through the {{pipelineAcronym}} on our
         |
         a(href="https://aws.amazon.com/")
           | AWS
@@ -81,7 +81,7 @@ section
         | The table below lists samples you uploaded.
       p.lead
         a.btn.btn-primary.btn-lg.font-size-2.font-weight-200(href="https://pathogen.tgen.org/ASAP/TB_Example_Set.html" role="button")
-          | Example ASAP Report
+          | Example {{pipelineAcronym}} Report
           i.fas.fa-external-link-alt
   section.container.font-size-1-5
     file-index(:endpoint="endpoint" :interval="30000")
@@ -109,7 +109,8 @@ export default {
       currentProject: localStorage.getItem("currentProject"),
       pipelineName: localStorage.getItem("currentPipeline"),
       pipelineVersion: localStorage.getItem("pipelineVersion"),
-      selectedPipelineTitle: "Amplicon Sequencing Analysis Pipeline"
+      selectedPipelineTitle: "Amplicon Sequencing Analysis Pipeline",
+      pipelineAcronym: "ASAP"
     };
   },
   methods: {
@@ -241,7 +242,7 @@ export default {
     startUpload() {
       this.startNext(this.singleEndReads);
       this.startNext(this.pairedEndReads);
-    }
+    },
   }
 };
 </script>
@@ -299,6 +300,10 @@ export default {
 
 .margin-right-2 {
   margin-right: 2rem;
+}
+
+.display-4 {
+  font-size: 41px;
 }
 
 .card {
