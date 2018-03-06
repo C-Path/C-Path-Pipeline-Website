@@ -6,11 +6,11 @@ section
       h4.font-weight-200.font-size-2-5 Select the pipeline you would like to upload files to:
       div.font-size-1-5.font-weight-300
         label.margin-1.margin-right-2.font-weight-300
-          input.margin-right-0-5(type='radio', name='pipeline-name', value=0, checked='checked')
-          | UVP
-        label.font-weight-300
-          input.margin-right-0-5(type='radio', name='pipeline-name', value=1, checked='')
+          input.margin-right-0-5(type='radio', name='pipeline-name', value="Amplicon Sequencing Analysis Pipeline", v-model="selectedPipelineTitle", checked)
           | ASAP
+        label.font-weight-300
+          input.margin-right-0-5(type='radio', name='pipeline-name', value="Unified Variant Pipeline",v-model="selectedPipelineTitle")
+          | UVP
   section.jumbotron
     div.container
       h1.display-4 {{selectedPipelineTitle}}
