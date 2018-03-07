@@ -18,14 +18,15 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: '444399542573-802e5tggcegcc20ei5idq9h9q6sqaurg.apps.googleusercontent.com'
+        client_id: process.env.CLIENT_ID + '.apps.googleusercontent.com'
       }
     }
   },
   methods: {
     onSignInSuccess (googleUser) {
       const profile = googleUser.getBasicProfile() // etc etc
-      console.log("Profile: ", profile.U3)
+      console.log("Profile: ", profile)
+      //Send profile.U3 to DB for storage
       window.location.href = "/dashboard"
     },
     onSignInError (error) {
