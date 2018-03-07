@@ -263,6 +263,7 @@ export default {
   right: 0;
   margin: 0;
   opacity: 0;
+  filter: "alpha(opacity=0)";
   -ms-filter: "alpha(opacity=0)";
   font-size: 200px !important;
   direction: ltr;
