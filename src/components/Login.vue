@@ -19,7 +19,7 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: '444399542573-802e5tggcegcc20ei5idq9h9q6sqaurg' + '.apps.googleusercontent.com'
+        client_id: process.env.CLIEND_ID + '.apps.googleusercontent.com'
       }
     }
   },
