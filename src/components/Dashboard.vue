@@ -84,9 +84,10 @@ export default {
       NewProject: {
         name: '',
         description: '',
-        username: auth.getUsername(),
+        username: localStorage.getItem("username"),
         active: false,
       },
+      loggedIn: true,
       projectNameTitle: "",
       description: "",
       projects: [],
@@ -99,7 +100,7 @@ export default {
       .get(process.env.SERVER_URL + "/projects", {
         params: {
           token: auth.getToken(),
-          username: auth.getUsername()
+          username: localStorage.getItem("username")
         }
       })
       .then(function(res) {

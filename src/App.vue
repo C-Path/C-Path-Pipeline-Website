@@ -24,15 +24,16 @@ export default {
   name: "app",
   data() {
     return {
-      loggedIn: auth.loggedIn(),
+      loggedIn: true,
       isUserLoggedIn: this.isUser()
     };
   },
   created() {
-    auth.onChange = (loggedIn, isUserLoggedIn) => {
-      this.loggedIn = loggedIn;
-      this.isUserLoggedIn = this.isUser();
-    };
+    this.loggedIn = localStorage.getItem("token") != null;
+    // auth.onChange = (loggedIn, isUserLoggedIn) => {
+    //   this.loggedIn = localStorage.getItem("token") != null;
+    //   this.isUserLoggedIn = this.isUser();
+    // };
     var minutes = 60,
       the_interval = minutes * 60 * 1000;
     setInterval(function() {
@@ -50,8 +51,8 @@ export default {
   methods: {
     showAlert() {
       if (
-        auth.parseJwt(JSON.parse(localStorage.getItem("token"))).role !=
-        "DATA_MANAGER"
+        1 === 1
+        //TODO look up username in db, if role is not DATA_MANAGER then continue
       ) {
         this.$modal.show("dialog", {
           title:

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+ import auth from '../auth'
 export default {
   data () {
     return {
@@ -18,7 +19,7 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: process.env.CLIENT_ID + '.apps.googleusercontent.com'
+        client_id: '444399542573-802e5tggcegcc20ei5idq9h9q6sqaurg' + '.apps.googleusercontent.com'
       }
     }
   },
@@ -27,7 +28,24 @@ export default {
       const profile = googleUser.getBasicProfile() // etc etc
       console.log("Profile: ", profile)
       //Send profile.U3 to DB for storage
-      window.location.href = "/dashboard"
+      console.log("Google User: ", googleUser)
+      console.log("Token: ", googleUser.Zi.access_token)
+      localStorage.setItem('token', JSON.stringify(googleUser.Zi.access_token))
+      localStorage.setItem('username', profile.U3)
+      this.$router.push('/dashboard') 
+      // this.$router.replace(this.$route.query.redirect || '/dashboard')
+      // auth.login(profile.U3, googleUser.Zi.access_token, (loggedIn) => {
+      //     if (!loggedIn) {
+      //       this.error = true
+      //     } else {
+      //       if (auth.isManager()) {
+      //         this.$router.replace(this.$route.query.redirect || '/datamanager')
+      //       } else {
+      //         this.$router.replace(this.$route.query.redirect || '/dashboard')
+      //       }
+      //     }
+      //   })
+      // window.location.href = "/dashboard"
     },
     onSignInError (error) {
       // `error` contains any error occurred.
@@ -36,6 +54,34 @@ export default {
   }
 }
 </script>
+
+
+//   import auth from '../auth'
+//   export default {
+//     data () {
+//       return {
+//         username: '',
+//         pass: '',
+//         error: false
+//       }
+//     },
+//     methods: {
+//       login () {
+//         auth.login(this.username, this.pass, (loggedIn) => {
+//           if (!loggedIn) {
+//             this.error = true
+//           } else {
+//             if (auth.isManager()) {
+//               this.$router.replace(this.$route.query.redirect || '/datamanager')
+//             } else {
+//               this.$router.replace(this.$route.query.redirect || '/dashboard')
+//             }
+//           }
+//         })
+//       }
+//     }
+//   }
+// </script>
 
 <style>
 .g-signin-button {
