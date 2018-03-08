@@ -84,7 +84,6 @@ export default {
       NewProject: {
         name: '',
         description: '',
-        username: auth.getUsername(),
         active: false,
       },
       projectNameTitle: "",
@@ -98,8 +97,7 @@ export default {
     axios
       .get(process.env.SERVER_URL + "/projects", {
         params: {
-          token: auth.getToken(),
-          username: auth.getUsername()
+          token: auth.getToken()
         }
       })
       .then(function(res) {
@@ -129,8 +127,8 @@ export default {
       });
     },
     showFiles (nameOfProject, index) {
-      localStorage.setItem('currentProject', nameOfProject)
-      this.$router.push('/upload')
+      localStorage.setItem('currentProject', nameOfProject);
+      this.$router.push('/upload');
       // this.$router.replace(this.$route.query.redirect || '/upload')
     },
     showDescription() {
@@ -147,9 +145,8 @@ export default {
       this.NewProject = {
         name: '',
         description: '',
-        username: auth.getUsername(),
         active: false,
-      }
+      };
     },
     isExistingProject() {
       for (var i = 0; i < this.projects.length; i++) {
@@ -163,7 +160,6 @@ export default {
       if (this.isExistingProject()) {
         this.showAlert();
       } else {
-        /* TODO: place the url for POST in .envrc */
         var tokenParam = "?token=" + auth.getToken()
         axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
             this.addProjectToTable(res.data)
@@ -187,7 +183,6 @@ export default {
         .get(process.env.SERVER_URL + "/projects", {
           params: {
             token: auth.getToken(),
-            username: auth.getUsername()
           }
         })
         .then(function(res) {
@@ -213,10 +208,6 @@ export default {
 </script>
 
 <style scoped>
-.projectsTable {
-  margin-left: 3em;
-}
-
 .table-width {
   width: 83%;
 }
