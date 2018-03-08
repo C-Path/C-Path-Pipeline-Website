@@ -2,59 +2,50 @@
 import axios from "axios";
 
 export default {
-  login (username, pass, cb) {
-    cb = arguments[arguments.length - 1]
-    if (localStorage.token) {
-      if (cb) cb(true)
-      this.onChange(true)
-      return
-    }
+  verifyThenProceed(username, token) {
+    var tokenParam = "?token=" + token
     var userData = {
       username: username,
-      password: pass
+      token: token
     }
-    axios.post(process.env.SERVER_URL + "/authenticate", userData).then((res) => {
-      if (res.data.authenticated) {
-        localStorage.setItem('token', JSON.stringify(res.data.token))
-
-        if (cb) cb(true)
-        this.onChange(true)
-      } else {
-        if (cb) cb(false)
-        this.onChange(false)
-      }
-    }).catch(function(err) {
-      console.log(err)
-    })
+    axios.post(process.env.SERVER_URL + "/authenticate", userData).then(function (res) {
+        localStorage.setItem("role", res.data.role)
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 
-  getToken () {
-    return JSON.parse(localStorage.getItem('token'))
+  getToken() {
+    return localStorage.getItem("token")
   },
 
-  getUsername () {
-    return this.parseJwt(JSON.parse(localStorage.getItem('token'))).username
+  getUsername() {
+    return this.parseJwt(JSON.parse(localStorage.getItem("token"))).username
   },
 
-  logout (cb) {
+  logout(cb) {
     delete localStorage.token
+    delete localStorage.role
+    delete localStorage.username
     if (cb) cb()
     this.onChange(false)
   },
 
-  loggedIn () {
+  loggedIn() {
     return !!localStorage.token
   },
 
-  isManager () {
+  isManager() {
     var user = this.parseJwt(JSON.parse(localStorage.getItem('token')))
     return user.role === "DATA_MANAGER"
   },
-  parseJwt (token) {
+  parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   },
 
-  onChange () {}
+  onChange() {}
 }

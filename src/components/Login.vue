@@ -25,30 +25,17 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
-      const profile = googleUser.getBasicProfile(); // etc etc
-      console.log("Profile: ", profile);
-      //Send profile.U3 to DB for storage
-      console.log("Google User: ", googleUser);
-      console.log("Token: ", googleUser.Zi.access_token);
-      localStorage.setItem("token", JSON.stringify(googleUser.Zi.access_token));
-      localStorage.setItem("username", profile.U3);
-      this.$router.push("/dashboard");
-      // this.$router.replace(this.$route.query.redirect || '/dashboard')
-      // auth.login(profile.U3, googleUser.Zi.access_token, (loggedIn) => {
-      //     if (!loggedIn) {
-      //       this.error = true
-      //     } else {
-      //       if (auth.isManager()) {
-      //         this.$router.replace(this.$route.query.redirect || '/datamanager')
-      //       } else {
-      //         this.$router.replace(this.$route.query.redirect || '/dashboard')
-      //       }
-      //     }
-      //   })
-      // window.location.href = "/dashboard"
+      const profile = googleUser.getBasicProfile();
+      auth.verifyThenProceed(profile.U3, googleUser.Zi.access_token);
+      localStorage.setItem("token", googleUser.Zi.access_token);
+        localStorage.setItem("username", profile.U3);
+      if (localStorage.getItem("role") === "DATA_MANAGER") {
+        this.$router.push("/datamanager");
+      } else {
+        this.$router.push("/dashboard");
+      }
     },
     onSignInError(error) {
-      // `error` contains any error occurred.
       console.log("OH NOES", error);
     }
   }
