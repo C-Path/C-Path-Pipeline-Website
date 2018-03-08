@@ -8,9 +8,9 @@
 </template>
 
 <script>
- import auth from '../auth'
+import auth from "../auth";
 export default {
-  data () {
+  data() {
     return {
       /**
        * The Auth2 parameters, as seen on
@@ -19,20 +19,20 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: process.env.CLIEND_ID + '.apps.googleusercontent.com'
+        client_id: process.env.CLIENT_ID + ".apps.googleusercontent.com"
       }
-    }
+    };
   },
   methods: {
-    onSignInSuccess (googleUser) {
-      const profile = googleUser.getBasicProfile() // etc etc
-      console.log("Profile: ", profile)
+    onSignInSuccess(googleUser) {
+      const profile = googleUser.getBasicProfile(); // etc etc
+      console.log("Profile: ", profile);
       //Send profile.U3 to DB for storage
-      console.log("Google User: ", googleUser)
-      console.log("Token: ", googleUser.Zi.access_token)
-      localStorage.setItem('token', JSON.stringify(googleUser.Zi.access_token))
-      localStorage.setItem('username', profile.U3)
-      this.$router.push('/dashboard') 
+      console.log("Google User: ", googleUser);
+      console.log("Token: ", googleUser.Zi.access_token);
+      localStorage.setItem("token", JSON.stringify(googleUser.Zi.access_token));
+      localStorage.setItem("username", profile.U3);
+      this.$router.push("/dashboard");
       // this.$router.replace(this.$route.query.redirect || '/dashboard')
       // auth.login(profile.U3, googleUser.Zi.access_token, (loggedIn) => {
       //     if (!loggedIn) {
@@ -47,12 +47,12 @@ export default {
       //   })
       // window.location.href = "/dashboard"
     },
-    onSignInError (error) {
+    onSignInError(error) {
       // `error` contains any error occurred.
-      console.log('OH NOES', error)
+      console.log("OH NOES", error);
     }
   }
-}
+};
 </script>
 
 
