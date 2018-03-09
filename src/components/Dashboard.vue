@@ -84,7 +84,6 @@ export default {
       NewProject: {
         name: '',
         description: '',
-        active: false,
       },
       projectNameTitle: "",
       description: "",
@@ -101,6 +100,7 @@ export default {
         }
       })
       .then(function(res) {
+        console.log("GOT", res.data)
         $vm.projects = res.data;
       })
       .catch(function(error) {
