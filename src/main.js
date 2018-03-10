@@ -6,7 +6,9 @@ import router from './router';
 
 Vue.config.productionTip = false;
 
-Vue.use(VModal, { dialog: true })
+Vue.use(VModal, {
+  dialog: true
+})
 
 /* eslint-disable no-new */
 new Vue({
@@ -14,5 +16,3 @@ new Vue({
   router,
   render: h => h(App),
 });
-
-
