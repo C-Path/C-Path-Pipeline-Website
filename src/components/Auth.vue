@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  data: function() {
+  data() {
     return {
       access_token: null,
       response: null,
@@ -128,7 +128,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 *,
 html,
 body {

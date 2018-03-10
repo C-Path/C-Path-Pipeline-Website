@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(project, index) in projects">
+        <tr v-for="(project, index) in projects" :key="project._id">
           <td class="mdl-data-table__cell--non-numeric table-width-10">
             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" :for="index">
               <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
