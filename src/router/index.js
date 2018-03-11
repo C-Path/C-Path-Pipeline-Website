@@ -47,7 +47,7 @@ function checkToken (to, from, next) {
 }
 
 function requireAuth (to, from, next) {
-  if (localStorage.getItem('token') != null) {
+  if (localStorage.getItem('token') == null) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
@@ -58,13 +58,13 @@ function requireAuth (to, from, next) {
 }
 
 function requireAdmin (to, from, next) {
-  if (!auth.loggedIn()) {
+  if (localStorage.getItem('token') != null) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
     })
   } else {
-    if (!auth.isManager()) {
+    if (localStorage.getItem('role') == 'DATA_MANAGER') {
       next({
         path: '/dashboard',
         query: { redirect: to.fullPath }
@@ -76,8 +76,7 @@ function requireAdmin (to, from, next) {
 }
 
 function redirectUser (to, from, next) {
-    var user = auth.parseJwt(JSON.parse(localStorage.getItem('token')))
-  if (auth.isManager()) {
+  if (localStorage.getItem('user') == 'DATA_MANAGER') {
     next({
       path: '/datamanager',
       query: { redirect: to.fullPath }
