@@ -13,7 +13,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 section {
   background: #E8E9EC;
   /*padding: 1.4rem 1.4rem 2.8rem 1.4rem;*/
@@ -57,4 +57,3 @@ h1 {
   margin: 2em 0;
 }
 </style>
-

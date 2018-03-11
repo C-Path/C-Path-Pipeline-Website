@@ -1,19 +1,19 @@
 <template>
-  <div id="app">
-    <div class="header">
-      <img src="../static/images/ReSeqTB.png" alt="c-path logo">
-      <v-dialog/>
-      <a @click="showAlert" v-if="loggedIn">
+<div id="app">
+  <div class="header">
+    <img src="../static/images/ReSeqTB.png" alt="c-path logo">
+    <v-dialog/>
+    <a @click="showAlert" v-if="loggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
       </a>
-      <a href="/dashboard" v-if="isUserLoggedIn">
+    <a href="/dashboard" v-if="isUserLoggedIn">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
         </a>
-    </div>
-    <template v-if="$route.matched.length">
+  </div>
+  <template v-if="$route.matched.length">
       <router-view></router-view>
     </template>
-  </div>
+</div>
 </template>
 
 <script>
@@ -54,12 +54,9 @@ export default {
         "DATA_MANAGER"
       ) {
         this.$modal.show("dialog", {
-          title:
-            '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
-          text:
-            "<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>",
-          buttons: [
-            {
+          title: '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
+          text: "<p>All files marked for <strong>deletion</strong> will be deleted when logging off.</p>",
+          buttons: [{
               title: "Log Out",
               handler: () => {
                 window.location = "/logout";

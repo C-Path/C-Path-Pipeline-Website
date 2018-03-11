@@ -54,7 +54,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .timeline-item {
   background: #fff;
   border-bottom: 1px solid #f2f2f2;
