@@ -87,7 +87,7 @@ export default {
         username: localStorage.getItem("username"),
         active: false,
       },
-      loggedIn: true,
+      loggedIn: localStorage.getItem('token') != null,
       projectNameTitle: "",
       description: "",
       projects: [],
@@ -99,7 +99,7 @@ export default {
     axios
       .get(process.env.SERVER_URL + "/projects", {
         params: {
-          token: auth.getToken(),
+          token: localStorage.getItem('token'),
           username: localStorage.getItem("username")
         }
       })
@@ -165,7 +165,7 @@ export default {
         this.showAlert();
       } else {
         /* TODO: place the url for POST in .envrc */
-        var tokenParam = "?token=" + auth.getToken()
+        var tokenParam = "?token=" + localStorage.getItem('token')
         axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
             this.addProjectToTable(res.data)
             this.resetNewProject()
@@ -187,8 +187,10 @@ export default {
       axios
         .get(process.env.SERVER_URL + "/projects", {
           params: {
-            token: auth.getToken(),
-            username: auth.getUsername()
+            token: localStorage.getItem('token'),
+            // token: auth.getToken(),
+            username: localStorage.getItem('username')
+            // username: auth.getUsername()
           }
         })
         .then(function(res) {

@@ -8,9 +8,11 @@
 import { Upload } from 'tus-js-client';
 
 export default {
-    mounted() {
+    data() {
+        return {
+            loggedIn: localStorage.getItem('token') != null,
+        }
     },
-
     methods: {
         onFileChange(e) {
             const files = e.target.files;
