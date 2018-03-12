@@ -3,14 +3,15 @@ import axios from "axios";
 
 export default {
   verifyThenProceed(username, token) {
+    var $vm = this;
     var tokenParam = "?token=" + token
     var userData = {
       username: username,
       token: token
     }
     axios.post(process.env.SERVER_URL + "/authenticate", userData).then(function (res) {
-        localStorage.setItem("role", res.data.role)
-        
+      console.log("coming from the server: ", res.data.role)
+        return res.data.role
       })
       .catch(function (error) {
         console.log(error);

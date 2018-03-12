@@ -3,10 +3,10 @@
     <div class="header">
       <img src="../static/images/ReSeqTB.png" alt="c-path logo">
       <v-dialog/>
-      <a @click="showAlert" v-if="loggedIn">
+      <a @click="showAlert" v-if="['Dashboard', 'Upload', 'DataManager', 'JobStatus'].indexOf($route.name) > -1">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
       </a>
-      <a href="/dashboard" v-if="loggedIn">
+      <a href="/dashboard" v-if="['Dashboard', 'Upload'].indexOf($route.name) > -1">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
         </a>
     </div>

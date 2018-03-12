@@ -43,7 +43,8 @@ export default {
   },
 mounted() {
   var $vm = this;
-  var tokenParam = "?token=" + auth.getToken()
+  var tokenParam = "?token=" + localStorage.getItem('token')
+  console.log("Token: ", tokenParam)
 
     axios.get(process.env.SERVER_URL + "/files" + tokenParam).then(function(response) {
       if (response.data.message === undefined) {

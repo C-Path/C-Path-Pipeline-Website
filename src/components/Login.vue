@@ -25,18 +25,22 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
+      // var $vm = this;
       const profile = googleUser.getBasicProfile();
-      auth.verifyThenProceed(profile.U3, googleUser.Zi.access_token);
+      var role = auth.verifyThenProceed(profile.U3, googleUser.Zi.access_token);
       localStorage.setItem("token", googleUser.Zi.access_token);
-        localStorage.setItem("username", profile.U3);
-      if (localStorage.getItem("role") === "DATA_MANAGER") {
+      localStorage.setItem("username", profile.U3);
+      console.log("This role: ", role)
+      // console.log("This vm role: ", $vm.role)
+      if (role === "DATA_MANAGER") {
+        console.log("redirecting to data manager")
         this.$router.push("/datamanager");
       } else {
         this.$router.push("/dashboard");
       }
     },
     onSignInError(error) {
-      console.log("OH NOES", error);
+      console.log("error: ", error);
     }
   }
 };
