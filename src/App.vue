@@ -24,7 +24,7 @@ export default {
   name: "app",
   data() {
     return {
-      loggedIn: true,
+      loggedIn: true
     };
   },
   created() {
@@ -45,10 +45,7 @@ export default {
   },
   methods: {
     showAlert() {
-      if (
-        1 === 1
-        //TODO look up username in db, if role is not DATA_MANAGER then continue
-      ) {
+      if (localStorage.getItem("role") === "USER") {
         this.$modal.show("dialog", {
           title:
             '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
@@ -73,7 +70,7 @@ export default {
     },
     isUser() {
       if (localStorage.getItem("token") != null) {
-        return localStorage.getItem('role') == 'USER';
+        return localStorage.getItem("role") == "USER";
       } else {
         return false;
       }
