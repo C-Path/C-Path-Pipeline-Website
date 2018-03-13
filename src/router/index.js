@@ -58,15 +58,13 @@ function requireAuth (to, from, next) {
 }
 
 function requireAdmin (to, from, next) {
-  console.log("Running admin step")
   if (localStorage.getItem('token') == null) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
     })
   } else {
-    console.log("ROLE: ", localStorage.getItem('role'))
-    if (localStorage.getItem('role') == 'DATA_MANAGER') {
+    if (localStorage.getItem('role') === 'USER') {
       next({
         path: '/dashboard',
         query: { redirect: to.fullPath }
