@@ -107,6 +107,7 @@ export default {
         }
       })
       .then(function(res) {
+        console.log("GOT", res.data)
         $vm.projects = res.data;
       })
       .catch(function(error) {
@@ -172,20 +173,13 @@ export default {
       if (this.isExistingProject()) {
         this.showAlert();
       } else {
-        /* TODO: place the url for POST in .envrc */
         var tokenParam = "?token=" + localStorage.getItem("token");
-        axios
-          .post(
-            process.env.SERVER_URL + "/projects" + tokenParam,
-            this.NewProject
-          )
-          .then(res => {
-            this.addProjectToTable(res.data);
-            this.resetNewProject();
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
+        axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
+            this.addProjectToTable(res.data)
+            this.resetNewProject()
+        }).catch(function(err) {
+          console.log(err)
+        })
       }
     },
     showDeleteModal(project) {
@@ -202,9 +196,7 @@ export default {
         .get(process.env.SERVER_URL + "/projects", {
           params: {
             token: localStorage.getItem("token"),
-            // token: auth.getToken(),
             username: localStorage.getItem("username")
-            // username: auth.getUsername()
           }
         })
         .then(function(res) {
@@ -238,10 +230,6 @@ export default {
 </script>
 
 <style scoped>
-.projectsTable {
-  margin-left: 3em;
-}
-
 .table-width {
   width: 83%;
 }

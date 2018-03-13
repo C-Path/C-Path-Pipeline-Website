@@ -7,7 +7,7 @@ export default {
   },
 
   getUsername() {
-    return this.parseJwt(JSON.parse(localStorage.getItem("token"))).username
+    return localStorage.getItem("username")
   },
 
   logout(cb) {
