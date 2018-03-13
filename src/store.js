@@ -9,14 +9,6 @@ import providers from './providers';
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 
-/*
- I believe this is not required if we use the Vuex.Store.
-Vue.use(VueAuthenticate, {
-  tokenName: 'access_token',
-  providers,
-});
-*/
-
 const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
   tokenName: 'access_token',
   providers,
@@ -31,7 +23,6 @@ export default new Vuex.Store({
 
   actions: {
     login(context, payload) {
-      // eslint-disable-next-line no-unused-vars
       vueAuth.login(payload.user, payload.requestOptions).then(response => {
         context.commit('isAuthenticated', {
           isAuthenticated: vueAuth.isAuthenticated(),

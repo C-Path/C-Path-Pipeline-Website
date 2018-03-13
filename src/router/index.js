@@ -12,7 +12,7 @@ const router = new Router({
     {path: '/dashboard', name: 'Dashboard', component: () => import('@/components/Dashboard'), beforeEnter: requireAuth},
     {path: '/jobstatus', name: 'JobStatus', component: () => import('@/components/JobStatus'), beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: () => import('@/components/DataManager'), beforeEnter: requireAdmin},
-    {path: '/upload', component: () => import('@/pages/tnorth/asap/fileupload/SequenceFileUpload')},
+    {path: '/upload', name: 'Upload', component: () => import('@/pages/tnorth/asap/fileupload/SequenceFileUpload'), beforeEnter: requireAuth},
     {path: '/projects/default', component: () => import('@/pages/tnorth/asap/FileIndex')},
     {path: '/projects/default/reports/tb', component: () => import('@/pages/tnorth/asap/tb/Summary.vue'), beforeEnter: requireAuth},
     {path: '/projects/default/reports/tb/samples/:id', component: () => import('@/pages/tnorth/asap/tb/Sample.vue'), props: true, beforeEnter: requireAuth},
@@ -29,8 +29,8 @@ const router = new Router({
 });
 
 function checkToken (to, from, next) {
-  if (auth.loggedIn()) {
-    if (auth.isManager()) {
+  if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('role') == 'DATA_MANAGER') {
       next({
         path: '/datamanager',
         query: { redirect: to.fullPath }
@@ -47,7 +47,7 @@ function checkToken (to, from, next) {
 }
 
 function requireAuth (to, from, next) {
-  if (!auth.loggedIn()) {
+  if (localStorage.getItem('token') == null) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
@@ -58,13 +58,13 @@ function requireAuth (to, from, next) {
 }
 
 function requireAdmin (to, from, next) {
-  if (!auth.loggedIn()) {
+  if (localStorage.getItem('token') == null) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
     })
   } else {
-    if (!auth.isManager()) {
+    if (localStorage.getItem('role') === 'USER') {
       next({
         path: '/dashboard',
         query: { redirect: to.fullPath }
@@ -76,8 +76,7 @@ function requireAdmin (to, from, next) {
 }
 
 function redirectUser (to, from, next) {
-    var user = auth.parseJwt(JSON.parse(localStorage.getItem('token')))
-  if (auth.isManager()) {
+  if (localStorage.getItem('user') == 'DATA_MANAGER') {
     next({
       path: '/datamanager',
       query: { redirect: to.fullPath }

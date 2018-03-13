@@ -76,31 +76,37 @@
 
 <script>
 import axios from "axios";
-import auth from "../auth.js"
+import auth from "../auth.js";
 
 export default {
   data() {
     return {
       NewProject: {
-        name: '',
-        description: '',
+        name: "",
+        description: "",
+        username: localStorage.getItem("username"),
+        active: false
       },
+      loggedIn: localStorage.getItem("token") != null,
       projectNameTitle: "",
       description: "",
       projects: [],
       deletionProject: ""
     };
   },
+
   mounted() {
+    
     var $vm = this;
+    $vm.loggedIn = localStorage.getItem("token") != null;
     axios
       .get(process.env.SERVER_URL + "/projects", {
         params: {
-          token: auth.getToken()
+          token: localStorage.getItem("token"),
+          username: localStorage.getItem("username")
         }
       })
       .then(function(res) {
-        console.log("GOT", res.data)
         $vm.projects = res.data;
       })
       .catch(function(error) {
@@ -111,24 +117,26 @@ export default {
     show() {
       this.$modal.show("NewProjectModal");
     },
-    hide () {
-      this.$modal.hide('NewProjectModal');
+    hide() {
+      this.$modal.hide("NewProjectModal");
     },
     showAlert() {
       this.$modal.show("dialog", {
-        title: '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
-        text: '<p style="text-align:center;">Please enter a different project name.</p>',
+        title:
+          '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
+        text:
+          '<p style="text-align:center;">Please enter a different project name.</p>',
         buttons: [
           {
             title: "Close", // Button title
-            default: true, // Will be triggered by default if 'Enter' pressed.
-          },
+            default: true // Will be triggered by default if 'Enter' pressed.
+          }
         ]
       });
     },
-    showFiles (nameOfProject, index) {
-      localStorage.setItem('currentProject', nameOfProject);
-      this.$router.push('/upload');
+    showFiles(nameOfProject, index) {
+      localStorage.setItem("currentProject", nameOfProject);
+      this.$router.push("/upload");
       // this.$router.replace(this.$route.query.redirect || '/upload')
     },
     showDescription() {
@@ -143,24 +151,28 @@ export default {
     },
     resetNewProject() {
       this.NewProject = {
-        name: '',
-        description: '',
-        active: false,
+        name: "",
+        description: "",
+        username: auth.getUsername(),
+        active: false
       };
     },
     isExistingProject() {
       for (var i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].name.toLowerCase() === this.NewProject.name.toLowerCase()) {
+        if (
+          this.projects[i].name.toLowerCase() ===
+          this.NewProject.name.toLowerCase()
+        ) {
           return true;
         }
       }
       return false;
-     },
-    createNewProject () {
+    },
+    createNewProject() {
       if (this.isExistingProject()) {
         this.showAlert();
       } else {
-        var tokenParam = "?token=" + auth.getToken()
+        var tokenParam = "?token=" + localStorage.getItem("token");
         axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
             this.addProjectToTable(res.data)
             this.resetNewProject()
@@ -169,20 +181,21 @@ export default {
         })
       }
     },
-    showDeleteModal (project) {
+    showDeleteModal(project) {
       this.$modal.show("DeleteModal");
       this.deletionProject = project;
     },
-    hideDeleteModal () {
+    hideDeleteModal() {
       this.$modal.hide("DeleteModal");
       this.deletionProject = "";
     },
-    refreshData () {
-      var $vm = this
+    refreshData() {
+      var $vm = this;
       axios
         .get(process.env.SERVER_URL + "/projects", {
           params: {
-            token: auth.getToken(),
+            token: localStorage.getItem("token"),
+            username: localStorage.getItem("username")
           }
         })
         .then(function(res) {
@@ -192,17 +205,25 @@ export default {
           console.log(error);
         });
     },
-    deleteProject () {
-      var tokenParam = "?token=" + auth.getToken()
-      axios.delete(process.env.SERVER_URL + "/projects/" + this.deletionProject._id + tokenParam).then((res) => {
+    deleteProject() {
+      var tokenParam = "?token=" + auth.getToken();
+      axios
+        .delete(
+          process.env.SERVER_URL +
+            "/projects/" +
+            this.deletionProject._id +
+            tokenParam
+        )
+        .then(res => {
           if (res.data.Deleted) {
-            this.refreshData()
+            this.refreshData();
           }
-      }).catch(function(err) {
-        console.log(err)
-      })
-      this.hideDeleteModal()
-    },
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      this.hideDeleteModal();
+    }
   }
 };
 </script>

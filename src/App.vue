@@ -3,10 +3,10 @@
     <div class="header">
       <img src="../static/images/ReSeqTB.png" alt="c-path logo">
       <v-dialog/>
-      <a @click="showAlert" v-if="loggedIn">
+      <a @click="showAlert" v-if="['Dashboard', 'Upload', 'DataManager', 'JobStatus'].indexOf($route.name) > -1">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
       </a>
-      <a href="/dashboard" v-if="isUserLoggedIn">
+      <a href="/dashboard" v-if="['Dashboard', 'Upload'].indexOf($route.name) > -1">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
         </a>
     </div>
@@ -24,15 +24,11 @@ export default {
   name: "app",
   data() {
     return {
-      loggedIn: auth.loggedIn(),
-      isUserLoggedIn: this.isUser()
+      loggedIn: true
     };
   },
   created() {
-    auth.onChange = (loggedIn, isUserLoggedIn) => {
-      this.loggedIn = loggedIn;
-      this.isUserLoggedIn = this.isUser();
-    };
+    this.loggedIn = localStorage.getItem("token") != null;
     var minutes = 60,
       the_interval = minutes * 60 * 1000;
     setInterval(function() {
@@ -49,10 +45,7 @@ export default {
   },
   methods: {
     showAlert() {
-      if (
-        auth.parseJwt(JSON.parse(localStorage.getItem("token"))).role !=
-        "DATA_MANAGER"
-      ) {
+      if (localStorage.getItem("role") === "USER") {
         this.$modal.show("dialog", {
           title:
             '<html><head></head><body><p style="text-align:center;color:#F89641;font-size:3em;"><span class="glyphicon glyphicon-info-sign"></span></p><h4 style="text-align:center;">Warning!</h4></body></html>',
@@ -77,9 +70,7 @@ export default {
     },
     isUser() {
       if (localStorage.getItem("token") != null) {
-        var userRole = auth.parseJwt(JSON.parse(localStorage.getItem("token")))
-          .role;
-        return userRole != "DATA_MANAGER";
+        return localStorage.getItem("role") == "USER";
       } else {
         return false;
       }
