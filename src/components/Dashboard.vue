@@ -153,7 +153,7 @@ export default {
       this.NewProject = {
         name: "",
         description: "",
-        username: auth.getUsername(),
+        username: localStorage.getItem("username"),
         active: false
       };
     },
@@ -173,6 +173,7 @@ export default {
         this.showAlert();
       } else {
         var tokenParam = "?token=" + localStorage.getItem("token");
+        
         axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
             this.addProjectToTable(res.data)
             this.resetNewProject()
@@ -212,7 +213,7 @@ export default {
           process.env.SERVER_URL +
             "/projects/" +
             this.deletionProject._id +
-            tokenParam
+            tokenParam +"&username=" + localStorage.getItem('username')
         )
         .then(res => {
           if (res.data.Deleted) {
