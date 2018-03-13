@@ -107,7 +107,6 @@ export default {
         }
       })
       .then(function(res) {
-        console.log("GOT", res.data)
         $vm.projects = res.data;
       })
       .catch(function(error) {
