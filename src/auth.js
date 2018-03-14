@@ -23,13 +23,8 @@ export default {
         if (cb) cb(false)
         this.onChange(false)
       }
-<<<<<<< HEAD
     }).catch(function(err) {
       return false
-=======
-    }).catch(function (err) {
-      console.log(err)
->>>>>>> 4af98a123e7491a58883c297d0b3c82f193d3c92
     })
   },
 
