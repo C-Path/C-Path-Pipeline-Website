@@ -25,6 +25,7 @@
           			</div>
           		</div>
           	</main>
+            <p v-if="error" class="error">Incorrect username or password</p>
           </div>
         </section>
         <section class="text-align-center account-services">
@@ -46,26 +47,26 @@ export default {
       googleSignInParams: {
         client_id: process.env.CLIENT_ID + ".apps.googleusercontent.com"
       },
-      username: '',
-        pass: '',
-        error: false
+      username: "",
+      pass: "",
+      error: false
     };
   },
   methods: {
     onSignInSuccess(googleUser) {
-      this.username = googleUser.w3.U3
-      this.pass = googleUser.w3.Eea
-      auth.login(this.username, this.pass, (loggedIn) => {
-          if (!loggedIn) {
-            this.error = true
+      this.username = googleUser.w3.U3;
+      this.pass = googleUser.w3.Eea;
+      auth.login(this.username, this.pass, loggedIn => {
+        if (!loggedIn) {
+          this.error = true;
+        } else {
+          if (auth.isManager()) {
+            this.$router.replace(this.$route.query.redirect || "/datamanager");
           } else {
-            if (auth.isManager()) {
-              this.$router.replace(this.$route.query.redirect || '/datamanager')
-            } else {
-              this.$router.replace(this.$route.query.redirect || '/dashboard')
-            }
+            this.$router.replace(this.$route.query.redirect || "/dashboard");
           }
-        })
+        }
+      });
     },
     onSignInError(error) {
       console.log("error: ", error);
@@ -85,5 +86,10 @@ export default {
   box-shadow: 0 3px 0 #0f69ff;
   width: 12em;
   font-size: 18px;
+}
+
+.error {
+  font-size: 20px;
+  font-weight: 500;
 }
 </style>

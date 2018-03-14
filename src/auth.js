@@ -23,8 +23,8 @@ export default {
         if (cb) cb(false)
         this.onChange(false)
       }
-    }).catch(function (err) {
-      console.log(err)
+    }).catch(function(err) {
+      return false
     })
   },
 
