@@ -16,16 +16,12 @@
           				<h2 class="mdl-card__title-text">Welcome.</h2>
           			</div>
           	  	<div class="mdl-card__supporting-text">
-          				<form @submit.prevent="login">
-          					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="text" id="username" v-model="username" placeholder="username"/>
-          					</div>
-          					<div class="mdl-textfield mdl-js-textfield">
-          						<input class="mdl-textfield__input" type="password" id="pass" v-model="pass" placeholder="password"/>
-          					</div>
-                    <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Log in</button>
-          				</form>
-                  <p v-if="error" class="error">Incorrect username or password</p>
+                  <g-signin-button
+                  :params="googleSignInParams"
+                  @success="onSignInSuccess"
+                  @error="onSignInError">
+                  Sign in with Google
+                </g-signin-button>
           			</div>
           		</div>
           	</main>
@@ -42,18 +38,24 @@
 </template>
 
 <script>
-  import auth from '../auth'
-  export default {
-    data () {
-      return {
-        username: '',
+import auth from "../auth";
+import axios from "axios";
+export default {
+  data() {
+    return {
+      googleSignInParams: {
+        client_id: process.env.CLIENT_ID + ".apps.googleusercontent.com"
+      },
+      username: '',
         pass: '',
         error: false
-      }
-    },
-    methods: {
-      login () {
-        auth.login(this.username, this.pass, (loggedIn) => {
+    };
+  },
+  methods: {
+    onSignInSuccess(googleUser) {
+      this.username = googleUser.w3.U3
+      this.pass = googleUser.w3.Eea
+      auth.login(this.username, this.pass, (loggedIn) => {
           if (!loggedIn) {
             this.error = true
           } else {
@@ -64,13 +66,24 @@
             }
           }
         })
-      }
+    },
+    onSignInError(error) {
+      console.log("error: ", error);
     }
   }
+};
 </script>
 
 <style>
-  .account-services {
-    padding: 4em;
-  }
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+  width: 12em;
+  font-size: 18px;
+}
 </style>
