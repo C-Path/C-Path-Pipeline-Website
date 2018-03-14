@@ -24,7 +24,7 @@ export default {
         this.onChange(false)
       }
     }).catch(function(err) {
-      console.log(err)
+      return false
     })
   },
 
