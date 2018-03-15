@@ -7,6 +7,9 @@
         <h4 v-if="$route.query.redirect">
           Please log in to access this website.
         </h4>
+        <h4 v-if="googleError">
+          Error logging in with that account, please try again.
+        </h4>
       </section>
       <section class="login">
         <div class="align-center text-align-center">
@@ -74,12 +77,13 @@ export default {
       authWithGoogle: false,
       googleUser: "",
       myValue: "mailto:",
-      requestSent: false
+      requestSent: false,
+      googleError: false
     };
   },
   methods: {
     onSignInSuccess(googleUser) {
-      console.log('googleUser', googleUser)
+      console.log("googleUser", googleUser);
       this.username = googleUser.w3.U3;
       this.pass = googleUser.w3.Eea;
       auth.login(this.username, this.pass, loggedIn => {
@@ -95,7 +99,7 @@ export default {
       });
     },
     onSignInError(error) {
-      console.log("error: ", error);
+      this.googleError = true;
     },
     show() {
       this.$modal.show("ContactUsModal");
