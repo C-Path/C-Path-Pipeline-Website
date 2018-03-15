@@ -10,7 +10,6 @@ const router = new Router({
     {path: '/', redirect: '/login'},
     {path: '/login', name: 'Login', component: () => import('@/components/Login'), beforeEnter: checkToken},
     {path: '/dashboard', name: 'Dashboard', component: () => import('@/components/Dashboard'), beforeEnter: requireAuth},
-    {path: '/jobstatus', name: 'JobStatus', component: () => import('@/components/JobStatus'), beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: () => import('@/components/DataManager'), beforeEnter: requireAdmin},
     {path: '/upload', component: () => import('@/pages/tnorth/asap/fileupload/SequenceFileUpload')},
     {path: '/projects/default', component: () => import('@/pages/tnorth/asap/FileIndex')},

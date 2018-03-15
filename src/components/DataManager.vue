@@ -37,16 +37,17 @@ export default {
       tgsQueue: '35',
     };
   },
-mounted() {
-  var $vm = this;
-  var tokenParam = "?token=" + auth.getToken()
+  mounted() {
+    var $vm = this;
+    var tokenParam = "?token=" + auth.getToken()
 
     axios.get(process.env.SERVER_URL + "/files" + tokenParam).then(function(response) {
-      if (response.data.message === undefined) {
-        $vm.files = response.data;
-      } else {
-        console.log(response.data.message)
-      }})
+        if (response.data.message === undefined) {
+          $vm.files = response.data;
+        } else {
+          console.log(response.data.message)
+        }
+      })
       .catch(function(error) {
         console.log(error);
       });

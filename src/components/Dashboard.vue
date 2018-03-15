@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
-  <h4 class="margin-left-1 error" v-if="$route.query.redirect && $route.query.redirect != '/login'">
-    404: Url not found, redirected to /dashboard
-  </h4>
+    <h4 class="margin-left-1 error" v-if="$route.query.redirect && $route.query.redirect != '/login'">
+      404: Url not found, redirected to /dashboard
+    </h4>
     <h3 class="margin-left-1">User Projects</h3>
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect new-project-btn" @click="show">Create New Project</button>
     <div class="margin-bottom-2 margin-left-3">
