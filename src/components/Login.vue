@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
+      console.log('googleUser', googleUser)
       this.username = googleUser.w3.U3;
       this.pass = googleUser.w3.Eea;
       auth.login(this.username, this.pass, loggedIn => {
