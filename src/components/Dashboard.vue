@@ -23,8 +23,8 @@
                         <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                         </label>
                     </td>
-                    <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
-                    <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
+                    <td class="mdl-data-table__cell--non-numeric"><a href="https://pipeline.reseqtb.org/">{{project.name}}</a></td>
+                    <td class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
                     <td @click="showDeleteModal(project)" class="delete__cell"><img src="../../static/images/ic_delete_black_24dp_1x.png" alt="Delete"></td>
                 </tr>
             </tbody>
@@ -195,7 +195,7 @@ export default {
         console.log(err)
       })
       this.hideDeleteModal()
-    },
+    }
   }
 };
 </script>
