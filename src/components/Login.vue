@@ -28,36 +28,41 @@
           	</div>
           </div>
         </main>
-        <p v-if="error" class="error">Incorrect username or password</p>
+        <p v-if="error" class="error">Incorrect username or password. Please try again, or request an account if you have not created one.</p>
       </div>
       </section>
       <section class="text-align-center account-services">
-        <p>If you would like an account, or if you forgot your credentials,<br> please click the link below to send us an email</p>
-        <button @click="show()" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
+        <a href="mailto:isaac.c.lessard@gmail.com?subject=ReSeqTB Account Services">
+            <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
+        </a>
+        <button @click="show()" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Request Account</button>
         <modal class="" name="ContactUsModal" height="auto" :scrollable="true">
           <div class="text-align-center">
             <h3 class="text-underline">Request New Account</h3>
           </div>
           <div class="text-align-center">
-            <p> 1. Sign in with the account you would like to be created.</p>
-            <g-signin-button
-              :params="googleSignInParams"
-              @success="createSuccess"
-              @error="createError">
-              Sign in
-            </g-signin-button>
-            <div v-if="authWithGoogle">
-              <p>2. Ok Great! Let's send a request to have the account <b>{{googleUser.w3.U3}}</b> created.</p>
-              <button @click="sendRequest" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Send Request</button>
-            </div>
+            <section v-if="!authWithGoogle">
+              <p> Please sign in with the google account you would like to be created. If you do not own a gmail address, please click 'Contact Us'.</p>
+              <g-signin-button
+                :params="googleSignInParams"
+                @success="createSuccess"
+                @error="createError">
+                Sign in
+              </g-signin-button>
+            </section>
+            <section>
+              <div v-if="authWithGoogle && !requestSent">
+                <p> Ok Great! Let's send a request to have the account <b>{{googleUser.w3.U3}}</b> created.</p>
+                <button @click="sendRequest" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Send Request</button>
+              </div>
+            </section>
             <div v-if="requestSent">
-              <p >3. Easy as that! Once your request is reviewed, you will be notified at <b>{{googleUser.w3.U3}}</b>.</p>
+              <p >Easy as that! Once your request is reviewed, you will be notified at <b>{{googleUser.w3.U3}}</b>.</p>
               <button @click="close" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Close</button>
             </div>
           </div>
         </modal>
       </section>
-      <a :href="myValue" id="mymailto" style="display:none"></a>
     </body>
   </html>
 </template>
@@ -76,7 +81,6 @@ export default {
       error: false,
       authWithGoogle: false,
       googleUser: "",
-      myValue: "mailto:",
       requestSent: false,
       googleError: false
     };
@@ -118,14 +122,24 @@ export default {
         this.googleUser.w3.U3 +
         "%0d%0aID: " +
         this.googleUser.w3.Eea;
-      this.myValue = "mailto:ken@cpath.com?subject=New Account Request&" + body;
     },
     createError(error) {
       console.log("error: ", error);
     },
     sendRequest() {
-      document.getElementById("mymailto").click();
-      this.requestSent = true;
+      var $vm = this
+      axios
+        .post(process.env.SERVER_URL + "/requestAccount", {
+          Username: this.googleUser.w3.U3,
+          password: this.googleUser.w3.Eea
+        })
+        .then(function(res) {
+          // email failure is logged on server
+          $vm.requestSent = true;
+        })
+        .catch(function(error) {
+          console.log("error: ", error);
+        });
     }
   }
 };
