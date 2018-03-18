@@ -120,11 +120,6 @@ export default {
         }, ]
       });
     },
-    showFiles(nameOfProject, index) {
-      localStorage.setItem('currentProject', nameOfProject);
-      this.$router.push('/upload');
-      // this.$router.replace(this.$route.query.redirect || '/upload')
-    },
     showDescription() {
       this.$modal.show("ProjectDescription");
     },
@@ -213,7 +208,7 @@ export default {
         username: this.readToken(auth.getToken()),
         project: projectName
       }
-      
+
       var token = jwt.sign(payload, 'TestPass')
       var element = document.getElementById(index)
       window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
