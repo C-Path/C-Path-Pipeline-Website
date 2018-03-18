@@ -45,3 +45,7 @@ section {
 .width-2 {
   width: 2em;
 }
+
+.pointer {
+  cursor: pointer;
+}

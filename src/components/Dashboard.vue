@@ -23,7 +23,7 @@
                         <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                         </label>
                     </td>
-                    <td class="mdl-data-table__cell--non-numeric"><a v-bind:id="index" @click="redirectToReSeqTB(project.name, index)">{{project.name}}</a></td>
+                    <td class="mdl-data-table__cell--non-numeric"><div class="pointer" v-bind:id="index" @click="redirectToReSeqTB(project.name, index)">{{project.name}}</div></td>
                     <td class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
                     <td @click="showDeleteModal(project)" class="delete__cell"><img src="../../static/images/ic_delete_black_24dp_1x.png" alt="Delete"></td>
                 </tr>
