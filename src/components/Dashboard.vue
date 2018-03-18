@@ -23,8 +23,8 @@
                         <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                         </label>
                     </td>
-                    <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.name}}</td>
-                    <td @click="showFiles(project.name)" class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
+                    <td class="mdl-data-table__cell--non-numeric"><a v-bind:id="index" @click="redirectToReSeqTB(project.name, index)">{{project.name}}</a></td>
+                    <td class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
                     <td @click="showDeleteModal(project)" class="delete__cell"><img src="../../static/images/ic_delete_black_24dp_1x.png" alt="Delete"></td>
                 </tr>
             </tbody>
@@ -72,6 +72,8 @@
 <script>
 import axios from "axios";
 import auth from "../auth.js"
+import jwt from "jsonwebtoken"
+import config from "../../config"
 
 export default {
   data() {
@@ -95,7 +97,6 @@ export default {
         }
       })
       .then(function(res) {
-        console.log("GOT", res.data)
         $vm.projects = res.data;
       })
       .catch(function(error) {
@@ -196,6 +197,27 @@ export default {
       })
       this.hideDeleteModal()
     },
+    readToken(token) {
+      var username = ""
+      jwt.verify(token, config.secret, function (err, decoded) {
+        if (err) {
+          console.log(err)
+        } else {
+          username = decoded["username"]
+        }
+      })
+      return username
+    },
+    redirectToReSeqTB(projectName, index) {
+      var payload = {
+        username: this.readToken(auth.getToken()),
+        project: projectName
+      }
+      
+      var token = jwt.sign(payload, 'TestPass')
+      var element = document.getElementById(index)
+      window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
+    }
   }
 };
 </script>
