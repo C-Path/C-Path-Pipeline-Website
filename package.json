@@ -26,6 +26,7 @@
     "nodemailer": "^4.6.0",
     "popper.js": "^1.13.0",
     "postcss-import": "^11.1.0",
+    "postcss-url": "^7.3.1",
     "raven-js": "^3.22.4",
     "style-loader": "^0.20.2",
     "tus-js-client": "^1.4.5",
