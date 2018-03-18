@@ -23,7 +23,7 @@
                         <input type = "checkbox" v-model=project.selected :id = "index" class = "mdl-checkbox__input">
                         </label>
                     </td>
-                    <td class="mdl-data-table__cell--non-numeric"><a v-bind:id="index" @click="redirectToReSeqTB(project.name, index)">{{project.name}}</a></td>
+                    <td class="mdl-data-table__cell--non-numeric"><div class="pointer" v-bind:id="index" @click="redirectToReSeqTB(project.name, index)">{{project.name}}</div></td>
                     <td class="mdl-data-table__cell--non-numeric">{{project.description}}</td>
                     <td @click="showDeleteModal(project)" class="delete__cell"><img src="../../static/images/ic_delete_black_24dp_1x.png" alt="Delete"></td>
                 </tr>
@@ -120,11 +120,6 @@ export default {
         }, ]
       });
     },
-    showFiles(nameOfProject, index) {
-      localStorage.setItem('currentProject', nameOfProject);
-      this.$router.push('/upload');
-      // this.$router.replace(this.$route.query.redirect || '/upload')
-    },
     showDescription() {
       this.$modal.show("ProjectDescription");
     },
@@ -213,7 +208,7 @@ export default {
         username: this.readToken(auth.getToken()),
         project: projectName
       }
-      
+
       var token = jwt.sign(payload, 'TestPass')
       var element = document.getElementById(index)
       window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
