@@ -13,9 +13,7 @@ export default {
       username: username,
       password: pass
     }
-    console.log("CHECKING", userData)
     axios.post(process.env.SERVER_URL + "/authenticate", userData).then((res) => {
-      console.log(res.data)
       if (res.data.authenticated) {
         localStorage.setItem('token', JSON.stringify(res.data.token))
 
