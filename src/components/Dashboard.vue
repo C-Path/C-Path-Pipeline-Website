@@ -204,14 +204,16 @@ export default {
       return username
     },
     redirectToReSeqTB(projectName, index) {
-      var payload = {
-        username: this.readToken(auth.getToken()),
-        project: projectName
-      }
-
-      var token = jwt.sign(payload, 'TestPass')
-      var element = document.getElementById(index)
-      window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
+      // TODO: Keep the below code for future authenticated integration with ReSeq pipeline site
+      // var payload = {
+      //   username: this.readToken(auth.getToken()),
+      //   project: projectName
+      // }
+      //
+      // var token = jwt.sign(payload, 'TestPass')
+      // var element = document.getElementById(index)
+      // window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
+      window.location.replace("https://pipeline.reseqtb.org/")
     }
   }
 };
