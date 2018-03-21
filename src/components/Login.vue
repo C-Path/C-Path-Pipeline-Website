@@ -36,18 +36,20 @@
             <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Contact Us</button>
         </a>
         <button @click="show()" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Request Account</button>
-        <modal class="" name="ContactUsModal" height="auto" :scrollable="true">
+        <modal class="requestNewUser" name="ContactUsModal" height="auto" :scrollable="true">
           <div class="text-align-center">
             <h3 class="text-underline">Request New Account</h3>
           </div>
           <div class="text-align-center">
             <section v-if="!requestSent">
-              <p> Please sign in with the google account you would like to be created. If you do not own a gmail address, please click 'Contact Us'.</p>
-                <input class="mdl-textfield__input newUserInput" type="text" id="newUserRequest" v-model="newUserEmail" placeholder="Email"/>
-                <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" @click="sendRequest">Log in</button>
+              <p> Please enter the email address you would like to use for the new account.</p>
+              <form @submit.prevent="sendRequest">
+                <input class="mdl-textfield__input newUserInput" type="email" id="newUserRequest" v-model="newUserEmail" placeholder="Email"/>
+                <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Request Account</button>
+              </form>
             </section>
             <div v-if="requestSent">
-              <p >Easy as that! Once your request is reviewed, you will be notified at <b>{{newUserEmail}}</b>.</p>
+              <p >Easy as that! Once your request is reviewed, you will be notified at<b>{{newUserEmail}}</b></p>
               <button @click="close" class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Close</button>
             </div>
           </div>
@@ -110,9 +112,15 @@ export default {
 </script>
 
 <style>
-.account-services * {
+
+.account-services button {
     margin: 1em;
   }
+
+.requestNewUser * {
+  margin: 1em;
+  text-align: center;
+}
 
 .newUserInput {
   margin: 0 auto;
