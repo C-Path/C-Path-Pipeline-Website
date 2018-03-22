@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <div class="header">
-      <img src="../static/images/ReSeqTB.png" alt="c-path logo">
+      <div class="jumbo">
+        <img src="../static/images/ReSeqTB-simple.png" alt="c-path logo">
+        <h1 class="logo-text">Pipelines</h1>
+      </div>
       <v-dialog/>
-      <a @click="showAlert" v-if="loggedIn">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
-      </a>
-      <a href="/dashboard" v-if="isUserLoggedIn">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Projects</button>
+      <div class="menu">
+        <a @click="showAlert" v-if="loggedIn">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect log-out">Log Out</button>
         </a>
+      </div>
     </div>
     <template v-if="$route.matched.length">
       <router-view></router-view>
@@ -91,16 +93,26 @@ export default {
 <style>
 .log-out {
   background-color: white;
-  float: right;
-  margin: 2em;
+  margin: 0.75em
 }
 
 .header {
+  height: 8em;
   padding: 2em;
   background-color: grey;
 }
 
 .vue-dialog-button:hover {
   background-color: #eee;
+}
+
+.jumbo * {
+  color: white;
+  float: left;
+  padding-right: 1em;
+}
+
+.menu {
+  float: right;
 }
 </style>
