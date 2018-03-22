@@ -1,42 +1,16 @@
+import VModal from 'vue-js-modal';
 import Vue from 'vue';
-import Vuex from 'vuex';
-import VueAxios from 'vue-axios';
-import { VueAuthenticate } from 'vue-authenticate';
-import axios from 'axios';
+import App from './App';
+import router from './router';
 
-import providers from './providers';
 
-Vue.use(Vuex);
-Vue.use(VueAxios, axios);
+Vue.config.productionTip = false;
 
-/*
- I believe this is not required if we use the Vuex.Store.
-Vue.use(VueAuthenticate, {
-  tokenName: 'access_token',
-  providers,
-});
-*/
+Vue.use(VModal, { dialog: true })
 
-const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
-  tokenName: 'access_token',
-  providers,
-});
-
-export default new Vuex.Store({
-  getters: {
-    isAuthenticated() {
-      return vueAuth.isAuthenticated();
-    },
-  },
-
-  actions: {
-    login(context, payload) {
-      // eslint-disable-next-line no-unused-vars
-      vueAuth.login(payload.user, payload.requestOptions).then(response => {
-        context.commit('isAuthenticated', {
-          isAuthenticated: vueAuth.isAuthenticated(),
-        });
-      });
-    },
-  },
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  render: h => h(App),
 });
