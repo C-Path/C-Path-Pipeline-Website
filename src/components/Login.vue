@@ -44,7 +44,7 @@
             <section v-if="!requestSent">
               <p> Please enter the email address you would like to use for the new account.</p>
               <form @submit.prevent="sendRequest">
-                <input class="mdl-textfield__input newUserInput" type="email" id="newUserRequest" v-model="newUserEmail" placeholder="Email"/>
+                <input class="mdl-textfield__input newUserInput" type="email" id="newUserRequest" v-model="newUserEmail" placeholder="Email" required/>
                 <button class="margin-bottom-2 mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Request Account</button>
               </form>
             </section>
