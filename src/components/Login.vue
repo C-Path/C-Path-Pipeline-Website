@@ -63,28 +63,28 @@
 import auth from "../auth";
 import axios from "axios";
 export default {
-  data () {
-      return {
-        username: '',
-        pass: '',
-        error: false,
-        newUserEmail: '',
-        requestSent: false,
-      }
+  data() {
+    return {
+      username: "",
+      pass: "",
+      error: false,
+      newUserEmail: "",
+      requestSent: false
+    };
   },
   methods: {
-    login () {
-      auth.login(this.username, this.pass, (loggedIn) => {
+    login() {
+      auth.login(this.username, this.pass, loggedIn => {
         if (!loggedIn) {
-          this.error = true
+          this.error = true;
         } else {
           if (auth.isManager()) {
-           this.$router.replace(this.$route.query.redirect || "/datamanager")
+            this.$router.replace(this.$route.query.redirect || "/datamanager");
           } else {
-            window.location.href = '/dashboard'
+            window.location.href = "/dashboard";
           }
         }
-      })
+      });
     },
     show() {
       this.$modal.show("ContactUsModal");
@@ -94,10 +94,10 @@ export default {
       this.$modal.hide("ContactUsModal");
     },
     sendRequest() {
-      var $vm = this
+      var $vm = this;
       axios
         .post(process.env.SERVER_URL + "/requestAccount", {
-          Username: this.newUserEmail,
+          Username: this.newUserEmail
         })
         .then(function(res) {
           // email failure is logged on server
@@ -112,10 +112,9 @@ export default {
 </script>
 
 <style>
-
 .account-services button {
-    margin: 1em;
-  }
+  margin: 1em;
+}
 
 .requestNewUser * {
   margin: 1em;
@@ -125,5 +124,9 @@ export default {
 .newUserInput {
   margin: 0 auto;
   width: 80%;
+}
+
+.mdl-color--primary {
+  background-color: #808080!important;
 }
 </style>
