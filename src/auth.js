@@ -43,7 +43,7 @@ export default {
   },
 
   loggedIn() {
-    return localStorage.token
+    return !!localStorage.token
   },
 
   isManager() {
