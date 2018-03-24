@@ -34,24 +34,13 @@
     <div class="margin-left-3">
         <modal name="NewProjectModal" height="auto" :scrollable="true">
           <v-dialog/>
-           <h3 class="text-align-center">Create New Project</h3>
-          <form @submit.prevent="createNewProject">
-
-            <div class="text-align-center">
-                <label for="projectName">Project Name:</label>
-                <input class="input" type="text" id="projectName" placeholder="Project Name" name="projectName" v-model.trim="NewProject.name" required>
-                </br>
-
-                <div class="mdl-textfield mdl-js-textfield">
-                  <p>Description:</p>
-              <textarea class="mdl-textfield__input border-light" type="text" rows= "6" id="sample5" v-model.trim="NewProject.description"></textarea>
-              </div>
-             </div>
-             <br>
-             <div class="text-align-center margin-bottom-2">
-                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Add Project</button>
-               </div>
-            </form>
+          <button type="button" @click="hide()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 class="text-align-center border-bottom-1px padding-bottom-1">Create New Project</h3>
+          <form @submit.prevent="createNewProject" class="form-horizontal col-sm-10 col-sm-offset-1">
+            <div class="form-group"><label>Project Name</label><input class="form-control required" placeholder="Your project name" data-placement="top" data-trigger="manual" type="text" name="projectName" v-model.trim="NewProject.name" required></div>
+            <div class="form-group"><label>Description</label><textarea class="form-control" placeholder="Your description here.." data-placement="top" data-trigger="manual" v-model.trim="NewProject.description"></textarea></div>
+            <div class="form-group"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-right" type="submit">Add Project</button> <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not valid. </p></div>
+        </form>
        </modal>
     </div>
 
@@ -71,16 +60,16 @@
 
 <script>
 import axios from "axios";
-import auth from "../auth.js"
-import jwt from "jsonwebtoken"
-import config from "../../config"
+import auth from "../auth.js";
+import jwt from "jsonwebtoken";
+import config from "../../config";
 
 export default {
   data() {
     return {
       NewProject: {
-        name: '',
-        description: '',
+        name: "",
+        description: ""
       },
       projectNameTitle: "",
       description: "",
@@ -108,16 +97,20 @@ export default {
       this.$modal.show("NewProjectModal");
     },
     hide() {
-      this.$modal.hide('NewProjectModal');
+      this.$modal.hide("NewProjectModal");
     },
     showAlert() {
       this.$modal.show("dialog", {
-        title: '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
-        text: '<p style="text-align:center;">Please enter a different project name.</p>',
-        buttons: [{
-          title: "Close", // Button title
-          default: true, // Will be triggered by default if 'Enter' pressed.
-        }, ]
+        title:
+          '<html><head></head><body><p style="text-align:center;color:red;font-size:3em;"><span class="glyphicon glyphicon-alert"></span></p><h4 style="text-align:center;">A Project with that name already exists!</h4></body></html>',
+        text:
+          '<p style="text-align:center;">Please enter a different project name.</p>',
+        buttons: [
+          {
+            title: "Close", // Button title
+            default: true // Will be triggered by default if 'Enter' pressed.
+          }
+        ]
       });
     },
     showDescription() {
@@ -132,14 +125,17 @@ export default {
     },
     resetNewProject() {
       this.NewProject = {
-        name: '',
-        description: '',
-        active: false,
+        name: "",
+        description: "",
+        active: false
       };
     },
     isExistingProject() {
       for (var i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].name.toLowerCase() === this.NewProject.name.toLowerCase()) {
+        if (
+          this.projects[i].name.toLowerCase() ===
+          this.NewProject.name.toLowerCase()
+        ) {
           return true;
         }
       }
@@ -149,13 +145,19 @@ export default {
       if (this.isExistingProject()) {
         this.showAlert();
       } else {
-        var tokenParam = "?token=" + auth.getToken()
-        axios.post(process.env.SERVER_URL + "/projects" + tokenParam, this.NewProject).then((res) => {
-          this.addProjectToTable(res.data)
-          this.resetNewProject()
-        }).catch(function(err) {
-          console.log(err)
-        })
+        var tokenParam = "?token=" + auth.getToken();
+        axios
+          .post(
+            process.env.SERVER_URL + "/projects" + tokenParam,
+            this.NewProject
+          )
+          .then(res => {
+            this.addProjectToTable(res.data);
+            this.resetNewProject();
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       }
     },
     showDeleteModal(project) {
@@ -167,11 +169,11 @@ export default {
       this.deletionProject = "";
     },
     refreshData() {
-      var $vm = this
+      var $vm = this;
       axios
         .get(process.env.SERVER_URL + "/projects", {
           params: {
-            token: auth.getToken(),
+            token: auth.getToken()
           }
         })
         .then(function(res) {
@@ -182,26 +184,34 @@ export default {
         });
     },
     deleteProject() {
-      var tokenParam = "?token=" + auth.getToken()
-      axios.delete(process.env.SERVER_URL + "/projects/" + this.deletionProject._id + tokenParam).then((res) => {
-        if (res.data.Deleted) {
-          this.refreshData()
-        }
-      }).catch(function(err) {
-        console.log(err)
-      })
-      this.hideDeleteModal()
+      var tokenParam = "?token=" + auth.getToken();
+      axios
+        .delete(
+          process.env.SERVER_URL +
+            "/projects/" +
+            this.deletionProject._id +
+            tokenParam
+        )
+        .then(res => {
+          if (res.data.Deleted) {
+            this.refreshData();
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      this.hideDeleteModal();
     },
     readToken(token) {
-      var username = ""
-      jwt.verify(token, config.secret, function (err, decoded) {
+      var username = "";
+      jwt.verify(token, config.secret, function(err, decoded) {
         if (err) {
-          console.log(err)
+          console.log(err);
         } else {
-          username = decoded["username"]
+          username = decoded["username"];
         }
-      })
-      return username
+      });
+      return username;
     },
     redirectToReSeqTB(projectName, index) {
       // TODO: Keep the below code for future authenticated integration with ReSeq pipeline site
@@ -213,7 +223,7 @@ export default {
       // var token = jwt.sign(payload, 'TestPass')
       // var element = document.getElementById(index)
       // window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
-      window.location.replace("https://pipeline.reseqtb.org/")
+      window.location.replace("https://pipeline.reseqtb.org/");
     }
   }
 };
@@ -246,5 +256,18 @@ export default {
 
 .delete-modal * {
   padding: 0em 2em 2em 2em;
+}
+
+.border-bottom-1px {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.padding-bottom-1 {
+  padding-bottom: 1em;
+}
+
+.close {
+  margin-right: 0.5em;
+  margin-top: 0.25em;
 }
 </style>
