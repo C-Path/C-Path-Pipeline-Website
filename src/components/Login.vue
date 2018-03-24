@@ -79,9 +79,9 @@ export default {
           this.error = true
         } else {
           if (auth.isManager()) {
-            this.$router.replace(this.$route.query.redirect || "/datamanager")
+           this.$router.replace(this.$route.query.redirect || "/datamanager")
           } else {
-            this.$router.replace(this.$route.query.redirect || "/dashboard")
+            window.location.href = '/dashboard'
           }
         }
       })
