@@ -214,16 +214,29 @@ export default {
       return username;
     },
     redirectToReSeqTB(projectName, index) {
-      // TODO: Keep the below code for future authenticated integration with ReSeq pipeline site
-      // var payload = {
-      //   username: this.readToken(auth.getToken()),
-      //   project: projectName
-      // }
-      //
-      // var token = jwt.sign(payload, 'TestPass')
-      // var element = document.getElementById(index)
+
+      var payload = {
+        aud: "pipeline.reseqtb.org",
+        iss: "pipeline-test.reseqtb.org",
+        exp: "10h",
+        username: this.readToken(auth.getToken()),
+        project: projectName
+      }
+      var cert = fs.readFileSync('../../certs/jwtClient.key');
+
+      var token = jwt.sign(payload, cert, { algorithm: 'RS256'})
+      var element = document.getElementById(index)
+      // TODO: uncomment line and delete following line once implemented in ReSeqTB-ASAP codebase
       // window.location.replace("https://pipeline.reseqtb.org/auth/login/accounts.google.com?access_token=" + token)
-      window.location.replace("https://pipeline.reseqtb.org/");
+
+      //TEST key
+      var pubCert = fs.readFileSynce('../../certs/jwtClient.key.pub');
+      jwt.verify(token, pubCert, function (err, decoded) {
+        console.log("DECO: ", decoded)
+      })
+
+
+      // window.location.replace("https://pipeline.reseqtb.org/");
     }
   }
 };
