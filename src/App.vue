@@ -26,14 +26,12 @@ export default {
   name: "app",
   data() {
     return {
-      loggedIn: auth.loggedIn(),
-      isUserLoggedIn: this.isUser()
+      loggedIn: auth.loggedIn()
     };
   },
   created() {
-    auth.onChange = (loggedIn, isUserLoggedIn) => {
+    auth.onChange = (loggedIn) => {
       this.loggedIn = loggedIn;
-      this.isUserLoggedIn = this.isUser();
     };
     var minutes = 60,
       the_interval = minutes * 60 * 1000;

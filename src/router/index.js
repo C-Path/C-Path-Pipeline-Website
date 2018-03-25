@@ -11,6 +11,7 @@ const router = new Router({
     {path: '/login', name: 'Login', component: () => import('@/components/Login'), beforeEnter: checkToken},
     {path: '/dashboard', name: 'Dashboard', component: () => import('@/components/Dashboard'), beforeEnter: requireAuth},
     {path: '/datamanager', name: 'DataManager', component: () => import('@/components/DataManager'), beforeEnter: requireAdmin},
+    {path: '/newUser', name: 'NewUser', component: () => import('@/components/NewUser')},
     {path: '*', beforeEnter: redirectUser },
     {path: '/logout',
       beforeEnter (to, from, next) {
